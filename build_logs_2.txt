@@ -1,0 +1,950 @@
+2026-03-17T17:27:15.7208376Z Current runner version: '2.332.0'
+2026-03-17T17:27:15.7233504Z ##[group]Runner Image Provisioner
+2026-03-17T17:27:15.7234374Z Hosted Compute Agent
+2026-03-17T17:27:15.7235143Z Version: 20260213.493
+2026-03-17T17:27:15.7235878Z Commit: 5c115507f6dd24b8de37d8bbe0bb4509d0cc0fa3
+2026-03-17T17:27:15.7236527Z Build Date: 2026-02-13T00:28:41Z
+2026-03-17T17:27:15.7237186Z Worker ID: {a7a099a4-442e-4e9e-bb89-c94a1bb6fa35}
+2026-03-17T17:27:15.7237864Z Azure Region: westus
+2026-03-17T17:27:15.7238475Z ##[endgroup]
+2026-03-17T17:27:15.7239918Z ##[group]Operating System
+2026-03-17T17:27:15.7240621Z Ubuntu
+2026-03-17T17:27:15.7241112Z 24.04.3
+2026-03-17T17:27:15.7241534Z LTS
+2026-03-17T17:27:15.7242028Z ##[endgroup]
+2026-03-17T17:27:15.7242502Z ##[group]Runner Image
+2026-03-17T17:27:15.7243039Z Image: ubuntu-24.04
+2026-03-17T17:27:15.7243525Z Version: 20260309.50.1
+2026-03-17T17:27:15.7245002Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20260309.50/images/ubuntu/Ubuntu2404-Readme.md
+2026-03-17T17:27:15.7246467Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20260309.50
+2026-03-17T17:27:15.7247379Z ##[endgroup]
+2026-03-17T17:27:15.7248416Z ##[group]GITHUB_TOKEN Permissions
+2026-03-17T17:27:15.7250328Z Contents: read
+2026-03-17T17:27:15.7250868Z Metadata: read
+2026-03-17T17:27:15.7251331Z Packages: read
+2026-03-17T17:27:15.7251938Z ##[endgroup]
+2026-03-17T17:27:15.7254199Z Secret source: Actions
+2026-03-17T17:27:15.7255133Z Prepare workflow directory
+2026-03-17T17:27:15.7593440Z Prepare all required actions
+2026-03-17T17:27:15.7631798Z Getting action download info
+2026-03-17T17:27:16.3248406Z Download action repository 'actions/checkout@v4' (SHA:34e114876b0b11c390a56381ad16ebd13914f8d5)
+2026-03-17T17:27:16.4539535Z Download action repository 'actions/setup-node@v4' (SHA:49933ea5288caeca8642d1e84afbd3f7d6820020)
+2026-03-17T17:27:16.6071213Z Download action repository 'actions/setup-java@v4' (SHA:c1e323688fd81a25caa38c78aa6df2d33d3e20d9)
+2026-03-17T17:27:17.4562748Z Download action repository 'actions/upload-artifact@v4' (SHA:ea165f8d65b6e75b540449e92b4886f43607fa02)
+2026-03-17T17:27:17.7593702Z Complete job name: build
+2026-03-17T17:27:17.8437576Z ##[group]Run actions/checkout@v4
+2026-03-17T17:27:17.8438801Z with:
+2026-03-17T17:27:17.8439481Z   repository: xeroxll/guard
+2026-03-17T17:27:17.8440565Z   token: ***
+2026-03-17T17:27:17.8441239Z   ssh-strict: true
+2026-03-17T17:27:17.8441937Z   ssh-user: git
+2026-03-17T17:27:17.8442640Z   persist-credentials: true
+2026-03-17T17:27:17.8443451Z   clean: true
+2026-03-17T17:27:17.8444168Z   sparse-checkout-cone-mode: true
+2026-03-17T17:27:17.8445241Z   fetch-depth: 1
+2026-03-17T17:27:17.8445921Z   fetch-tags: false
+2026-03-17T17:27:17.8446629Z   show-progress: true
+2026-03-17T17:27:17.8447354Z   lfs: false
+2026-03-17T17:27:17.8448021Z   submodules: false
+2026-03-17T17:27:17.8448738Z   set-safe-directory: true
+2026-03-17T17:27:17.8449784Z ##[endgroup]
+2026-03-17T17:27:17.9548128Z Syncing repository: xeroxll/guard
+2026-03-17T17:27:17.9551965Z ##[group]Getting Git version info
+2026-03-17T17:27:17.9553917Z Working directory is '/home/runner/work/guard/guard'
+2026-03-17T17:27:17.9557171Z [command]/usr/bin/git version
+2026-03-17T17:27:17.9608886Z git version 2.53.0
+2026-03-17T17:27:17.9636938Z ##[endgroup]
+2026-03-17T17:27:17.9660672Z Temporarily overriding HOME='/home/runner/work/_temp/045728c5-7acc-47e2-b1bc-3f3283c0e82b' before making global git config changes
+2026-03-17T17:27:17.9665638Z Adding repository directory to the temporary git global config as a safe directory
+2026-03-17T17:27:17.9669224Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/guard/guard
+2026-03-17T17:27:17.9705711Z Deleting the contents of '/home/runner/work/guard/guard'
+2026-03-17T17:27:17.9709563Z ##[group]Initializing the repository
+2026-03-17T17:27:17.9714872Z [command]/usr/bin/git init /home/runner/work/guard/guard
+2026-03-17T17:27:17.9807009Z hint: Using 'master' as the name for the initial branch. This default branch name
+2026-03-17T17:27:17.9809904Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+2026-03-17T17:27:17.9813065Z hint: to use in all of your new repositories, which will suppress this warning,
+2026-03-17T17:27:17.9815736Z hint: call:
+2026-03-17T17:27:17.9816897Z hint:
+2026-03-17T17:27:17.9818507Z hint: 	git config --global init.defaultBranch <name>
+2026-03-17T17:27:17.9820372Z hint:
+2026-03-17T17:27:17.9822162Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+2026-03-17T17:27:17.9825430Z hint: 'development'. The just-created branch can be renamed via this command:
+2026-03-17T17:27:17.9827766Z hint:
+2026-03-17T17:27:17.9828833Z hint: 	git branch -m <name>
+2026-03-17T17:27:17.9830341Z hint:
+2026-03-17T17:27:17.9831761Z hint: Disable this message with "git config set advice.defaultBranchName false"
+2026-03-17T17:27:17.9833573Z Initialized empty Git repository in /home/runner/work/guard/guard/.git/
+2026-03-17T17:27:17.9838033Z [command]/usr/bin/git remote add origin https://github.com/xeroxll/guard
+2026-03-17T17:27:17.9862283Z ##[endgroup]
+2026-03-17T17:27:17.9864772Z ##[group]Disabling automatic garbage collection
+2026-03-17T17:27:17.9866923Z [command]/usr/bin/git config --local gc.auto 0
+2026-03-17T17:27:17.9898060Z ##[endgroup]
+2026-03-17T17:27:17.9900138Z ##[group]Setting up auth
+2026-03-17T17:27:17.9906148Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-03-17T17:27:17.9940709Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-03-17T17:27:18.0301033Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-03-17T17:27:18.0337774Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-03-17T17:27:18.0579274Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-03-17T17:27:18.0617400Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-03-17T17:27:18.0861128Z [command]/usr/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+2026-03-17T17:27:18.0898953Z ##[endgroup]
+2026-03-17T17:27:18.0900231Z ##[group]Fetching the repository
+2026-03-17T17:27:18.0911433Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +2af1393b7821a9720542377a603c44ebe2d55047:refs/remotes/origin/main
+2026-03-17T17:27:19.0460213Z From https://github.com/xeroxll/guard
+2026-03-17T17:27:19.0460835Z  * [new ref]         2af1393b7821a9720542377a603c44ebe2d55047 -> origin/main
+2026-03-17T17:27:19.0495847Z ##[endgroup]
+2026-03-17T17:27:19.0496721Z ##[group]Determining the checkout info
+2026-03-17T17:27:19.0498124Z ##[endgroup]
+2026-03-17T17:27:19.0503409Z [command]/usr/bin/git sparse-checkout disable
+2026-03-17T17:27:19.0545537Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+2026-03-17T17:27:19.0571801Z ##[group]Checking out the ref
+2026-03-17T17:27:19.0575960Z [command]/usr/bin/git checkout --progress --force -B main refs/remotes/origin/main
+2026-03-17T17:27:19.0728949Z Switched to a new branch 'main'
+2026-03-17T17:27:19.0731939Z branch 'main' set up to track 'origin/main'.
+2026-03-17T17:27:19.0739474Z ##[endgroup]
+2026-03-17T17:27:19.0776576Z [command]/usr/bin/git log -1 --format=%H
+2026-03-17T17:27:19.0799775Z 2af1393b7821a9720542377a603c44ebe2d55047
+2026-03-17T17:27:19.1053763Z ##[group]Run actions/setup-node@v4
+2026-03-17T17:27:19.1054235Z with:
+2026-03-17T17:27:19.1054852Z   node-version: 18
+2026-03-17T17:27:19.1055231Z   cache: npm
+2026-03-17T17:27:19.1055573Z   always-auth: false
+2026-03-17T17:27:19.1055948Z   check-latest: false
+2026-03-17T17:27:19.1056464Z   token: ***
+2026-03-17T17:27:19.1057083Z ##[endgroup]
+2026-03-17T17:27:19.3091882Z Attempting to download 18...
+2026-03-17T17:27:20.0271471Z Acquiring 18.20.8 - x64 from https://github.com/actions/node-versions/releases/download/18.20.8-14110393767/node-18.20.8-linux-x64.tar.gz
+2026-03-17T17:27:20.4848943Z Extracting ...
+2026-03-17T17:27:20.4952621Z [command]/usr/bin/tar xz --strip 1 --warning=no-unknown-keyword --overwrite -C /home/runner/work/_temp/6a4eb848-2322-4bb8-b91a-d277bc436d83 -f /home/runner/work/_temp/875b7631-5c6f-4123-9fb4-f430a40f5b56
+2026-03-17T17:27:21.4486834Z Adding to the cache ...
+2026-03-17T17:27:23.1474818Z ##[group]Environment details
+2026-03-17T17:27:23.5157365Z node: v18.20.8
+2026-03-17T17:27:23.5157795Z npm: 10.8.2
+2026-03-17T17:27:23.5158108Z yarn: 1.22.22
+2026-03-17T17:27:23.5158775Z ##[endgroup]
+2026-03-17T17:27:23.5182499Z [command]/opt/hostedtoolcache/node/18.20.8/x64/bin/npm config get cache
+2026-03-17T17:27:23.6345924Z /home/runner/.npm
+2026-03-17T17:27:23.9019155Z Cache hit for: node-cache-Linux-x64-npm-7edbeffce539f47a9561f96ea2a6c720c820d74a8e573f4532cb3abf034b4d5b
+2026-03-17T17:27:25.1880439Z Received 8388608 of 93244611 (9.0%), 8.0 MBs/sec
+2026-03-17T17:27:25.8433229Z Received 93244611 of 93244611 (100.0%), 53.7 MBs/sec
+2026-03-17T17:27:25.8434230Z Cache Size: ~89 MB (93244611 B)
+2026-03-17T17:27:25.8490302Z [command]/usr/bin/tar -xf /home/runner/work/_temp/64a15ad2-08d3-4f18-939c-4c9205ec0ebe/cache.tzst -P -C /home/runner/work/guard/guard --use-compress-program unzstd
+2026-03-17T17:27:26.1178872Z Cache restored successfully
+2026-03-17T17:27:26.1371796Z Cache restored from key: node-cache-Linux-x64-npm-7edbeffce539f47a9561f96ea2a6c720c820d74a8e573f4532cb3abf034b4d5b
+2026-03-17T17:27:26.1715011Z ##[group]Run actions/setup-java@v4
+2026-03-17T17:27:26.1715384Z with:
+2026-03-17T17:27:26.1715578Z   distribution: zulu
+2026-03-17T17:27:26.1715779Z   java-version: 17
+2026-03-17T17:27:26.1715970Z   java-package: jdk
+2026-03-17T17:27:26.1716165Z   check-latest: false
+2026-03-17T17:27:26.1716351Z   server-id: github
+2026-03-17T17:27:26.1716587Z   server-username: GITHUB_ACTOR
+2026-03-17T17:27:26.1716826Z   server-password: GITHUB_TOKEN
+2026-03-17T17:27:26.1717207Z   overwrite-settings: true
+2026-03-17T17:27:26.1717506Z   job-status: success
+2026-03-17T17:27:26.1717837Z   token: ***
+2026-03-17T17:27:26.1718061Z ##[endgroup]
+2026-03-17T17:27:26.3935580Z ##[group]Installed distributions
+2026-03-17T17:27:26.3969058Z Trying to resolve the latest version from remote
+2026-03-17T17:27:26.4797365Z Resolved latest version as 17.0.18+8
+2026-03-17T17:27:26.4797891Z Trying to download...
+2026-03-17T17:27:26.4798840Z Downloading Java 17.0.18+8 (Zulu) from https://cdn.azul.com/zulu/bin/zulu17.64.17-ca-crac-jdk17.0.18-linux_x64.tar.gz ...
+2026-03-17T17:27:29.4028299Z Extracting Java archive...
+2026-03-17T17:27:29.4141357Z [command]/usr/bin/tar xz --warning=no-unknown-keyword --overwrite -C /home/runner/work/_temp/e00413a6-4776-4652-a0df-572b53064e12 -f /home/runner/work/_temp/ee2ab9d6-bedb-4ac1-8987-507fc3704708
+2026-03-17T17:27:32.1318575Z Java 17.0.18+8 was downloaded
+2026-03-17T17:27:32.1319202Z Setting Java 17.0.18+8 as the default
+2026-03-17T17:27:32.1329279Z Creating toolchains.xml for JDK version 17 from zulu
+2026-03-17T17:27:32.1405084Z Writing to /home/runner/.m2/toolchains.xml
+2026-03-17T17:27:32.1405552Z 
+2026-03-17T17:27:32.1405891Z Java configuration:
+2026-03-17T17:27:32.1406355Z   Distribution: zulu
+2026-03-17T17:27:32.1406830Z   Version: 17.0.18+8
+2026-03-17T17:27:32.1407468Z   Path: /opt/hostedtoolcache/Java_Zulu_jdk/17.0.18-8/x64
+2026-03-17T17:27:32.1407961Z 
+2026-03-17T17:27:32.1408474Z ##[endgroup]
+2026-03-17T17:27:32.1412679Z Creating settings.xml with server-id: github
+2026-03-17T17:27:32.1426928Z Writing to /home/runner/.m2/settings.xml
+2026-03-17T17:27:32.1579479Z ##[group]Run npm install
+2026-03-17T17:27:32.1579790Z [36;1mnpm install[0m
+2026-03-17T17:27:32.1634284Z shell: /usr/bin/bash -e {0}
+2026-03-17T17:27:32.1634725Z env:
+2026-03-17T17:27:32.1634988Z   JAVA_HOME: /opt/hostedtoolcache/Java_Zulu_jdk/17.0.18-8/x64
+2026-03-17T17:27:32.1635717Z   JAVA_HOME_17_X64: /opt/hostedtoolcache/Java_Zulu_jdk/17.0.18-8/x64
+2026-03-17T17:27:32.1636048Z ##[endgroup]
+2026-03-17T17:27:33.1018126Z npm warn EBADENGINE Unsupported engine {
+2026-03-17T17:27:33.1019101Z npm warn EBADENGINE   package: '@react-native/assets-registry@0.81.5',
+2026-03-17T17:27:33.1020043Z npm warn EBADENGINE   required: { node: '>= 20.19.4' },
+2026-03-17T17:27:33.1020906Z npm warn EBADENGINE   current: { node: 'v18.20.8', npm: '10.8.2' }
+2026-03-17T17:27:33.1021634Z npm warn EBADENGINE }
+2026-03-17T17:27:33.1023369Z npm warn EBADENGINE Unsupported engine {
+2026-03-17T17:27:33.1024338Z npm warn EBADENGINE   package: '@react-native/babel-plugin-codegen@0.81.5',
+2026-03-17T17:27:33.1025641Z npm warn EBADENGINE   required: { node: '>= 20.19.4' },
+2026-03-17T17:27:33.1026534Z npm warn EBADENGINE   current: { node: 'v18.20.8', npm: '10.8.2' }
+2026-03-17T17:27:33.1027232Z npm warn EBADENGINE }
+2026-03-17T17:27:33.1030224Z npm warn EBADENGINE Unsupported engine {
+2026-03-17T17:27:33.1031130Z npm warn EBADENGINE   package: '@react-native/babel-preset@0.81.5',
+2026-03-17T17:27:33.1031990Z npm warn EBADENGINE   required: { node: '>= 20.19.4' },
+2026-03-17T17:27:33.1032901Z npm warn EBADENGINE   current: { node: 'v18.20.8', npm: '10.8.2' }
+2026-03-17T17:27:33.1033614Z npm warn EBADENGINE }
+2026-03-17T17:27:33.1034161Z npm warn EBADENGINE Unsupported engine {
+2026-03-17T17:27:33.1035164Z npm warn EBADENGINE   package: '@react-native/codegen@0.81.5',
+2026-03-17T17:27:33.1036118Z npm warn EBADENGINE   required: { node: '>= 20.19.4' },
+2026-03-17T17:27:33.1037004Z npm warn EBADENGINE   current: { node: 'v18.20.8', npm: '10.8.2' }
+2026-03-17T17:27:33.1037691Z npm warn EBADENGINE }
+2026-03-17T17:27:33.1038700Z npm warn EBADENGINE Unsupported engine {
+2026-03-17T17:27:33.1039616Z npm warn EBADENGINE   package: '@react-native/community-cli-plugin@0.81.5',
+2026-03-17T17:27:33.1040599Z npm warn EBADENGINE   required: { node: '>= 20.19.4' },
+2026-03-17T17:27:33.1041461Z npm warn EBADENGINE   current: { node: 'v18.20.8', npm: '10.8.2' }
+2026-03-17T17:27:33.1042143Z npm warn EBADENGINE }
+2026-03-17T17:27:33.1042690Z npm warn EBADENGINE Unsupported engine {
+2026-03-17T17:27:33.1043551Z npm warn EBADENGINE   package: '@react-native/debugger-frontend@0.81.5',
+2026-03-17T17:27:33.1044442Z npm warn EBADENGINE   required: { node: '>= 20.19.4' },
+2026-03-17T17:27:33.1045523Z npm warn EBADENGINE   current: { node: 'v18.20.8', npm: '10.8.2' }
+2026-03-17T17:27:33.1046130Z npm warn EBADENGINE }
+2026-03-17T17:27:33.1046624Z npm warn EBADENGINE Unsupported engine {
+2026-03-17T17:27:33.1047528Z npm warn EBADENGINE   package: '@react-native/dev-middleware@0.81.5',
+2026-03-17T17:27:33.1048426Z npm warn EBADENGINE   required: { node: '>= 20.19.4' },
+2026-03-17T17:27:33.1049278Z npm warn EBADENGINE   current: { node: 'v18.20.8', npm: '10.8.2' }
+2026-03-17T17:27:33.1049943Z npm warn EBADENGINE }
+2026-03-17T17:27:33.1050507Z npm warn EBADENGINE Unsupported engine {
+2026-03-17T17:27:33.1051378Z npm warn EBADENGINE   package: '@react-native/gradle-plugin@0.81.5',
+2026-03-17T17:27:33.1052259Z npm warn EBADENGINE   required: { node: '>= 20.19.4' },
+2026-03-17T17:27:33.1053081Z npm warn EBADENGINE   current: { node: 'v18.20.8', npm: '10.8.2' }
+2026-03-17T17:27:33.1053717Z npm warn EBADENGINE }
+2026-03-17T17:27:33.1054229Z npm warn EBADENGINE Unsupported engine {
+2026-03-17T17:27:33.1055276Z npm warn EBADENGINE   package: '@react-native/js-polyfills@0.81.5',
+2026-03-17T17:27:33.1056131Z npm warn EBADENGINE   required: { node: '>= 20.19.4' },
+2026-03-17T17:27:33.1056954Z npm warn EBADENGINE   current: { node: 'v18.20.8', npm: '10.8.2' }
+2026-03-17T17:27:33.1057616Z npm warn EBADENGINE }
+2026-03-17T17:27:33.1060974Z npm warn EBADENGINE Unsupported engine {
+2026-03-17T17:27:33.1061817Z npm warn EBADENGINE   package: 'eslint-visitor-keys@5.0.1',
+2026-03-17T17:27:33.1062745Z npm warn EBADENGINE   required: { node: '^20.19.0 || ^22.13.0 || >=24' },
+2026-03-17T17:27:33.1063669Z npm warn EBADENGINE   current: { node: 'v18.20.8', npm: '10.8.2' }
+2026-03-17T17:27:33.1064776Z npm warn EBADENGINE }
+2026-03-17T17:27:33.1078577Z npm warn EBADENGINE Unsupported engine {
+2026-03-17T17:27:33.1079300Z npm warn EBADENGINE   package: 'expo-server@1.0.5',
+2026-03-17T17:27:33.1080031Z npm warn EBADENGINE   required: { node: '>=20.16.0' },
+2026-03-17T17:27:33.1080881Z npm warn EBADENGINE   current: { node: 'v18.20.8', npm: '10.8.2' }
+2026-03-17T17:27:33.1081528Z npm warn EBADENGINE }
+2026-03-17T17:27:33.1101775Z npm warn EBADENGINE Unsupported engine {
+2026-03-17T17:27:33.1102511Z npm warn EBADENGINE   package: 'metro@0.83.3',
+2026-03-17T17:27:33.1103264Z npm warn EBADENGINE   required: { node: '>=20.19.4' },
+2026-03-17T17:27:33.1104143Z npm warn EBADENGINE   current: { node: 'v18.20.8', npm: '10.8.2' }
+2026-03-17T17:27:33.1105000Z npm warn EBADENGINE }
+2026-03-17T17:27:33.1105559Z npm warn EBADENGINE Unsupported engine {
+2026-03-17T17:27:33.1106358Z npm warn EBADENGINE   package: 'metro-babel-transformer@0.83.3',
+2026-03-17T17:27:33.1107225Z npm warn EBADENGINE   required: { node: '>=20.19.4' },
+2026-03-17T17:27:33.1108104Z npm warn EBADENGINE   current: { node: 'v18.20.8', npm: '10.8.2' }
+2026-03-17T17:27:33.1108776Z npm warn EBADENGINE }
+2026-03-17T17:27:33.1109407Z npm warn EBADENGINE Unsupported engine {
+2026-03-17T17:27:33.1110175Z npm warn EBADENGINE   package: 'metro-cache@0.83.3',
+2026-03-17T17:27:33.1110952Z npm warn EBADENGINE   required: { node: '>=20.19.4' },
+2026-03-17T17:27:33.1111800Z npm warn EBADENGINE   current: { node: 'v18.20.8', npm: '10.8.2' }
+2026-03-17T17:27:33.1112462Z npm warn EBADENGINE }
+2026-03-17T17:27:33.1113009Z npm warn EBADENGINE Unsupported engine {
+2026-03-17T17:27:33.1113776Z npm warn EBADENGINE   package: 'metro-cache-key@0.83.3',
+2026-03-17T17:27:33.1114883Z npm warn EBADENGINE   required: { node: '>=20.19.4' },
+2026-03-17T17:27:33.1115754Z npm warn EBADENGINE   current: { node: 'v18.20.8', npm: '10.8.2' }
+2026-03-17T17:27:33.1116416Z npm warn EBADENGINE }
+2026-03-17T17:27:33.1116939Z npm warn EBADENGINE Unsupported engine {
+2026-03-17T17:27:33.1117659Z npm warn EBADENGINE   package: 'metro-config@0.83.3',
+2026-03-17T17:27:33.1118454Z npm warn EBADENGINE   required: { node: '>=20.19.4' },
+2026-03-17T17:27:33.1119293Z npm warn EBADENGINE   current: { node: 'v18.20.8', npm: '10.8.2' }
+2026-03-17T17:27:33.1119971Z npm warn EBADENGINE }
+2026-03-17T17:27:33.1120526Z npm warn EBADENGINE Unsupported engine {
+2026-03-17T17:27:33.1121210Z npm warn EBADENGINE   package: 'metro-core@0.83.3',
+2026-03-17T17:27:33.1121967Z npm warn EBADENGINE   required: { node: '>=20.19.4' },
+2026-03-17T17:27:33.1122846Z npm warn EBADENGINE   current: { node: 'v18.20.8', npm: '10.8.2' }
+2026-03-17T17:27:33.1123531Z npm warn EBADENGINE }
+2026-03-17T17:27:33.1124069Z npm warn EBADENGINE Unsupported engine {
+2026-03-17T17:27:33.1125077Z npm warn EBADENGINE   package: 'metro-file-map@0.83.3',
+2026-03-17T17:27:33.1125854Z npm warn EBADENGINE   required: { node: '>=20.19.4' },
+2026-03-17T17:27:33.1126679Z npm warn EBADENGINE   current: { node: 'v18.20.8', npm: '10.8.2' }
+2026-03-17T17:27:33.1127339Z npm warn EBADENGINE }
+2026-03-17T17:27:33.1127872Z npm warn EBADENGINE Unsupported engine {
+2026-03-17T17:27:33.1128621Z npm warn EBADENGINE   package: 'metro-minify-terser@0.83.3',
+2026-03-17T17:27:33.1129394Z npm warn EBADENGINE   required: { node: '>=20.19.4' },
+2026-03-17T17:27:33.1130214Z npm warn EBADENGINE   current: { node: 'v18.20.8', npm: '10.8.2' }
+2026-03-17T17:27:33.1130880Z npm warn EBADENGINE }
+2026-03-17T17:27:33.1131468Z npm warn EBADENGINE Unsupported engine {
+2026-03-17T17:27:33.1132184Z npm warn EBADENGINE   package: 'metro-resolver@0.83.3',
+2026-03-17T17:27:33.1155344Z npm warn EBADENGINE   required: { node: '>=20.19.4' },
+2026-03-17T17:27:33.1156498Z npm warn EBADENGINE   current: { node: 'v18.20.8', npm: '10.8.2' }
+2026-03-17T17:27:33.1157182Z npm warn EBADENGINE }
+2026-03-17T17:27:33.1157712Z npm warn EBADENGINE Unsupported engine {
+2026-03-17T17:27:33.1158417Z npm warn EBADENGINE   package: 'metro-runtime@0.83.3',
+2026-03-17T17:27:33.1159449Z npm warn EBADENGINE   required: { node: '>=20.19.4' },
+2026-03-17T17:27:33.1160289Z npm warn EBADENGINE   current: { node: 'v18.20.8', npm: '10.8.2' }
+2026-03-17T17:27:33.1160947Z npm warn EBADENGINE }
+2026-03-17T17:27:33.1161446Z npm warn EBADENGINE Unsupported engine {
+2026-03-17T17:27:33.1162186Z npm warn EBADENGINE   package: 'metro-source-map@0.83.3',
+2026-03-17T17:27:33.1162951Z npm warn EBADENGINE   required: { node: '>=20.19.4' },
+2026-03-17T17:27:33.1163829Z npm warn EBADENGINE   current: { node: 'v18.20.8', npm: '10.8.2' }
+2026-03-17T17:27:33.1164458Z npm warn EBADENGINE }
+2026-03-17T17:27:33.1165190Z npm warn EBADENGINE Unsupported engine {
+2026-03-17T17:27:33.1165924Z npm warn EBADENGINE   package: 'metro-symbolicate@0.83.3',
+2026-03-17T17:27:33.1166664Z npm warn EBADENGINE   required: { node: '>=20.19.4' },
+2026-03-17T17:27:33.1167433Z npm warn EBADENGINE   current: { node: 'v18.20.8', npm: '10.8.2' }
+2026-03-17T17:27:33.1168051Z npm warn EBADENGINE }
+2026-03-17T17:27:33.1168560Z npm warn EBADENGINE Unsupported engine {
+2026-03-17T17:27:33.1169368Z npm warn EBADENGINE   package: 'metro-transform-plugins@0.83.3',
+2026-03-17T17:27:33.1170178Z npm warn EBADENGINE   required: { node: '>=20.19.4' },
+2026-03-17T17:27:33.1170973Z npm warn EBADENGINE   current: { node: 'v18.20.8', npm: '10.8.2' }
+2026-03-17T17:27:33.1171599Z npm warn EBADENGINE }
+2026-03-17T17:27:33.1172105Z npm warn EBADENGINE Unsupported engine {
+2026-03-17T17:27:33.1172822Z npm warn EBADENGINE   package: 'metro-transform-worker@0.83.3',
+2026-03-17T17:27:33.1173553Z npm warn EBADENGINE   required: { node: '>=20.19.4' },
+2026-03-17T17:27:33.1174288Z npm warn EBADENGINE   current: { node: 'v18.20.8', npm: '10.8.2' }
+2026-03-17T17:27:33.1175117Z npm warn EBADENGINE }
+2026-03-17T17:27:33.1175567Z npm warn EBADENGINE Unsupported engine {
+2026-03-17T17:27:33.1176123Z npm warn EBADENGINE   package: 'ob1@0.83.3',
+2026-03-17T17:27:33.1176730Z npm warn EBADENGINE   required: { node: '>=20.19.4' },
+2026-03-17T17:27:33.1177461Z npm warn EBADENGINE   current: { node: 'v18.20.8', npm: '10.8.2' }
+2026-03-17T17:27:33.1178029Z npm warn EBADENGINE }
+2026-03-17T17:27:33.1178463Z npm warn EBADENGINE Unsupported engine {
+2026-03-17T17:27:33.1179042Z npm warn EBADENGINE   package: 'lru-cache@11.2.6',
+2026-03-17T17:27:33.1179684Z npm warn EBADENGINE   required: { node: '20 || >=22' },
+2026-03-17T17:27:33.1180399Z npm warn EBADENGINE   current: { node: 'v18.20.8', npm: '10.8.2' }
+2026-03-17T17:27:33.1180973Z npm warn EBADENGINE }
+2026-03-17T17:27:33.1181431Z npm warn EBADENGINE Unsupported engine {
+2026-03-17T17:27:33.1182063Z npm warn EBADENGINE   package: 'react-native@0.81.5',
+2026-03-17T17:27:33.1182764Z npm warn EBADENGINE   required: { node: '>= 20.19.4' },
+2026-03-17T17:27:33.1183520Z npm warn EBADENGINE   current: { node: 'v18.20.8', npm: '10.8.2' }
+2026-03-17T17:27:33.1184086Z npm warn EBADENGINE }
+2026-03-17T17:27:33.1190520Z npm warn EBADENGINE Unsupported engine {
+2026-03-17T17:27:33.1191443Z npm warn EBADENGINE   package: '@react-native/virtualized-lists@0.81.5',
+2026-03-17T17:27:33.1192298Z npm warn EBADENGINE   required: { node: '>= 20.19.4' },
+2026-03-17T17:27:33.1193058Z npm warn EBADENGINE   current: { node: 'v18.20.8', npm: '10.8.2' }
+2026-03-17T17:27:33.1193627Z npm warn EBADENGINE }
+2026-03-17T17:27:36.1571542Z npm warn deprecated inflight@1.0.6: This module is not supported, and leaks memory. Do not use it. Check out lru-cache if you want a good and tested way to coalesce async requests by a key value, which is much more comprehensive and powerful.
+2026-03-17T17:27:36.3724238Z npm warn deprecated rimraf@3.0.2: Rimraf versions prior to v4 are no longer supported
+2026-03-17T17:27:36.5320047Z npm warn deprecated glob@7.2.3: Old versions of glob are not supported, and contain widely publicized security vulnerabilities, which have been fixed in the current version. Please update. Support for old versions may be purchased (at exorbitant rates) by contacting i@izs.me
+2026-03-17T17:27:36.5325135Z npm warn deprecated glob@7.2.3: Old versions of glob are not supported, and contain widely publicized security vulnerabilities, which have been fixed in the current version. Please update. Support for old versions may be purchased (at exorbitant rates) by contacting i@izs.me
+2026-03-17T17:27:36.5342877Z npm warn deprecated glob@7.2.3: Old versions of glob are not supported, and contain widely publicized security vulnerabilities, which have been fixed in the current version. Please update. Support for old versions may be purchased (at exorbitant rates) by contacting i@izs.me
+2026-03-17T17:27:36.5393344Z npm warn deprecated glob@7.2.3: Old versions of glob are not supported, and contain widely publicized security vulnerabilities, which have been fixed in the current version. Please update. Support for old versions may be purchased (at exorbitant rates) by contacting i@izs.me
+2026-03-17T17:27:44.1315207Z 
+2026-03-17T17:27:44.1315904Z added 966 packages, and audited 967 packages in 12s
+2026-03-17T17:27:44.1316347Z 
+2026-03-17T17:27:44.1316624Z 184 packages are looking for funding
+2026-03-17T17:27:44.1317151Z   run `npm fund` for details
+2026-03-17T17:27:44.1385874Z 
+2026-03-17T17:27:44.1386304Z 1 high severity vulnerability
+2026-03-17T17:27:44.1386630Z 
+2026-03-17T17:27:44.1386833Z To address all issues, run:
+2026-03-17T17:27:44.1387241Z   npm audit fix
+2026-03-17T17:27:44.1387436Z 
+2026-03-17T17:27:44.1387631Z Run `npm audit` for details.
+2026-03-17T17:27:44.1949506Z ##[group]Run npx expo prebuild --platform android
+2026-03-17T17:27:44.1949918Z [36;1mnpx expo prebuild --platform android[0m
+2026-03-17T17:27:44.1999459Z shell: /usr/bin/bash -e {0}
+2026-03-17T17:27:44.1999703Z env:
+2026-03-17T17:27:44.1999978Z   JAVA_HOME: /opt/hostedtoolcache/Java_Zulu_jdk/17.0.18-8/x64
+2026-03-17T17:27:44.2000403Z   JAVA_HOME_17_X64: /opt/hostedtoolcache/Java_Zulu_jdk/17.0.18-8/x64
+2026-03-17T17:27:44.2000743Z ##[endgroup]
+2026-03-17T17:27:44.8073441Z - Creating native directory (./android)
+2026-03-17T17:27:45.4145401Z ✔ Created native directory | reusing /android
+2026-03-17T17:27:45.4282984Z - Updating package.json
+2026-03-17T17:27:45.4514385Z ✔ Updated package.json | no changes
+2026-03-17T17:27:45.4518240Z - Running prebuild
+2026-03-17T17:27:48.9264231Z ✔ Finished prebuild
+2026-03-17T17:27:48.9713086Z ##[group]Run ./gradlew assembleDebug
+2026-03-17T17:27:48.9713604Z [36;1m./gradlew assembleDebug[0m
+2026-03-17T17:27:48.9768089Z shell: /usr/bin/bash -e {0}
+2026-03-17T17:27:48.9768346Z env:
+2026-03-17T17:27:48.9768602Z   JAVA_HOME: /opt/hostedtoolcache/Java_Zulu_jdk/17.0.18-8/x64
+2026-03-17T17:27:48.9769012Z   JAVA_HOME_17_X64: /opt/hostedtoolcache/Java_Zulu_jdk/17.0.18-8/x64
+2026-03-17T17:27:48.9769342Z ##[endgroup]
+2026-03-17T17:27:49.0846774Z Downloading https://services.gradle.org/distributions/gradle-8.14.3-bin.zip
+2026-03-17T17:27:50.7089850Z .............10%.............20%.............30%.............40%.............50%.............60%.............70%.............80%.............90%..............100%
+2026-03-17T17:27:51.9235492Z 
+2026-03-17T17:27:51.9236369Z Welcome to Gradle 8.14.3!
+2026-03-17T17:27:51.9236992Z 
+2026-03-17T17:27:51.9237498Z Here are the highlights of this release:
+2026-03-17T17:27:51.9238172Z  - Java 24 support
+2026-03-17T17:27:51.9239014Z  - GraalVM Native Image toolchain selection
+2026-03-17T17:27:51.9239844Z  - Enhancements to test reporting
+2026-03-17T17:27:51.9240822Z  - Build Authoring improvements
+2026-03-17T17:27:51.9242663Z 
+2026-03-17T17:27:51.9243188Z For more details see https://docs.gradle.org/8.14.3/release-notes.html
+2026-03-17T17:27:51.9243692Z 
+2026-03-17T17:27:52.0205908Z Starting a Gradle Daemon (subsequent builds will be faster)
+2026-03-17T17:28:33.3201366Z 
+2026-03-17T17:28:33.3224941Z > Configure project :expo-gradle-plugin:expo-autolinking-plugin
+2026-03-17T17:28:33.3230178Z w: file:///home/runner/work/guard/guard/node_modules/expo-modules-autolinking/android/expo-gradle-plugin/expo-autolinking-plugin/build.gradle.kts:25:3: 'kotlinOptions(KotlinJvmOptionsDeprecated /* = KotlinJvmOptions */.() -> Unit): Unit' is deprecated. Please migrate to the compilerOptions DSL. More details are here: https://kotl.in/u1r8ln
+2026-03-17T17:28:35.2200684Z 
+2026-03-17T17:28:35.2201636Z > Configure project :expo-gradle-plugin:expo-autolinking-settings-plugin
+2026-03-17T17:28:35.2203805Z w: file:///home/runner/work/guard/guard/node_modules/expo-modules-autolinking/android/expo-gradle-plugin/expo-autolinking-settings-plugin/build.gradle.kts:30:3: 'kotlinOptions(KotlinJvmOptionsDeprecated /* = KotlinJvmOptions */.() -> Unit): Unit' is deprecated. Please migrate to the compilerOptions DSL. More details are here: https://kotl.in/u1r8ln
+2026-03-17T17:28:42.6224128Z 
+2026-03-17T17:28:42.6232194Z > Task :expo-gradle-plugin:expo-autolinking-plugin-shared:checkKotlinGradlePluginConfigurationErrors SKIPPED
+2026-03-17T17:28:42.6234121Z > Task :gradle-plugin:shared:checkKotlinGradlePluginConfigurationErrors SKIPPED
+2026-03-17T17:28:42.6252520Z > Task :gradle-plugin:settings-plugin:checkKotlinGradlePluginConfigurationErrors SKIPPED
+2026-03-17T17:28:42.6254268Z > Task :expo-gradle-plugin:expo-autolinking-settings-plugin:checkKotlinGradlePluginConfigurationErrors SKIPPED
+2026-03-17T17:28:42.7202654Z > Task :gradle-plugin:settings-plugin:pluginDescriptors
+2026-03-17T17:28:42.7203907Z > Task :expo-gradle-plugin:expo-autolinking-settings-plugin:pluginDescriptors
+2026-03-17T17:28:42.7207098Z > Task :expo-gradle-plugin:expo-autolinking-settings-plugin:processResources
+2026-03-17T17:28:42.7211047Z > Task :gradle-plugin:settings-plugin:processResources
+2026-03-17T17:28:48.7216430Z > Task :expo-gradle-plugin:expo-autolinking-plugin-shared:processResources NO-SOURCE
+2026-03-17T17:28:48.7217809Z > Task :gradle-plugin:shared:processResources NO-SOURCE
+2026-03-17T17:28:57.7227895Z > Task :gradle-plugin:shared:compileKotlin
+2026-03-17T17:28:57.7232913Z > Task :gradle-plugin:shared:compileJava NO-SOURCE
+2026-03-17T17:28:57.7238040Z > Task :gradle-plugin:shared:classes UP-TO-DATE
+2026-03-17T17:28:57.8207512Z > Task :gradle-plugin:shared:jar
+2026-03-17T17:29:00.4202754Z > Task :expo-gradle-plugin:expo-autolinking-plugin-shared:compileKotlin
+2026-03-17T17:29:00.4208508Z > Task :expo-gradle-plugin:expo-autolinking-plugin-shared:compileJava NO-SOURCE
+2026-03-17T17:29:00.4210271Z > Task :expo-gradle-plugin:expo-autolinking-plugin-shared:classes UP-TO-DATE
+2026-03-17T17:29:00.5201498Z > Task :expo-gradle-plugin:expo-autolinking-plugin-shared:jar
+2026-03-17T17:29:08.7202419Z > Task :gradle-plugin:settings-plugin:compileKotlin
+2026-03-17T17:29:08.7210856Z > Task :gradle-plugin:settings-plugin:compileJava NO-SOURCE
+2026-03-17T17:29:08.7211586Z > Task :gradle-plugin:settings-plugin:classes
+2026-03-17T17:29:08.7213669Z > Task :gradle-plugin:settings-plugin:jar
+2026-03-17T17:29:09.6201624Z > Task :expo-gradle-plugin:expo-autolinking-settings-plugin:compileKotlin
+2026-03-17T17:29:09.6203347Z > Task :expo-gradle-plugin:expo-autolinking-settings-plugin:compileJava NO-SOURCE
+2026-03-17T17:29:09.6204687Z > Task :expo-gradle-plugin:expo-autolinking-settings-plugin:classes
+2026-03-17T17:29:09.6207860Z > Task :expo-gradle-plugin:expo-autolinking-settings-plugin:jar
+2026-03-17T17:29:15.9200370Z 
+2026-03-17T17:29:15.9201041Z > Configure project :expo-module-gradle-plugin
+2026-03-17T17:29:15.9204102Z w: file:///home/runner/work/guard/guard/node_modules/expo-modules-core/expo-module-gradle-plugin/build.gradle.kts:58:3: 'kotlinOptions(KotlinJvmOptionsDeprecated /* = KotlinJvmOptions */.() -> Unit): Unit' is deprecated. Please migrate to the compilerOptions DSL. More details are here: https://kotl.in/u1r8ln
+2026-03-17T17:29:22.1205873Z 
+2026-03-17T17:29:22.1216063Z > Task :gradle-plugin:react-native-gradle-plugin:checkKotlinGradlePluginConfigurationErrors SKIPPED
+2026-03-17T17:29:22.1227117Z > Task :expo-gradle-plugin:expo-autolinking-plugin:checkKotlinGradlePluginConfigurationErrors SKIPPED
+2026-03-17T17:29:22.1229560Z > Task :expo-module-gradle-plugin:checkKotlinGradlePluginConfigurationErrors SKIPPED
+2026-03-17T17:29:22.2201753Z > Task :expo-module-gradle-plugin:pluginDescriptors
+2026-03-17T17:29:22.2203766Z > Task :expo-module-gradle-plugin:processResources
+2026-03-17T17:29:22.2205868Z > Task :expo-gradle-plugin:expo-autolinking-plugin:pluginDescriptors
+2026-03-17T17:29:22.2206899Z > Task :expo-gradle-plugin:expo-autolinking-plugin:processResources
+2026-03-17T17:29:26.3206421Z > Task :gradle-plugin:react-native-gradle-plugin:pluginDescriptors
+2026-03-17T17:29:26.3211694Z > Task :gradle-plugin:react-native-gradle-plugin:processResources
+2026-03-17T17:29:26.6202670Z > Task :expo-gradle-plugin:expo-autolinking-plugin:compileKotlin
+2026-03-17T17:29:26.6206934Z > Task :expo-gradle-plugin:expo-autolinking-plugin:compileJava NO-SOURCE
+2026-03-17T17:29:26.6210814Z > Task :expo-gradle-plugin:expo-autolinking-plugin:classes
+2026-03-17T17:29:26.6213358Z > Task :expo-gradle-plugin:expo-autolinking-plugin:jar
+2026-03-17T17:29:31.0202402Z > Task :gradle-plugin:react-native-gradle-plugin:compileKotlin
+2026-03-17T17:29:31.0209233Z > Task :gradle-plugin:react-native-gradle-plugin:compileJava NO-SOURCE
+2026-03-17T17:29:31.0212661Z > Task :gradle-plugin:react-native-gradle-plugin:classes
+2026-03-17T17:29:31.1230177Z > Task :gradle-plugin:react-native-gradle-plugin:jar
+2026-03-17T17:29:32.8199873Z 
+2026-03-17T17:29:32.8200575Z > Task :expo-module-gradle-plugin:compileKotlin
+2026-03-17T17:29:32.8203301Z w: file:///home/runner/work/guard/guard/node_modules/expo-modules-core/expo-module-gradle-plugin/src/main/kotlin/expo/modules/plugin/android/AndroidLibraryExtension.kt:9:24 'var targetSdk: Int?' is deprecated. Will be removed from library DSL in v9.0. Use testOptions.targetSdk or/and lint.targetSdk instead.
+2026-03-17T17:29:32.8205516Z 
+2026-03-17T17:29:32.8205920Z > Task :expo-module-gradle-plugin:compileJava NO-SOURCE
+2026-03-17T17:29:32.8206667Z > Task :expo-module-gradle-plugin:classes
+2026-03-17T17:29:32.8207312Z > Task :expo-module-gradle-plugin:jar
+2026-03-17T17:29:41.4205572Z 
+2026-03-17T17:29:41.4206433Z > Configure project :
+2026-03-17T17:29:41.4207744Z [32m[ExpoRootProject][0m Using the following versions:
+2026-03-17T17:29:41.4208685Z   - buildTools:  [32m36.0.0[0m
+2026-03-17T17:29:41.4209508Z   - minSdk:      [32m24[0m
+2026-03-17T17:29:41.4210480Z   - compileSdk:  [32m36[0m
+2026-03-17T17:29:41.4211685Z   - targetSdk:   [32m36[0m
+2026-03-17T17:29:41.4212582Z   - ndk:         [32m27.1.12297006[0m
+2026-03-17T17:29:41.4213371Z   - kotlin:      [32m2.1.20[0m
+2026-03-17T17:29:41.4214159Z   - ksp:         [32m2.1.20-2.0.1[0m
+2026-03-17T17:30:01.1206326Z 
+2026-03-17T17:30:01.1208660Z > Configure project :app
+2026-03-17T17:30:01.1230730Z Checking the license for package NDK (Side by side) 27.1.12297006 in /usr/local/lib/android/sdk/licenses
+2026-03-17T17:30:01.1231872Z License for package NDK (Side by side) 27.1.12297006 accepted.
+2026-03-17T17:30:01.1234430Z Preparing "Install NDK (Side by side) 27.1.12297006 v.27.1.12297006".
+2026-03-17T17:30:01.1239182Z "Install NDK (Side by side) 27.1.12297006 v.27.1.12297006" ready.
+2026-03-17T17:30:01.1240234Z Installing NDK (Side by side) 27.1.12297006 in /usr/local/lib/android/sdk/ndk/27.1.12297006
+2026-03-17T17:30:01.1241242Z "Install NDK (Side by side) 27.1.12297006 v.27.1.12297006" complete.
+2026-03-17T17:30:01.1242127Z "Install NDK (Side by side) 27.1.12297006 v.27.1.12297006" finished.
+2026-03-17T17:30:03.1201854Z 
+2026-03-17T17:30:03.1209835Z > Configure project :expo
+2026-03-17T17:30:03.1214254Z 
+2026-03-17T17:30:03.1216063Z Using expo modules
+2026-03-17T17:30:03.1218344Z   - [32mexpo-constants[0m (18.0.13)
+2026-03-17T17:30:03.2228593Z   - [32mexpo-modules-core[0m (3.0.29)
+2026-03-17T17:30:03.2249574Z   - [33m[📦][0m [32mexpo-application[0m (7.0.8)
+2026-03-17T17:30:03.2250700Z   - [33m[📦][0m [32mexpo-asset[0m (12.0.12)
+2026-03-17T17:30:03.2251828Z   - [33m[📦][0m [32mexpo-background-fetch[0m (14.0.9)
+2026-03-17T17:30:03.2252843Z   - [33m[📦][0m [32mexpo-device[0m (8.0.10)
+2026-03-17T17:30:03.2261178Z   - [33m[📦][0m [32mexpo-file-system[0m (19.0.21)
+2026-03-17T17:30:03.2261942Z   - [33m[📦][0m [32mexpo-font[0m (14.0.11)
+2026-03-17T17:30:03.2262660Z   - [33m[📦][0m [32mexpo-image[0m (3.0.11)
+2026-03-17T17:30:03.2264025Z   - [33m[📦][0m [32mexpo-intent-launcher[0m (13.0.8)
+2026-03-17T17:30:03.2265069Z   - [33m[📦][0m [32mexpo-keep-awake[0m (15.0.8)
+2026-03-17T17:30:03.2265856Z   - [33m[📦][0m [32mexpo-linking[0m (8.0.11)
+2026-03-17T17:30:03.2266642Z   - [33m[📦][0m [32mexpo-notifications[0m (0.32.16)
+2026-03-17T17:30:03.2267451Z   - [33m[📦][0m [32mexpo-splash-screen[0m (31.0.13)
+2026-03-17T17:30:03.2268194Z   - [33m[📦][0m [32mexpo-system-ui[0m (6.0.9)
+2026-03-17T17:30:03.2268958Z   - [33m[📦][0m [32mexpo-task-manager[0m (14.0.9)
+2026-03-17T17:30:03.2269749Z   - [33m[📦][0m [32mexpo-web-browser[0m (15.0.10)
+2026-03-17T17:30:03.2270557Z   - [33m[📦][0m [32munimodules-app-loader[0m (6.0.8)
+2026-03-17T17:30:03.2270980Z 
+2026-03-17T17:31:01.6236277Z 
+2026-03-17T17:31:01.6246115Z > Task :expo-modules-core:preBuild UP-TO-DATE
+2026-03-17T17:31:01.6247377Z > Task :app:generateAutolinkingNewArchitectureFiles
+2026-03-17T17:31:01.6248411Z > Task :app:generateAutolinkingPackageList
+2026-03-17T17:31:01.6249410Z > Task :app:generateCodegenSchemaFromJavaScript SKIPPED
+2026-03-17T17:31:01.6250398Z > Task :app:generateCodegenArtifactsFromSchema SKIPPED
+2026-03-17T17:31:01.7228162Z > Task :app:generateReactNativeEntryPoint
+2026-03-17T17:31:01.8201676Z 
+2026-03-17T17:31:01.8202715Z > Task :expo-constants:createExpoConfig
+2026-03-17T17:31:01.8203588Z 
+2026-03-17T17:31:01.8204019Z > Task :expo-constants:preBuild
+2026-03-17T17:31:01.8216539Z The NODE_ENV environment variable is required but was not specified. Ensure the project is bundled with Expo CLI or NODE_ENV is set. Using only .env.local and .env
+2026-03-17T17:31:01.9256510Z > Task :react-native-reanimated:assertMinimalReactNativeVersionTask
+2026-03-17T17:31:01.9258039Z > Task :react-native-reanimated:assertNewArchitectureEnabledTask SKIPPED
+2026-03-17T17:31:02.1202621Z > Task :react-native-async-storage_async-storage:generateCodegenSchemaFromJavaScript
+2026-03-17T17:31:02.1251762Z > Task :react-native-reanimated:assertWorkletsVersionTask
+2026-03-17T17:31:02.2210428Z > Task :react-native-gesture-handler:generateCodegenSchemaFromJavaScript
+2026-03-17T17:31:02.3218040Z > Task :expo:generatePackagesList
+2026-03-17T17:31:02.3224454Z > Task :expo:preBuild
+2026-03-17T17:31:02.4208510Z > Task :react-native-reanimated:generateCodegenSchemaFromJavaScript
+2026-03-17T17:31:02.6202884Z > Task :react-native-safe-area-context:generateCodegenSchemaFromJavaScript
+2026-03-17T17:31:02.6204778Z > Task :react-native-gesture-handler:generateCodegenArtifactsFromSchema
+2026-03-17T17:31:02.6205931Z > Task :react-native-gesture-handler:preBuild
+2026-03-17T17:31:02.7206453Z > Task :react-native-async-storage_async-storage:generateCodegenArtifactsFromSchema
+2026-03-17T17:31:02.7212259Z > Task :react-native-async-storage_async-storage:preBuild
+2026-03-17T17:31:02.7217830Z > Task :react-native-worklets:assertMinimalReactNativeVersionTask
+2026-03-17T17:31:02.7223163Z > Task :react-native-worklets:assertNewArchitectureEnabledTask SKIPPED
+2026-03-17T17:31:02.9211314Z > Task :react-native-reanimated:generateCodegenArtifactsFromSchema
+2026-03-17T17:31:02.9213181Z > Task :react-native-safe-area-context:generateCodegenArtifactsFromSchema
+2026-03-17T17:31:02.9215847Z > Task :react-native-safe-area-context:preBuild
+2026-03-17T17:31:02.9216636Z > Task :app:checkKotlinGradlePluginConfigurationErrors SKIPPED
+2026-03-17T17:31:02.9217294Z > Task :expo:preDebugBuild
+2026-03-17T17:31:03.0256200Z > Task :react-native-reanimated:prepareReanimatedHeadersForPrefabs
+2026-03-17T17:31:03.0260880Z > Task :react-native-reanimated:preBuild
+2026-03-17T17:31:03.0261796Z > Task :expo-constants:preDebugBuild
+2026-03-17T17:31:03.0262536Z > Task :expo:writeDebugAarMetadata
+2026-03-17T17:31:03.0263282Z > Task :expo-constants:writeDebugAarMetadata
+2026-03-17T17:31:03.0264241Z > Task :react-native-async-storage_async-storage:preDebugBuild
+2026-03-17T17:31:03.0265377Z > Task :expo-modules-core:preDebugBuild UP-TO-DATE
+2026-03-17T17:31:03.0266320Z > Task :react-native-worklets:generateCodegenSchemaFromJavaScript
+2026-03-17T17:31:03.0267654Z > Task :expo-modules-core:writeDebugAarMetadata
+2026-03-17T17:31:03.0268344Z > Task :react-native-gesture-handler:preDebugBuild
+2026-03-17T17:31:03.0269182Z > Task :react-native-async-storage_async-storage:writeDebugAarMetadata
+2026-03-17T17:31:03.0269964Z > Task :react-native-reanimated:preDebugBuild
+2026-03-17T17:31:03.0270911Z > Task :react-native-gesture-handler:writeDebugAarMetadata
+2026-03-17T17:31:03.0271990Z > Task :react-native-screens:generateCodegenSchemaFromJavaScript
+2026-03-17T17:31:03.0285740Z > Task :react-native-safe-area-context:preDebugBuild
+2026-03-17T17:31:03.0286807Z > Task :react-native-safe-area-context:writeDebugAarMetadata
+2026-03-17T17:31:03.0287745Z > Task :react-native-reanimated:writeDebugAarMetadata
+2026-03-17T17:31:03.0288472Z > Task :expo:generateDebugResValues
+2026-03-17T17:31:03.0289204Z > Task :expo-constants:generateDebugResValues
+2026-03-17T17:31:03.0290030Z > Task :expo-constants:generateDebugResources
+2026-03-17T17:31:03.0290741Z > Task :expo:generateDebugResources
+2026-03-17T17:31:03.2209938Z > Task :expo:packageDebugResources
+2026-03-17T17:31:03.2211138Z > Task :expo-constants:packageDebugResources
+2026-03-17T17:31:03.2223293Z > Task :expo-modules-core:generateDebugResValues
+2026-03-17T17:31:03.2224188Z > Task :react-native-async-storage_async-storage:generateDebugResValues
+2026-03-17T17:31:03.2225302Z > Task :expo-modules-core:generateDebugResources
+2026-03-17T17:31:03.2226101Z > Task :react-native-async-storage_async-storage:generateDebugResources
+2026-03-17T17:31:03.2227031Z > Task :react-native-async-storage_async-storage:packageDebugResources
+2026-03-17T17:31:03.2227901Z > Task :expo-modules-core:packageDebugResources
+2026-03-17T17:31:03.2228685Z > Task :react-native-gesture-handler:generateDebugResValues
+2026-03-17T17:31:03.2229466Z > Task :react-native-reanimated:generateDebugResValues
+2026-03-17T17:31:03.2230289Z > Task :react-native-gesture-handler:generateDebugResources
+2026-03-17T17:31:03.3207984Z > Task :react-native-reanimated:generateDebugResources
+2026-03-17T17:31:03.3218146Z > Task :react-native-gesture-handler:packageDebugResources
+2026-03-17T17:31:03.3219881Z > Task :react-native-reanimated:packageDebugResources
+2026-03-17T17:31:03.3221089Z > Task :react-native-safe-area-context:generateDebugResValues
+2026-03-17T17:31:03.3222037Z > Task :expo:extractDeepLinksDebug
+2026-03-17T17:31:03.3223000Z > Task :react-native-safe-area-context:generateDebugResources
+2026-03-17T17:31:03.3224090Z > Task :react-native-safe-area-context:packageDebugResources
+2026-03-17T17:31:03.4225060Z > Task :expo-constants:extractDeepLinksDebug
+2026-03-17T17:31:03.4234291Z > Task :react-native-screens:generateCodegenArtifactsFromSchema
+2026-03-17T17:31:03.4240742Z > Task :react-native-screens:preBuild
+2026-03-17T17:31:03.4323555Z > Task :react-native-screens:preDebugBuild
+2026-03-17T17:31:03.4325571Z > Task :react-native-screens:writeDebugAarMetadata
+2026-03-17T17:31:03.4326241Z > Task :react-native-screens:generateDebugResValues
+2026-03-17T17:31:03.4327238Z > Task :react-native-screens:generateDebugResources
+2026-03-17T17:31:03.4331105Z > Task :react-native-worklets:generateCodegenArtifactsFromSchema
+2026-03-17T17:31:03.4332029Z > Task :react-native-worklets:prepareWorkletsHeadersForPrefabs
+2026-03-17T17:31:03.4332670Z > Task :react-native-worklets:preBuild
+2026-03-17T17:31:03.4333090Z > Task :app:preBuild
+2026-03-17T17:31:03.4333446Z > Task :app:preDebugBuild
+2026-03-17T17:31:03.5206055Z > Task :app:mergeDebugNativeDebugMetadata NO-SOURCE
+2026-03-17T17:31:03.5209634Z > Task :expo:processDebugManifest
+2026-03-17T17:31:03.5235391Z > Task :react-native-worklets:preDebugBuild
+2026-03-17T17:31:03.5236431Z > Task :expo-constants:processDebugManifest
+2026-03-17T17:31:03.5242324Z > Task :expo-modules-core:extractDeepLinksDebug
+2026-03-17T17:31:03.5245137Z > Task :react-native-worklets:generateDebugResValues
+2026-03-17T17:31:03.5246441Z > Task :react-native-worklets:writeDebugAarMetadata
+2026-03-17T17:31:03.5249003Z > Task :app:generateDebugBuildConfig
+2026-03-17T17:31:03.5250981Z > Task :react-native-worklets:generateDebugResources
+2026-03-17T17:31:03.5255799Z > Task :react-native-worklets:packageDebugResources
+2026-03-17T17:31:03.5256230Z 
+2026-03-17T17:31:03.5256544Z > Task :expo-modules-core:processDebugManifest
+2026-03-17T17:31:03.5257755Z /home/runner/work/guard/guard/node_modules/expo-modules-core/android/src/main/AndroidManifest.xml:8:9-11:45 Warning:
+2026-03-17T17:31:03.5259550Z 	meta-data#com.facebook.soloader.enabled@android:value was tagged at AndroidManifest.xml:8 to replace other declarations but no other declaration present
+2026-03-17T17:31:03.5260550Z 
+2026-03-17T17:31:03.5261034Z > Task :react-native-async-storage_async-storage:extractDeepLinksDebug
+2026-03-17T17:31:03.5261939Z > Task :react-native-gesture-handler:extractDeepLinksDebug
+2026-03-17T17:31:03.6222402Z > Task :react-native-screens:packageDebugResources
+2026-03-17T17:31:03.6228019Z > Task :react-native-reanimated:extractDeepLinksDebug
+2026-03-17T17:31:03.6232826Z 
+2026-03-17T17:31:03.6237762Z > Task :react-native-async-storage_async-storage:processDebugManifest
+2026-03-17T17:31:03.6241513Z package="com.reactnativecommunity.asyncstorage" found in source AndroidManifest.xml: /home/runner/work/guard/guard/node_modules/@react-native-async-storage/async-storage/android/src/main/AndroidManifest.xml.
+2026-03-17T17:31:03.6248739Z Setting the namespace via the package attribute in the source AndroidManifest.xml is no longer supported, and the value is ignored.
+2026-03-17T17:31:03.6252032Z Recommendation: remove package="com.reactnativecommunity.asyncstorage" from the source AndroidManifest.xml: /home/runner/work/guard/guard/node_modules/@react-native-async-storage/async-storage/android/src/main/AndroidManifest.xml.
+2026-03-17T17:31:03.6269732Z 
+2026-03-17T17:31:03.6280551Z > Task :react-native-safe-area-context:extractDeepLinksDebug
+2026-03-17T17:31:03.6285444Z > Task :react-native-gesture-handler:processDebugManifest
+2026-03-17T17:31:03.6286552Z > Task :react-native-screens:extractDeepLinksDebug
+2026-03-17T17:31:03.6287546Z > Task :react-native-reanimated:processDebugManifest
+2026-03-17T17:31:03.7201497Z > Task :react-native-worklets:extractDeepLinksDebug
+2026-03-17T17:31:03.7205799Z > Task :react-native-worklets:processDebugManifest
+2026-03-17T17:31:04.2226434Z > Task :expo:compileDebugLibraryResources
+2026-03-17T17:31:04.2228426Z > Task :react-native-screens:processDebugManifest
+2026-03-17T17:31:05.7211041Z 
+2026-03-17T17:31:05.7211818Z > Task :react-native-safe-area-context:processDebugManifest
+2026-03-17T17:31:05.7213711Z package="com.th3rdwave.safeareacontext" found in source AndroidManifest.xml: /home/runner/work/guard/guard/node_modules/react-native-safe-area-context/android/src/main/AndroidManifest.xml.
+2026-03-17T17:31:05.7215986Z Setting the namespace via the package attribute in the source AndroidManifest.xml is no longer supported, and the value is ignored.
+2026-03-17T17:31:05.7218327Z Recommendation: remove package="com.th3rdwave.safeareacontext" from the source AndroidManifest.xml: /home/runner/work/guard/guard/node_modules/react-native-safe-area-context/android/src/main/AndroidManifest.xml.
+2026-03-17T17:31:05.7219763Z 
+2026-03-17T17:31:05.7220126Z > Task :expo-constants:compileDebugLibraryResources
+2026-03-17T17:31:05.8212609Z > Task :expo-modules-core:compileDebugLibraryResources
+2026-03-17T17:31:05.8213874Z > Task :expo-constants:parseDebugLocalResources
+2026-03-17T17:31:05.9201387Z > Task :expo-modules-core:parseDebugLocalResources
+2026-03-17T17:31:05.9202471Z > Task :expo:parseDebugLocalResources
+2026-03-17T17:31:05.9203057Z > Task :expo:generateDebugRFile
+2026-03-17T17:31:05.9203614Z > Task :expo-modules-core:generateDebugRFile
+2026-03-17T17:31:06.0201416Z > Task :react-native-async-storage_async-storage:parseDebugLocalResources
+2026-03-17T17:31:06.0202833Z > Task :react-native-async-storage_async-storage:compileDebugLibraryResources
+2026-03-17T17:31:06.0203957Z > Task :react-native-gesture-handler:compileDebugLibraryResources
+2026-03-17T17:31:06.0205254Z > Task :react-native-async-storage_async-storage:generateDebugRFile
+2026-03-17T17:31:06.1204777Z > Task :react-native-reanimated:compileDebugLibraryResources
+2026-03-17T17:31:06.1208658Z > Task :expo-constants:generateDebugRFile
+2026-03-17T17:31:06.6226034Z > Task :react-native-gesture-handler:parseDebugLocalResources
+2026-03-17T17:31:06.6227362Z > Task :react-native-safe-area-context:compileDebugLibraryResources
+2026-03-17T17:31:06.7200613Z > Task :react-native-safe-area-context:parseDebugLocalResources
+2026-03-17T17:31:06.7209427Z > Task :react-native-gesture-handler:generateDebugRFile
+2026-03-17T17:31:06.8200693Z > Task :react-native-reanimated:parseDebugLocalResources
+2026-03-17T17:31:06.8206236Z > Task :react-native-screens:compileDebugLibraryResources
+2026-03-17T17:31:06.8209435Z > Task :react-native-safe-area-context:generateDebugRFile
+2026-03-17T17:31:06.8211897Z > Task :react-native-worklets:compileDebugLibraryResources
+2026-03-17T17:31:06.8214371Z > Task :react-native-worklets:parseDebugLocalResources
+2026-03-17T17:31:06.8215614Z > Task :react-native-reanimated:generateDebugRFile
+2026-03-17T17:31:06.8216465Z > Task :expo:checkKotlinGradlePluginConfigurationErrors SKIPPED
+2026-03-17T17:31:06.9207144Z > Task :expo:generateDebugBuildConfig
+2026-03-17T17:31:06.9209841Z > Task :expo-constants:checkKotlinGradlePluginConfigurationErrors SKIPPED
+2026-03-17T17:31:06.9217892Z > Task :expo-constants:generateDebugBuildConfig
+2026-03-17T17:31:06.9218825Z > Task :expo-modules-core:checkKotlinGradlePluginConfigurationErrors SKIPPED
+2026-03-17T17:31:06.9219719Z > Task :expo-modules-core:generateDebugBuildConfig
+2026-03-17T17:31:07.1201343Z > Task :react-native-worklets:generateDebugRFile
+2026-03-17T17:31:07.1202129Z > Task :react-native-screens:parseDebugLocalResources
+2026-03-17T17:31:08.4200549Z > Task :expo-constants:javaPreCompileDebug
+2026-03-17T17:31:08.4203920Z > Task :expo:javaPreCompileDebug
+2026-03-17T17:31:08.4206335Z > Task :react-native-async-storage_async-storage:generateDebugBuildConfig
+2026-03-17T17:31:08.7203345Z > Task :react-native-async-storage_async-storage:javaPreCompileDebug
+2026-03-17T17:31:11.4219626Z > Task :react-native-screens:generateDebugRFile
+2026-03-17T17:31:11.4273462Z > Task :react-native-gesture-handler:checkKotlinGradlePluginConfigurationErrors SKIPPED
+2026-03-17T17:31:11.5200527Z > Task :react-native-gesture-handler:generateDebugBuildConfig
+2026-03-17T17:31:11.5201810Z > Task :react-native-reanimated:generateDebugBuildConfig
+2026-03-17T17:31:12.0200548Z > Task :react-native-reanimated:javaPreCompileDebug
+2026-03-17T17:31:12.0206062Z > Task :react-native-worklets:generateDebugBuildConfig
+2026-03-17T17:31:12.1217581Z > Task :react-native-worklets:javaPreCompileDebug
+2026-03-17T17:31:17.3204103Z /home/runner/work/guard/guard/node_modules/@react-native-async-storage/async-storage/android/src/main/java/com/reactnativecommunity/asyncstorage/AsyncStorageModule.java:84: warning: [removal] onCatalystInstanceDestroy() in NativeModule has been deprecated and marked for removal
+2026-03-17T17:31:17.3206295Z 
+2026-03-17T17:31:17.3206887Z > Task :react-native-async-storage_async-storage:compileDebugJavaWithJavac
+2026-03-17T17:31:17.6207738Z   public void onCatalystInstanceDestroy() {
+2026-03-17T17:31:17.6208318Z               ^
+2026-03-17T17:31:17.6208895Z Note: Some input files use or override a deprecated API.
+2026-03-17T17:31:17.6209996Z Note: Recompile with -Xlint:deprecation for details.
+2026-03-17T17:31:17.6213217Z Note: /home/runner/work/guard/guard/node_modules/@react-native-async-storage/async-storage/android/src/javaPackage/java/com/reactnativecommunity/asyncstorage/AsyncStoragePackage.java uses unchecked or unsafe operations.
+2026-03-17T17:31:17.6215261Z Note: Recompile with -Xlint:unchecked for details.
+2026-03-17T17:31:17.6215775Z 1 warning
+2026-03-17T17:31:23.4202995Z Note: /home/runner/work/guard/guard/node_modules/react-native-worklets/android/src/main/java/com/swmansion/worklets/WorkletsPackage.java uses unchecked or unsafe operations.
+2026-03-17T17:31:23.4209904Z Note: Recompile with -Xlint:unchecked for details.
+2026-03-17T17:31:23.4215514Z 
+2026-03-17T17:31:23.4220337Z > Task :app:checkDebugAarMetadata
+2026-03-17T17:31:23.4225435Z 
+2026-03-17T17:31:23.4230451Z > Task :react-native-worklets:compileDebugJavaWithJavac
+2026-03-17T17:31:23.5200104Z 
+2026-03-17T17:31:23.5205425Z > Task :app:generateDebugResValues
+2026-03-17T17:31:23.8216149Z > Task :expo-modules-core:javaPreCompileDebug
+2026-03-17T17:31:23.9201129Z > Task :app:mapDebugSourceSetPaths
+2026-03-17T17:31:23.9201757Z > Task :app:generateDebugResources
+2026-03-17T17:31:23.9202439Z > Task :react-native-worklets:bundleLibCompileToJarDebug
+2026-03-17T17:31:24.0205983Z > Task :react-native-async-storage_async-storage:bundleLibCompileToJarDebug
+2026-03-17T17:31:24.0231010Z > Task :react-native-gesture-handler:javaPreCompileDebug
+2026-03-17T17:31:24.0231995Z > Task :react-native-safe-area-context:checkKotlinGradlePluginConfigurationErrors SKIPPED
+2026-03-17T17:31:24.0232943Z > Task :react-native-safe-area-context:generateDebugBuildConfig
+2026-03-17T17:31:25.5201972Z Note: Some input files use or override a deprecated API.
+2026-03-17T17:31:25.5207710Z Note: Recompile with -Xlint:deprecation for details.
+2026-03-17T17:31:25.5213675Z Note: Some input files use unchecked or unsafe operations.
+2026-03-17T17:31:25.5216459Z Note: Recompile with -Xlint:unchecked for details.
+2026-03-17T17:31:25.5219875Z 
+2026-03-17T17:31:25.5225192Z > Task :react-native-reanimated:compileDebugJavaWithJavac
+2026-03-17T17:31:25.5237694Z 
+2026-03-17T17:31:25.5238735Z > Task :react-native-reanimated:bundleLibCompileToJarDebug
+2026-03-17T17:31:30.6225445Z 
+2026-03-17T17:31:30.6242760Z > Task :react-native-safe-area-context:compileDebugKotlin
+2026-03-17T17:31:30.6267492Z w: file:///home/runner/work/guard/guard/node_modules/react-native-safe-area-context/android/src/main/java/com/th3rdwave/safeareacontext/SafeAreaView.kt:59:23 'val uiImplementation: UIImplementation!' is deprecated. Deprecated in Java.
+2026-03-17T17:31:31.1200191Z 
+2026-03-17T17:31:31.1200779Z > Task :app:packageDebugResources
+2026-03-17T17:31:31.2217802Z > Task :app:parseDebugLocalResources
+2026-03-17T17:31:31.2218799Z > Task :app:createDebugCompatibleScreenManifests
+2026-03-17T17:31:31.2220132Z > Task :app:extractDeepLinksDebug
+2026-03-17T17:31:31.3201003Z > Task :app:mergeDebugResources
+2026-03-17T17:31:31.7205880Z > Task :react-native-safe-area-context:javaPreCompileDebug
+2026-03-17T17:31:32.3217522Z > Task :react-native-safe-area-context:compileDebugJavaWithJavac
+2026-03-17T17:31:32.4200516Z > Task :react-native-safe-area-context:bundleLibCompileToJarDebug
+2026-03-17T17:31:32.4202035Z > Task :react-native-screens:checkKotlinGradlePluginConfigurationErrors SKIPPED
+2026-03-17T17:31:32.4203283Z > Task :react-native-screens:generateDebugBuildConfig
+2026-03-17T17:31:32.5199809Z 
+2026-03-17T17:31:32.5200875Z > Task :app:processDebugMainManifest
+2026-03-17T17:31:32.5202261Z /home/runner/work/guard/guard/android/app/src/debug/AndroidManifest.xml:6:5-162 Warning:
+2026-03-17T17:31:32.5203926Z 	application@android:usesCleartextTraffic was tagged at AndroidManifest.xml:6 to replace other declarations but no other declaration present
+2026-03-17T17:31:32.5205907Z /home/runner/work/guard/guard/android/app/src/debug/AndroidManifest.xml Warning:
+2026-03-17T17:31:32.5207797Z 	provider#expo.modules.filesystem.FileSystemFileProvider@android:authorities was tagged at AndroidManifest.xml:0 to replace other declarations but no other declaration present
+2026-03-17T17:31:32.8215297Z 
+2026-03-17T17:31:32.8220301Z > Task :app:processDebugManifest
+2026-03-17T17:31:33.4235948Z > Task :app:processDebugManifestForPackage
+2026-03-17T17:31:36.9200678Z > Task :expo-modules-core:compileDebugKotlin
+2026-03-17T17:31:38.7201641Z > Task :app:processDebugResources
+2026-03-17T17:31:38.7249023Z > Task :react-native-screens:javaPreCompileDebug
+2026-03-17T17:31:38.7249864Z > Task :app:javaPreCompileDebug
+2026-03-17T17:31:38.8201115Z > Task :app:mergeDebugShaders
+2026-03-17T17:31:38.8208763Z > Task :app:compileDebugShaders NO-SOURCE
+2026-03-17T17:31:38.8209417Z > Task :app:generateDebugAssets UP-TO-DATE
+2026-03-17T17:31:38.9201024Z > Task :expo:mergeDebugShaders
+2026-03-17T17:31:38.9201671Z > Task :expo:compileDebugShaders NO-SOURCE
+2026-03-17T17:31:38.9207490Z > Task :expo:generateDebugAssets UP-TO-DATE
+2026-03-17T17:31:38.9208016Z > Task :expo:mergeDebugAssets
+2026-03-17T17:31:38.9208521Z > Task :expo-constants:mergeDebugShaders
+2026-03-17T17:31:38.9209152Z > Task :expo-constants:compileDebugShaders NO-SOURCE
+2026-03-17T17:31:38.9209829Z > Task :expo-constants:generateDebugAssets UP-TO-DATE
+2026-03-17T17:31:38.9210412Z > Task :expo-constants:mergeDebugAssets
+2026-03-17T17:31:38.9210949Z > Task :expo-modules-core:mergeDebugShaders
+2026-03-17T17:31:38.9211571Z > Task :expo-modules-core:compileDebugShaders NO-SOURCE
+2026-03-17T17:31:38.9212289Z > Task :expo-modules-core:generateDebugAssets UP-TO-DATE
+2026-03-17T17:31:38.9212920Z > Task :expo-modules-core:mergeDebugAssets
+2026-03-17T17:31:38.9213626Z > Task :react-native-async-storage_async-storage:mergeDebugShaders
+2026-03-17T17:31:39.0218944Z > Task :react-native-async-storage_async-storage:compileDebugShaders NO-SOURCE
+2026-03-17T17:31:39.0220503Z > Task :react-native-async-storage_async-storage:generateDebugAssets UP-TO-DATE
+2026-03-17T17:31:39.0221628Z > Task :react-native-async-storage_async-storage:mergeDebugAssets
+2026-03-17T17:31:39.0222554Z > Task :react-native-gesture-handler:mergeDebugShaders
+2026-03-17T17:31:39.0223496Z > Task :react-native-gesture-handler:compileDebugShaders NO-SOURCE
+2026-03-17T17:31:39.0224473Z > Task :react-native-gesture-handler:generateDebugAssets UP-TO-DATE
+2026-03-17T17:31:39.0225612Z > Task :react-native-gesture-handler:mergeDebugAssets
+2026-03-17T17:31:39.0226459Z > Task :react-native-reanimated:mergeDebugShaders
+2026-03-17T17:31:39.0227299Z > Task :react-native-reanimated:compileDebugShaders NO-SOURCE
+2026-03-17T17:31:39.0228203Z > Task :react-native-reanimated:generateDebugAssets UP-TO-DATE
+2026-03-17T17:31:39.0229001Z > Task :react-native-reanimated:mergeDebugAssets
+2026-03-17T17:31:39.0229932Z > Task :react-native-safe-area-context:mergeDebugShaders
+2026-03-17T17:31:39.0231091Z > Task :react-native-safe-area-context:compileDebugShaders NO-SOURCE
+2026-03-17T17:31:39.0232597Z > Task :react-native-safe-area-context:generateDebugAssets UP-TO-DATE
+2026-03-17T17:31:39.0233619Z > Task :react-native-safe-area-context:mergeDebugAssets
+2026-03-17T17:31:39.0234775Z > Task :react-native-screens:mergeDebugShaders
+2026-03-17T17:31:39.0235678Z > Task :react-native-screens:compileDebugShaders NO-SOURCE
+2026-03-17T17:31:39.0236556Z > Task :react-native-screens:generateDebugAssets UP-TO-DATE
+2026-03-17T17:31:39.0237341Z > Task :react-native-screens:mergeDebugAssets
+2026-03-17T17:31:39.0238092Z > Task :react-native-worklets:mergeDebugShaders
+2026-03-17T17:31:39.0238942Z > Task :react-native-worklets:compileDebugShaders NO-SOURCE
+2026-03-17T17:31:39.0239974Z > Task :react-native-worklets:generateDebugAssets UP-TO-DATE
+2026-03-17T17:31:39.0240940Z > Task :react-native-worklets:mergeDebugAssets
+2026-03-17T17:31:39.5200959Z > Task :app:mergeDebugAssets
+2026-03-17T17:31:39.6200476Z > Task :app:compressDebugAssets
+2026-03-17T17:31:39.6206881Z > Task :react-native-safe-area-context:bundleLibRuntimeToJarDebug
+2026-03-17T17:31:43.5200795Z > Task :react-native-async-storage_async-storage:bundleLibRuntimeToJarDebug
+2026-03-17T17:31:44.1200383Z 
+2026-03-17T17:31:44.1205735Z > Task :react-native-gesture-handler:compileDebugKotlin
+2026-03-17T17:31:44.1213461Z w: file:///home/runner/work/guard/guard/node_modules/react-native-gesture-handler/android/src/main/java/com/swmansion/gesturehandler/react/RNGestureHandlerRootView.kt:41:43 The corresponding parameter in the supertype 'ReactViewGroup' is named 'ev'. This may cause problems when calling this function with named arguments.
+2026-03-17T17:31:44.5205556Z 
+2026-03-17T17:31:44.5206379Z > Task :react-native-reanimated:bundleLibRuntimeToJarDebug
+2026-03-17T17:31:45.6200864Z > Task :react-native-worklets:bundleLibRuntimeToJarDebug
+2026-03-17T17:31:45.9211563Z > Task :react-native-gesture-handler:compileDebugJavaWithJavac
+2026-03-17T17:31:45.9249004Z > Task :react-native-gesture-handler:bundleLibCompileToJarDebug
+2026-03-17T17:31:46.0201506Z > Task :app:desugarDebugFileDependencies
+2026-03-17T17:31:46.0202641Z > Task :react-native-async-storage_async-storage:processDebugJavaRes NO-SOURCE
+2026-03-17T17:31:46.0203833Z > Task :react-native-gesture-handler:bundleLibRuntimeToJarDebug
+2026-03-17T17:31:46.0205062Z > Task :react-native-reanimated:processDebugJavaRes NO-SOURCE
+2026-03-17T17:31:46.0205872Z > Task :react-native-safe-area-context:processDebugJavaRes
+2026-03-17T17:31:46.0206620Z > Task :react-native-gesture-handler:processDebugJavaRes
+2026-03-17T17:31:46.0207344Z > Task :react-native-worklets:processDebugJavaRes NO-SOURCE
+2026-03-17T17:31:50.3216745Z > Task :app:checkDebugDuplicateClasses
+2026-03-17T17:31:50.3217887Z > Task :react-native-gesture-handler:bundleLibRuntimeToDirDebug
+2026-03-17T17:32:02.4200601Z > Task :react-native-screens:compileDebugKotlin
+2026-03-17T17:32:03.1267838Z w: file:///home/runner/work/guard/guard/node_modules/react-native-screens/android/src/main/java/com/swmansion/rnscreens/RNScreensPackage.kt:56:9 The corresponding parameter in the supertype 'BaseReactPackage' is named 'name'. This may cause problems when calling this function with named arguments.
+2026-03-17T17:32:03.1271943Z w: file:///home/runner/work/guard/guard/node_modules/react-native-screens/android/src/main/java/com/swmansion/rnscreens/RNScreensPackage.kt:57:9 The corresponding parameter in the supertype 'BaseReactPackage' is named 'reactContext'. This may cause problems when calling this function with named arguments.
+2026-03-17T17:32:03.1277539Z w: file:///home/runner/work/guard/guard/node_modules/react-native-screens/android/src/main/java/com/swmansion/rnscreens/RNScreensPackage.kt:70:17 'constructor(name: String, className: String, canOverrideExistingModule: Boolean, needsEagerInit: Boolean, hasConstants: Boolean, isCxxModule: Boolean, isTurboModule: Boolean): ReactModuleInfo' is deprecated. This constructor is deprecated and will be removed in the future. Use ReactModuleInfo(String, String, boolean, boolean, boolean, boolean)].
+2026-03-17T17:32:03.1282712Z w: file:///home/runner/work/guard/guard/node_modules/react-native-screens/android/src/main/java/com/swmansion/rnscreens/Screen.kt:48:77 Unchecked cast of '(CoordinatorLayout.Behavior<View!>?..CoordinatorLayout.Behavior<*>?)' to 'BottomSheetBehavior<Screen>'.
+2026-03-17T17:32:03.1287408Z w: file:///home/runner/work/guard/guard/node_modules/react-native-screens/android/src/main/java/com/swmansion/rnscreens/Screen.kt:383:36 'fun setTranslucent(screen: Screen, activity: Activity?, context: ReactContext?): Unit' is deprecated. For apps targeting SDK 35 or above this prop has no effect because edge-to-edge is enabled by default and the status bar is always translucent.
+2026-03-17T17:32:03.1292743Z w: file:///home/runner/work/guard/guard/node_modules/react-native-screens/android/src/main/java/com/swmansion/rnscreens/Screen.kt:402:36 'fun setColor(screen: Screen, activity: Activity?, context: ReactContext?): Unit' is deprecated. For apps targeting SDK 35 or above this prop has no effect because edge-to-edge is enabled by default and the status bar is always translucent.
+2026-03-17T17:32:03.1331351Z w: file:///home/runner/work/guard/guard/node_modules/react-native-screens/android/src/main/java/com/swmansion/rnscreens/Screen.kt:420:36 'fun setNavigationBarColor(screen: Screen, activity: Activity?): Unit' is deprecated. For all apps targeting Android SDK 35 or above edge-to-edge is enabled by default.
+2026-03-17T17:32:03.1335863Z w: file:///home/runner/work/guard/guard/node_modules/react-native-screens/android/src/main/java/com/swmansion/rnscreens/Screen.kt:437:36 'fun setNavigationBarTranslucent(screen: Screen, activity: Activity?): Unit' is deprecated. For all apps targeting Android SDK 35 or above edge-to-edge is enabled by default.
+2026-03-17T17:32:03.1339427Z w: file:///home/runner/work/guard/guard/node_modules/react-native-screens/android/src/main/java/com/swmansion/rnscreens/ScreenStackFragment.kt:217:31 'var targetElevation: Float' is deprecated. Deprecated in Java.
+2026-03-17T17:32:03.1342906Z w: file:///home/runner/work/guard/guard/node_modules/react-native-screens/android/src/main/java/com/swmansion/rnscreens/ScreenStackFragment.kt:220:13 'fun setHasOptionsMenu(p0: Boolean): Unit' is deprecated. Deprecated in Java.
+2026-03-17T17:32:03.1346906Z w: file:///home/runner/work/guard/guard/node_modules/react-native-screens/android/src/main/java/com/swmansion/rnscreens/ScreenStackFragment.kt:397:18 This declaration overrides a deprecated member but is not marked as deprecated itself. Add the '@Deprecated' annotation or suppress the diagnostic.
+2026-03-17T17:32:03.1350587Z w: file:///home/runner/work/guard/guard/node_modules/react-native-screens/android/src/main/java/com/swmansion/rnscreens/ScreenStackFragment.kt:404:22 'fun onPrepareOptionsMenu(p0: Menu): Unit' is deprecated. Deprecated in Java.
+2026-03-17T17:32:03.1354391Z w: file:///home/runner/work/guard/guard/node_modules/react-native-screens/android/src/main/java/com/swmansion/rnscreens/ScreenStackFragment.kt:407:18 This declaration overrides a deprecated member but is not marked as deprecated itself. Add the '@Deprecated' annotation or suppress the diagnostic.
+2026-03-17T17:32:03.1411203Z w: file:///home/runner/work/guard/guard/node_modules/react-native-screens/android/src/main/java/com/swmansion/rnscreens/ScreenStackFragment.kt:412:22 'fun onCreateOptionsMenu(p0: Menu, p1: MenuInflater): Unit' is deprecated. Deprecated in Java.
+2026-03-17T17:32:03.1415353Z w: file:///home/runner/work/guard/guard/node_modules/react-native-screens/android/src/main/java/com/swmansion/rnscreens/ScreenStackHeaderConfig.kt:435:18 'val reactNativeHost: ReactNativeHost' is deprecated. You should not use ReactNativeHost directly in the New Architecture. Use ReactHost instead.
+2026-03-17T17:32:03.1420184Z w: file:///home/runner/work/guard/guard/node_modules/react-native-screens/android/src/main/java/com/swmansion/rnscreens/ScreenViewManager.kt:203:14 'var statusBarColor: Int?' is deprecated. For apps targeting SDK 35 or above this prop has no effect because edge-to-edge is enabled by default and the status bar is always translucent.
+2026-03-17T17:32:03.1425047Z w: file:///home/runner/work/guard/guard/node_modules/react-native-screens/android/src/main/java/com/swmansion/rnscreens/ScreenViewManager.kt:220:14 'var isStatusBarTranslucent: Boolean?' is deprecated. For apps targeting SDK 35 or above this prop has no effect because edge-to-edge is enabled by default and the status bar is always translucent.
+2026-03-17T17:32:03.1429145Z w: file:///home/runner/work/guard/guard/node_modules/react-native-screens/android/src/main/java/com/swmansion/rnscreens/ScreenViewManager.kt:237:14 'var navigationBarColor: Int?' is deprecated. For all apps targeting Android SDK 35 or above edge-to-edge is enabled by default.
+2026-03-17T17:32:03.1432974Z w: file:///home/runner/work/guard/guard/node_modules/react-native-screens/android/src/main/java/com/swmansion/rnscreens/ScreenViewManager.kt:246:14 'var isNavigationBarTranslucent: Boolean?' is deprecated. For all apps targeting Android SDK 35 or above edge-to-edge is enabled by default.
+2026-03-17T17:32:03.1497787Z w: file:///home/runner/work/guard/guard/node_modules/react-native-screens/android/src/main/java/com/swmansion/rnscreens/ScreenWindowTraits.kt:55:42 'fun replaceSystemWindowInsets(p0: Int, p1: Int, p2: Int, p3: Int): WindowInsetsCompat' is deprecated. Deprecated in Java.
+2026-03-17T17:32:03.1501252Z w: file:///home/runner/work/guard/guard/node_modules/react-native-screens/android/src/main/java/com/swmansion/rnscreens/ScreenWindowTraits.kt:56:39 'val systemWindowInsetLeft: Int' is deprecated. Deprecated in Java.
+2026-03-17T17:32:03.1504418Z w: file:///home/runner/work/guard/guard/node_modules/react-native-screens/android/src/main/java/com/swmansion/rnscreens/ScreenWindowTraits.kt:58:39 'val systemWindowInsetRight: Int' is deprecated. Deprecated in Java.
+2026-03-17T17:32:03.1507730Z w: file:///home/runner/work/guard/guard/node_modules/react-native-screens/android/src/main/java/com/swmansion/rnscreens/ScreenWindowTraits.kt:59:39 'val systemWindowInsetBottom: Int' is deprecated. Deprecated in Java.
+2026-03-17T17:32:03.1511358Z w: file:///home/runner/work/guard/guard/node_modules/react-native-screens/android/src/main/java/com/swmansion/rnscreens/ScreenWindowTraits.kt:102:53 'var statusBarColor: Int' is deprecated. Deprecated in Java.
+2026-03-17T17:32:03.1515326Z w: file:///home/runner/work/guard/guard/node_modules/react-native-screens/android/src/main/java/com/swmansion/rnscreens/ScreenWindowTraits.kt:106:37 'var statusBarColor: Int?' is deprecated. For apps targeting SDK 35 or above this prop has no effect because edge-to-edge is enabled by default and the status bar is always translucent.
+2026-03-17T17:32:03.1518626Z w: file:///home/runner/work/guard/guard/node_modules/react-native-screens/android/src/main/java/com/swmansion/rnscreens/ScreenWindowTraits.kt:113:48 'var statusBarColor: Int' is deprecated. Deprecated in Java.
+2026-03-17T17:32:03.1521293Z w: file:///home/runner/work/guard/guard/node_modules/react-native-screens/android/src/main/java/com/swmansion/rnscreens/ScreenWindowTraits.kt:116:32 'var statusBarColor: Int' is deprecated. Deprecated in Java.
+2026-03-17T17:32:03.1575283Z w: file:///home/runner/work/guard/guard/node_modules/react-native-screens/android/src/main/java/com/swmansion/rnscreens/ScreenWindowTraits.kt:162:49 'var isStatusBarTranslucent: Boolean?' is deprecated. For apps targeting SDK 35 or above this prop has no effect because edge-to-edge is enabled by default and the status bar is always translucent.
+2026-03-17T17:32:03.1579887Z w: file:///home/runner/work/guard/guard/node_modules/react-native-screens/android/src/main/java/com/swmansion/rnscreens/ScreenWindowTraits.kt:218:43 'var navigationBarColor: Int?' is deprecated. For all apps targeting Android SDK 35 or above edge-to-edge is enabled by default.
+2026-03-17T17:32:03.1583243Z w: file:///home/runner/work/guard/guard/node_modules/react-native-screens/android/src/main/java/com/swmansion/rnscreens/ScreenWindowTraits.kt:218:72 'var navigationBarColor: Int' is deprecated. Deprecated in Java.
+2026-03-17T17:32:03.1586872Z w: file:///home/runner/work/guard/guard/node_modules/react-native-screens/android/src/main/java/com/swmansion/rnscreens/ScreenWindowTraits.kt:224:16 'var navigationBarColor: Int' is deprecated. Deprecated in Java.
+2026-03-17T17:32:03.1590567Z w: file:///home/runner/work/guard/guard/node_modules/react-native-screens/android/src/main/java/com/swmansion/rnscreens/ScreenWindowTraits.kt:241:55 'var isNavigationBarTranslucent: Boolean?' is deprecated. For all apps targeting Android SDK 35 or above edge-to-edge is enabled by default.
+2026-03-17T17:32:03.1595543Z w: file:///home/runner/work/guard/guard/node_modules/react-native-screens/android/src/main/java/com/swmansion/rnscreens/ScreenWindowTraits.kt:283:13 'fun setColor(screen: Screen, activity: Activity?, context: ReactContext?): Unit' is deprecated. For apps targeting SDK 35 or above this prop has no effect because edge-to-edge is enabled by default and the status bar is always translucent.
+2026-03-17T17:32:03.1600744Z w: file:///home/runner/work/guard/guard/node_modules/react-native-screens/android/src/main/java/com/swmansion/rnscreens/ScreenWindowTraits.kt:285:13 'fun setTranslucent(screen: Screen, activity: Activity?, context: ReactContext?): Unit' is deprecated. For apps targeting SDK 35 or above this prop has no effect because edge-to-edge is enabled by default and the status bar is always translucent.
+2026-03-17T17:32:03.1635870Z w: file:///home/runner/work/guard/guard/node_modules/react-native-screens/android/src/main/java/com/swmansion/rnscreens/ScreenWindowTraits.kt:289:13 'fun setNavigationBarColor(screen: Screen, activity: Activity?): Unit' is deprecated. For all apps targeting Android SDK 35 or above edge-to-edge is enabled by default.
+2026-03-17T17:32:03.1640511Z w: file:///home/runner/work/guard/guard/node_modules/react-native-screens/android/src/main/java/com/swmansion/rnscreens/ScreenWindowTraits.kt:290:13 'fun setNavigationBarTranslucent(screen: Screen, activity: Activity?): Unit' is deprecated. For all apps targeting Android SDK 35 or above edge-to-edge is enabled by default.
+2026-03-17T17:32:03.1652190Z w: file:///home/runner/work/guard/guard/node_modules/react-native-screens/android/src/main/java/com/swmansion/rnscreens/ScreenWindowTraits.kt:354:42 'var statusBarColor: Int?' is deprecated. For apps targeting SDK 35 or above this prop has no effect because edge-to-edge is enabled by default and the status bar is always translucent.
+2026-03-17T17:32:03.1656968Z w: file:///home/runner/work/guard/guard/node_modules/react-native-screens/android/src/main/java/com/swmansion/rnscreens/ScreenWindowTraits.kt:356:48 'var isStatusBarTranslucent: Boolean?' is deprecated. For apps targeting SDK 35 or above this prop has no effect because edge-to-edge is enabled by default and the status bar is always translucent.
+2026-03-17T17:32:03.1661020Z w: file:///home/runner/work/guard/guard/node_modules/react-native-screens/android/src/main/java/com/swmansion/rnscreens/ScreenWindowTraits.kt:359:57 'var navigationBarColor: Int?' is deprecated. For all apps targeting Android SDK 35 or above edge-to-edge is enabled by default.
+2026-03-17T17:32:03.1695295Z w: file:///home/runner/work/guard/guard/node_modules/react-native-screens/android/src/main/java/com/swmansion/rnscreens/ScreenWindowTraits.kt:360:63 'var isNavigationBarTranslucent: Boolean?' is deprecated. For all apps targeting Android SDK 35 or above edge-to-edge is enabled by default.
+2026-03-17T17:32:03.1699767Z w: file:///home/runner/work/guard/guard/node_modules/react-native-screens/android/src/main/java/com/swmansion/rnscreens/bottomsheet/BottomSheetDialogRootView.kt:7:8 'object ReactFeatureFlags : Any' is deprecated. Use com.facebook.react.internal.featureflags.ReactNativeFeatureFlags instead.
+2026-03-17T17:32:03.1704066Z w: file:///home/runner/work/guard/guard/node_modules/react-native-screens/android/src/main/java/com/swmansion/rnscreens/bottomsheet/BottomSheetDialogRootView.kt:25:13 'object ReactFeatureFlags : Any' is deprecated. Use com.facebook.react.internal.featureflags.ReactNativeFeatureFlags instead.
+2026-03-17T17:32:03.1709031Z w: file:///home/runner/work/guard/guard/node_modules/react-native-screens/android/src/main/java/com/swmansion/rnscreens/bottomsheet/BottomSheetDialogRootView.kt:32:9 The corresponding parameter in the supertype 'ReactViewGroup' is named 'left'. This may cause problems when calling this function with named arguments.
+2026-03-17T17:32:03.1713502Z w: file:///home/runner/work/guard/guard/node_modules/react-native-screens/android/src/main/java/com/swmansion/rnscreens/bottomsheet/BottomSheetDialogRootView.kt:33:9 The corresponding parameter in the supertype 'ReactViewGroup' is named 'top'. This may cause problems when calling this function with named arguments.
+2026-03-17T17:32:03.1718100Z w: file:///home/runner/work/guard/guard/node_modules/react-native-screens/android/src/main/java/com/swmansion/rnscreens/bottomsheet/BottomSheetDialogRootView.kt:34:9 The corresponding parameter in the supertype 'ReactViewGroup' is named 'right'. This may cause problems when calling this function with named arguments.
+2026-03-17T17:32:03.1722581Z w: file:///home/runner/work/guard/guard/node_modules/react-native-screens/android/src/main/java/com/swmansion/rnscreens/bottomsheet/BottomSheetDialogRootView.kt:35:9 The corresponding parameter in the supertype 'ReactViewGroup' is named 'bottom'. This may cause problems when calling this function with named arguments.
+2026-03-17T17:32:03.1737529Z w: file:///home/runner/work/guard/guard/node_modules/react-native-screens/android/src/main/java/com/swmansion/rnscreens/bottomsheet/BottomSheetDialogRootView.kt:71:9 The corresponding parameter in the supertype 'RootView' is named 'childView'. This may cause problems when calling this function with named arguments.
+2026-03-17T17:32:03.1741884Z w: file:///home/runner/work/guard/guard/node_modules/react-native-screens/android/src/main/java/com/swmansion/rnscreens/bottomsheet/BottomSheetDialogRootView.kt:72:9 The corresponding parameter in the supertype 'RootView' is named 'ev'. This may cause problems when calling this function with named arguments.
+2026-03-17T17:32:03.1746807Z w: file:///home/runner/work/guard/guard/node_modules/react-native-screens/android/src/main/java/com/swmansion/rnscreens/bottomsheet/BottomSheetDialogRootView.kt:79:46 The corresponding parameter in the supertype 'RootView' is named 'ev'. This may cause problems when calling this function with named arguments.
+2026-03-17T17:32:03.1751289Z w: file:///home/runner/work/guard/guard/node_modules/react-native-screens/android/src/main/java/com/swmansion/rnscreens/bottomsheet/BottomSheetDialogRootView.kt:83:9 The corresponding parameter in the supertype 'RootView' is named 'childView'. This may cause problems when calling this function with named arguments.
+2026-03-17T17:32:03.1755955Z w: file:///home/runner/work/guard/guard/node_modules/react-native-screens/android/src/main/java/com/swmansion/rnscreens/bottomsheet/BottomSheetDialogRootView.kt:84:9 The corresponding parameter in the supertype 'RootView' is named 'ev'. This may cause problems when calling this function with named arguments.
+2026-03-17T17:32:03.1760386Z w: file:///home/runner/work/guard/guard/node_modules/react-native-screens/android/src/main/java/com/swmansion/rnscreens/bottomsheet/BottomSheetDialogRootView.kt:95:34 The corresponding parameter in the supertype 'RootView' is named 't'. This may cause problems when calling this function with named arguments.
+2026-03-17T17:32:03.1795226Z w: file:///home/runner/work/guard/guard/node_modules/react-native-screens/android/src/main/java/com/swmansion/rnscreens/bottomsheet/DimmingView.kt:63:9 The corresponding parameter in the supertype 'ReactCompoundView' is named 'touchX'. This may cause problems when calling this function with named arguments.
+2026-03-17T17:32:03.1799688Z w: file:///home/runner/work/guard/guard/node_modules/react-native-screens/android/src/main/java/com/swmansion/rnscreens/bottomsheet/DimmingView.kt:64:9 The corresponding parameter in the supertype 'ReactCompoundView' is named 'touchY'. This may cause problems when calling this function with named arguments.
+2026-03-17T17:32:03.1818707Z w: file:///home/runner/work/guard/guard/node_modules/react-native-screens/android/src/main/java/com/swmansion/rnscreens/bottomsheet/DimmingView.kt:68:9 The corresponding parameter in the supertype 'ReactCompoundViewGroup' is named 'touchX'. This may cause problems when calling this function with named arguments.
+2026-03-17T17:32:03.1823169Z w: file:///home/runner/work/guard/guard/node_modules/react-native-screens/android/src/main/java/com/swmansion/rnscreens/bottomsheet/DimmingView.kt:69:9 The corresponding parameter in the supertype 'ReactCompoundViewGroup' is named 'touchY'. This may cause problems when calling this function with named arguments.
+2026-03-17T17:32:03.1827593Z w: file:///home/runner/work/guard/guard/node_modules/react-native-screens/android/src/main/java/com/swmansion/rnscreens/gamma/tabs/TabsHostViewManager.kt:37:9 The corresponding parameter in the supertype 'TabsHostViewManager' is named 'view'. This may cause problems when calling this function with named arguments.
+2026-03-17T17:32:05.3200666Z 
+2026-03-17T17:32:05.3205533Z > Task :expo-modules-core:compileDebugKotlin
+2026-03-17T17:32:05.3208443Z w: file:///home/runner/work/guard/guard/node_modules/expo-modules-core/android/src/main/java/expo/modules/adapters/react/apploader/RNHeadlessAppLoader.kt:48:87 'val reactNativeHost: ReactNativeHost' is deprecated. You should not use ReactNativeHost directly in the New Architecture. Use ReactHost instead.
+2026-03-17T17:32:05.3213712Z w: file:///home/runner/work/guard/guard/node_modules/expo-modules-core/android/src/main/java/expo/modules/adapters/react/apploader/RNHeadlessAppLoader.kt:91:85 'val reactNativeHost: ReactNativeHost' is deprecated. You should not use ReactNativeHost directly in the New Architecture. Use ReactHost instead.
+2026-03-17T17:32:05.3220196Z w: file:///home/runner/work/guard/guard/node_modules/expo-modules-core/android/src/main/java/expo/modules/adapters/react/apploader/RNHeadlessAppLoader.kt:120:83 'val reactNativeHost: ReactNativeHost' is deprecated. You should not use ReactNativeHost directly in the New Architecture. Use ReactHost instead.
+2026-03-17T17:32:05.4203629Z w: file:///home/runner/work/guard/guard/node_modules/expo-modules-core/android/src/main/java/expo/modules/apploader/AppLoaderProvider.kt:34:52 Unchecked cast of 'Class<*>!' to 'Class<out HeadlessAppLoader>'.
+2026-03-17T17:32:05.4206739Z w: file:///home/runner/work/guard/guard/node_modules/expo-modules-core/android/src/main/java/expo/modules/kotlin/AppContext.kt:30:8 'typealias ErrorManagerModule = JSLoggerModule' is deprecated. Use JSLoggerModule instead.
+2026-03-17T17:32:05.4209765Z w: file:///home/runner/work/guard/guard/node_modules/expo-modules-core/android/src/main/java/expo/modules/kotlin/AppContext.kt:253:21 'typealias ErrorManagerModule = JSLoggerModule' is deprecated. Use JSLoggerModule instead.
+2026-03-17T17:32:05.4213039Z w: file:///home/runner/work/guard/guard/node_modules/expo-modules-core/android/src/main/java/expo/modules/kotlin/AppContext.kt:343:21 'val DEFAULT: Int' is deprecated. UIManagerType.DEFAULT will be deleted in the next release of React Native. Use [LEGACY] instead.
+2026-03-17T17:32:05.4216940Z w: file:///home/runner/work/guard/guard/node_modules/expo-modules-core/android/src/main/java/expo/modules/kotlin/defaultmodules/NativeModulesProxyModule.kt:16:5 'fun Constants(legacyConstantsProvider: () -> Map<String, Any?>): Unit' is deprecated. Use `Constant` or `Property` instead.
+2026-03-17T17:32:05.4220411Z w: file:///home/runner/work/guard/guard/node_modules/expo-modules-core/android/src/main/java/expo/modules/kotlin/jni/PromiseImpl.kt:65:51 'val errorManager: JSLoggerModule?' is deprecated. Use AppContext.jsLogger instead.
+2026-03-17T17:32:05.4223840Z w: file:///home/runner/work/guard/guard/node_modules/expo-modules-core/android/src/main/java/expo/modules/kotlin/jni/PromiseImpl.kt:69:22 'fun reportExceptionToLogBox(codedException: CodedException): Unit' is deprecated. Use appContext.jsLogger.error(...) instead.
+2026-03-17T17:32:05.4236533Z w: file:///home/runner/work/guard/guard/node_modules/expo-modules-core/android/src/main/java/expo/modules/kotlin/views/ViewDefinitionBuilder.kt:464:16 'val errorManager: JSLoggerModule?' is deprecated. Use AppContext.jsLogger instead.
+2026-03-17T17:32:05.4240271Z w: file:///home/runner/work/guard/guard/node_modules/expo-modules-core/android/src/main/java/expo/modules/kotlin/views/ViewDefinitionBuilder.kt:464:30 'fun reportExceptionToLogBox(codedException: CodedException): Unit' is deprecated. Use appContext.jsLogger.error(...) instead.
+2026-03-17T17:32:05.4243949Z w: file:///home/runner/work/guard/guard/node_modules/expo-modules-core/android/src/main/java/expo/modules/kotlin/views/ViewManagerDefinition.kt:41:16 'val errorManager: JSLoggerModule?' is deprecated. Use AppContext.jsLogger instead.
+2026-03-17T17:32:05.4247941Z w: file:///home/runner/work/guard/guard/node_modules/expo-modules-core/android/src/main/java/expo/modules/kotlin/views/ViewManagerDefinition.kt:41:30 'fun reportExceptionToLogBox(codedException: CodedException): Unit' is deprecated. Use appContext.jsLogger.error(...) instead.
+2026-03-17T17:32:05.4249804Z 
+2026-03-17T17:32:05.4250274Z > Task :react-native-safe-area-context:bundleLibRuntimeToDirDebug
+2026-03-17T17:32:08.1216275Z Note: Some input files use or override a deprecated API.
+2026-03-17T17:32:08.1216748Z 
+2026-03-17T17:32:08.1217673Z Note: Recompile with -Xlint:deprecation for details.
+2026-03-17T17:32:08.1218338Z > Task :expo-modules-core:compileDebugJavaWithJavac
+2026-03-17T17:32:20.3207834Z 
+2026-03-17T17:32:20.3208790Z > Task :app:mergeExtDexDebug
+2026-03-17T17:32:33.2202113Z > Task :react-native-screens:compileDebugJavaWithJavac
+2026-03-17T17:32:35.7200621Z > Task :react-native-async-storage_async-storage:bundleLibRuntimeToDirDebug
+2026-03-17T17:32:42.3200779Z > Task :expo-modules-core:bundleLibCompileToJarDebug
+2026-03-17T17:32:42.4200714Z > Task :react-native-reanimated:bundleLibRuntimeToDirDebug
+2026-03-17T17:32:42.5216284Z > Task :react-native-screens:bundleLibCompileToJarDebug
+2026-03-17T17:32:42.5217687Z > Task :react-native-screens:bundleLibRuntimeToJarDebug
+2026-03-17T17:32:43.0200457Z > Task :expo-modules-core:bundleLibRuntimeToJarDebug
+2026-03-17T17:32:44.1200323Z 
+2026-03-17T17:32:44.1202120Z > Task :expo-constants:compileDebugKotlin
+2026-03-17T17:32:44.1205362Z w: file:///home/runner/work/guard/guard/node_modules/expo-constants/android/src/main/java/expo/modules/constants/ConstantsModule.kt:12:5 'fun Constants(legacyConstantsProvider: () -> Map<String, Any?>): Unit' is deprecated. Use `Constant` or `Property` instead.
+2026-03-17T17:32:44.3199714Z 
+2026-03-17T17:32:44.3200658Z > Task :expo-modules-core:processDebugJavaRes
+2026-03-17T17:32:44.4200368Z > Task :react-native-screens:processDebugJavaRes
+2026-03-17T17:32:44.6202862Z > Task :react-native-screens:bundleLibRuntimeToDirDebug
+2026-03-17T17:32:44.7200670Z > Task :expo-constants:compileDebugJavaWithJavac
+2026-03-17T17:32:44.7201984Z > Task :expo-constants:bundleLibCompileToJarDebug
+2026-03-17T17:32:46.4200441Z > Task :expo-constants:bundleLibRuntimeToJarDebug
+2026-03-17T17:32:46.5202890Z > Task :expo-constants:processDebugJavaRes
+2026-03-17T17:32:46.8200522Z > Task :react-native-worklets:bundleLibRuntimeToDirDebug
+2026-03-17T17:32:47.7200474Z > Task :expo-modules-core:bundleLibRuntimeToDirDebug
+2026-03-17T17:32:49.6203769Z 
+2026-03-17T17:32:49.6204969Z > Task :expo:compileDebugKotlin
+2026-03-17T17:32:49.6207795Z w: file:///home/runner/work/guard/guard/node_modules/expo/android/src/main/java/expo/modules/ExpoModulesPackage.kt:34:16 This declaration overrides a deprecated member but is not marked as deprecated itself. Add the '@Deprecated' annotation or suppress the diagnostic.
+2026-03-17T17:32:49.6211188Z w: file:///home/runner/work/guard/guard/node_modules/expo/android/src/main/java/expo/modules/ExpoReactHostFactory.kt:8:8 'class ReactNativeHost : Any' is deprecated. Deprecated in Java.
+2026-03-17T17:32:49.6214804Z w: file:///home/runner/work/guard/guard/node_modules/expo/android/src/main/java/expo/modules/ExpoReactHostFactory.kt:80:22 'class ReactNativeHost : Any' is deprecated. Deprecated in Java.
+2026-03-17T17:32:49.6217898Z w: file:///home/runner/work/guard/guard/node_modules/expo/android/src/main/java/expo/modules/ReactActivityDelegateWrapper.kt:24:8 'class ReactNativeHost : Any' is deprecated. Deprecated in Java.
+2026-03-17T17:32:49.6221300Z w: file:///home/runner/work/guard/guard/node_modules/expo/android/src/main/java/expo/modules/ReactActivityDelegateWrapper.kt:58:33 'class ReactNativeHost : Any' is deprecated. Deprecated in Java.
+2026-03-17T17:32:49.6225583Z w: file:///home/runner/work/guard/guard/node_modules/expo/android/src/main/java/expo/modules/ReactActivityDelegateWrapper.kt:105:16 This declaration overrides a deprecated member but is not marked as deprecated itself. Add the '@Deprecated' annotation or suppress the diagnostic.
+2026-03-17T17:32:49.6229340Z w: file:///home/runner/work/guard/guard/node_modules/expo/android/src/main/java/expo/modules/ReactActivityDelegateWrapper.kt:105:38 'class ReactNativeHost : Any' is deprecated. Deprecated in Java.
+2026-03-17T17:32:49.6233196Z w: file:///home/runner/work/guard/guard/node_modules/expo/android/src/main/java/expo/modules/ReactActivityDelegateWrapper.kt:113:16 This declaration overrides a deprecated member but is not marked as deprecated itself. Add the '@Deprecated' annotation or suppress the diagnostic.
+2026-03-17T17:32:49.6237294Z w: file:///home/runner/work/guard/guard/node_modules/expo/android/src/main/java/expo/modules/ReactActivityDelegateWrapper.kt:114:21 'val reactInstanceManager: ReactInstanceManager' is deprecated. Deprecated in Java.
+2026-03-17T17:32:49.6244706Z w: file:///home/runner/work/guard/guard/node_modules/expo/android/src/main/java/expo/modules/ReactActivityDelegateWrapper.kt:168:36 'constructor(activity: Activity, reactNativeHost: ReactNativeHost?, appKey: String?, launchOptions: Bundle?, fabricEnabled: Boolean): ReactDelegate' is deprecated. Deprecated since 0.81.0, use one of the other constructors instead.
+2026-03-17T17:32:49.6252168Z w: file:///home/runner/work/guard/guard/node_modules/expo/android/src/main/java/expo/modules/ReactActivityDelegateWrapper.kt:279:77 'val reactInstanceManager: ReactInstanceManager' is deprecated. Deprecated in Java.
+2026-03-17T17:32:49.6258006Z w: file:///home/runner/work/guard/guard/node_modules/expo/android/src/main/java/expo/modules/ReactActivityDelegateWrapper.kt:282:22 'val reactInstanceManager: ReactInstanceManager' is deprecated. Deprecated in Java.
+2026-03-17T17:32:49.6272157Z w: file:///home/runner/work/guard/guard/node_modules/expo/android/src/main/java/expo/modules/ReactActivityDelegateWrapper.kt:286:54 'val reactInstanceManager: ReactInstanceManager' is deprecated. Deprecated in Java.
+2026-03-17T17:32:49.6276190Z w: file:///home/runner/work/guard/guard/node_modules/expo/android/src/main/java/expo/modules/ReactNativeHostWrapper.kt:6:8 'class ReactNativeHost : Any' is deprecated. Deprecated in Java.
+2026-03-17T17:32:49.6278629Z w: file:///home/runner/work/guard/guard/node_modules/expo/android/src/main/java/expo/modules/ReactNativeHostWrapper.kt:15:9 'class ReactNativeHost : Any' is deprecated. Deprecated in Java.
+2026-03-17T17:32:49.6281035Z w: file:///home/runner/work/guard/guard/node_modules/expo/android/src/main/java/expo/modules/ReactNativeHostWrapper.kt:47:60 'class ReactNativeHost : Any' is deprecated. Deprecated in Java.
+2026-03-17T17:32:49.6283444Z w: file:///home/runner/work/guard/guard/node_modules/expo/android/src/main/java/expo/modules/ReactNativeHostWrapperBase.kt:7:8 'class ReactNativeHost : Any' is deprecated. Deprecated in Java.
+2026-03-17T17:32:49.6286031Z w: file:///home/runner/work/guard/guard/node_modules/expo/android/src/main/java/expo/modules/ReactNativeHostWrapperBase.kt:16:23 'class ReactNativeHost : Any' is deprecated. Deprecated in Java.
+2026-03-17T17:32:49.6288322Z w: file:///home/runner/work/guard/guard/node_modules/expo/android/src/main/java/expo/modules/ReactNativeHostWrapperBase.kt:89:16 'class ReactNativeHost : Any' is deprecated. Deprecated in Java.
+2026-03-17T17:32:49.6290735Z w: file:///home/runner/work/guard/guard/node_modules/expo/android/src/main/java/expo/modules/ReactNativeHostWrapperBase.kt:101:38 'class ReactNativeHost : Any' is deprecated. Deprecated in Java.
+2026-03-17T17:32:49.6293217Z w: file:///home/runner/work/guard/guard/node_modules/expo/android/src/main/java/expo/modules/fetch/ExpoFetchModule.kt:30:39 'constructor(reactContext: ReactContext): ForwardingCookieHandler' is deprecated. Use the default constructor.
+2026-03-17T17:32:49.6296441Z w: file:///home/runner/work/guard/guard/node_modules/expo/android/src/main/java/expo/modules/fetch/NativeResponse.kt:42:16 This declaration overrides a deprecated member but is not marked as deprecated itself. Add the '@Deprecated' annotation or suppress the diagnostic.
+2026-03-17T17:32:49.6299585Z w: file:///home/runner/work/guard/guard/node_modules/expo/android/src/main/java/expo/modules/fetch/NativeResponse.kt:44:11 'fun deallocate(): Unit' is deprecated. Use sharedObjectDidRelease() instead.
+2026-03-17T17:32:49.7201966Z 
+2026-03-17T17:32:49.7202672Z > Task :expo-constants:bundleLibRuntimeToDirDebug
+2026-03-17T17:32:51.8200002Z 
+2026-03-17T17:32:51.8200831Z > Task :react-native-worklets:configureCMakeDebug[arm64-v8a]
+2026-03-17T17:32:51.8201959Z Checking the license for package CMake 3.22.1 in /usr/local/lib/android/sdk/licenses
+2026-03-17T17:32:51.8202855Z License for package CMake 3.22.1 accepted.
+2026-03-17T17:32:51.8203490Z Preparing "Install CMake 3.22.1 v.3.22.1".
+2026-03-17T17:32:51.9199645Z 
+2026-03-17T17:32:51.9225651Z > Task :expo:compileDebugJavaWithJavac
+2026-03-17T17:32:52.0206636Z > Task :expo:bundleLibCompileToJarDebug
+2026-03-17T17:32:53.8201651Z e: file:///home/runner/work/guard/guard/android/app/src/main/java/com/guardian/app/MainApplication.kt:27:19 Unresolved reference 'SecurityPackage'.
+2026-03-17T17:32:53.8202712Z 
+2026-03-17T17:32:53.8206428Z > Task :app:compileDebugKotlin FAILED
+2026-03-17T17:32:53.9199913Z 
+2026-03-17T17:32:53.9227325Z > Task :react-native-worklets:configureCMakeDebug[arm64-v8a]
+2026-03-17T17:32:53.9228084Z "Install CMake 3.22.1 v.3.22.1" ready.
+2026-03-17T17:32:53.9228791Z Installing CMake 3.22.1 in /usr/local/lib/android/sdk/cmake/3.22.1
+2026-03-17T17:32:53.9229484Z "Install CMake 3.22.1 v.3.22.1" complete.
+2026-03-17T17:32:53.9230014Z "Install CMake 3.22.1 v.3.22.1" finished.
+2026-03-17T17:32:57.6200759Z 
+2026-03-17T17:32:57.6202083Z [Incubating] Problems report is available at: file:///home/runner/work/guard/guard/android/build/reports/problems/problems-report.html
+2026-03-17T17:32:57.7208672Z 
+2026-03-17T17:32:57.7209240Z FAILURE: Build failed with an exception.
+2026-03-17T17:32:57.7209579Z 
+2026-03-17T17:32:57.7209719Z * What went wrong:
+2026-03-17T17:32:57.7210181Z Execution failed for task ':app:compileDebugKotlin'.
+2026-03-17T17:32:57.7211385Z > A failure occurred while executing org.jetbrains.kotlin.compilerRunner.GradleCompilerRunnerWithWorkers$GradleKotlinCompilerWorkAction
+2026-03-17T17:32:57.7212402Z    > Compilation error. See log for more details
+2026-03-17T17:32:57.7212696Z 
+2026-03-17T17:32:57.7212798Z * Try:
+2026-03-17T17:32:57.7213231Z > Run with --stacktrace option to get the stack trace.
+2026-03-17T17:32:57.7213834Z > Run with --info or --debug option to get more log output.
+2026-03-17T17:32:57.7214374Z > Run with --scan to get full insights.
+2026-03-17T17:32:57.7215049Z > Get more help at https://help.gradle.org.
+2026-03-17T17:32:57.7215329Z 
+2026-03-17T17:32:57.7215466Z BUILD FAILED in 5m 8s
+2026-03-17T17:32:57.7215678Z 
+2026-03-17T17:32:57.7216199Z Deprecated Gradle features were used in this build, making it incompatible with Gradle 9.0.
+2026-03-17T17:32:57.7216691Z 
+2026-03-17T17:32:57.7217481Z You can use '--warning-mode all' to show the individual deprecation warnings and determine if they come from your own scripts or plugins.
+2026-03-17T17:32:57.7218194Z 
+2026-03-17T17:32:57.7219150Z For more on this, please refer to https://docs.gradle.org/8.14.3/userguide/command_line_interface.html#sec:command_line_warnings in the Gradle documentation.
+2026-03-17T17:32:57.7220141Z 231 actionable tasks: 231 executed
+2026-03-17T17:32:58.2062815Z ##[error]Process completed with exit code 1.
+2026-03-17T17:32:58.2165865Z Post job cleanup.
+2026-03-17T17:32:58.4006499Z Post job cleanup.
+2026-03-17T17:32:58.5019968Z [command]/usr/bin/git version
+2026-03-17T17:32:58.5062512Z git version 2.53.0
+2026-03-17T17:32:58.5109557Z Temporarily overriding HOME='/home/runner/work/_temp/1470864d-164a-47ec-bcdb-0aa37012eab6' before making global git config changes
+2026-03-17T17:32:58.5111080Z Adding repository directory to the temporary git global config as a safe directory
+2026-03-17T17:32:58.5125058Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/guard/guard
+2026-03-17T17:32:58.5162191Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-03-17T17:32:58.5197120Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-03-17T17:32:58.5468729Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-03-17T17:32:58.5492397Z http.https://github.com/.extraheader
+2026-03-17T17:32:58.5506151Z [command]/usr/bin/git config --local --unset-all http.https://github.com/.extraheader
+2026-03-17T17:32:58.5539932Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-03-17T17:32:58.5780662Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-03-17T17:32:58.5814687Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-03-17T17:32:58.6161743Z Cleaning up orphan processes
+2026-03-17T17:32:58.6506334Z Terminate orphan process: pid (2555) (java)
+2026-03-17T17:32:58.6530543Z Terminate orphan process: pid (2791) (java)
+2026-03-17T17:32:58.6560044Z Terminate orphan process: pid (2792) (java)
+2026-03-17T17:32:58.6576945Z ##[warning]Node.js 20 actions are deprecated. The following actions are running on Node.js 20 and may not work as expected: actions/checkout@v4, actions/setup-java@v4, actions/setup-node@v4. Actions will be forced to run with Node.js 24 by default starting June 2nd, 2026. Please check if updated versions of these actions are available that support Node.js 24. To opt into Node.js 24 now, set the FORCE_JAVASCRIPT_ACTIONS_TO_NODE24=true environment variable on the runner or in your workflow file. Once Node.js 24 becomes the default, you can temporarily opt out by setting ACTIONS_ALLOW_USE_UNSECURE_NODE_VERSION=true. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/
+
