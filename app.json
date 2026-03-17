@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "cto-expo-app",
-    "slug": "cto-expo-app",
+    "name": "guard",
+    "slug": "guard",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
@@ -14,7 +14,7 @@
     "android": {
       "package": "com.guardian.app",
       "adaptiveIcon": {
-        "backgroundColor": "#E6F4FE",
+        "backgroundColor": "#0a0b10",
         "foregroundImage": "./assets/images/android-icon-foreground.png",
         "backgroundImage": "./assets/images/android-icon-background.png",
         "monochromeImage": "./assets/images/android-icon-monochrome.png"

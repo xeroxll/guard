@@ -101,7 +101,7 @@ export default function SettingsScreen() {
         </View>
 
         <View className="items-center py-10">
-          <Text className="text-gray-600 text-[10px] uppercase font-bold tracking-widest">Guardian v1.0.1</Text>
+          <Text className="text-gray-600 text-[10px] uppercase font-bold tracking-widest">Guard v1.0.2</Text>
         </View>
       </ScrollView>
     </SafeAreaView>

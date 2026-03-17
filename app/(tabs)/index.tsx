@@ -18,7 +18,7 @@ export default function HomeScreen() {
               <MaterialCommunityIcons name="shield-check" size={28} color="white" />
             </View>
             <View>
-              <Text className="text-2xl font-bold text-white leading-tight">Guardian</Text>
+              <Text className="text-2xl font-bold text-white leading-tight">Guard</Text>
               <Text className="text-xs text-gray-400">Защита {isProtectionEnabled ? 'активна' : 'выключена'}</Text>
             </View>
           </View>
