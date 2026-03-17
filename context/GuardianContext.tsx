@@ -67,8 +67,13 @@ export function GuardianProvider({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     const init = async () => {
-      await loadData();
-      setIsInitialized(true);
+      try {
+        await loadData();
+      } catch (e) {
+        console.warn("Init failed:", e);
+      } finally {
+        setIsInitialized(true);
+      }
     };
     init();
 
