@@ -508,7 +508,7 @@ class GuardianViewModel(application: Application) : AndroidViewModel(application
                 )
                 
                 // Get current trusted apps for checking
-                val currentTrustedApps = trustedApps.replayCache.firstOrNull() ?: emptyList()
+                val currentTrustedApps = trustedApps.value
                 val trustedPackageNames = currentTrustedApps.map { it.packageName }.toSet()
                 
                 // Check each app
@@ -518,10 +518,10 @@ class GuardianViewModel(application: Application) : AndroidViewModel(application
                     val isSystemApp = (packageInfo.flags and ApplicationInfo.FLAG_SYSTEM) != 0 ||
                                        (packageInfo.flags and ApplicationInfo.FLAG_UPDATED_SYSTEM_APP) != 0
                     val isTrusted = trustedPackageNames.contains(packageInfo.packageName) || 
-                                    trustedPackageNames.any { packageInfo.packageName == it }
+                                    trustedPackageNames.any { trustedPkg -> packageInfo.packageName == trustedPkg }
                     
                     // Skip trusted apps and system apps immediately
-                    if (trustedApps.replayCache.firstOrNull()?.any { it.packageName == packageInfo.packageName } == true || 
+                    if (trustedApps.value.any { it.packageName == packageInfo.packageName } || 
                         trustedPackageNames.any { packageName == it.lowercase() } ||
                         isSystemApp ||
                         isTrusted) {
