@@ -8,6 +8,8 @@ import android.provider.DocumentsContract
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.animation.core.*
+import android.graphics.drawable.Drawable
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -24,12 +26,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.core.graphics.drawable.toBitmap
 import com.guardian.app.data.api.VirusTotalResult
 import com.guardian.app.ui.theme.*
 import com.guardian.app.viewmodel.GuardianViewModel
@@ -838,9 +842,15 @@ private fun AppListItem(
     onUninstall: () -> Unit,
     isDarkTheme: Boolean = isSystemInDarkTheme()
 ) {
+    val context = LocalContext.current
     val textColor = if (isDarkTheme) Color.White else Color(0xFF1E293B)
     val grayText = if (isDarkTheme) Color.Gray else Color(0xFF64748B)
     val cardBackground = if (isDarkTheme) GuardianSurface else GuardianSurfaceLight
+    
+    // Load app icon
+    val appIcon by remember(app.packageName) {
+        mutableStateOf(loadAppIcon(context, app.packageName))
+    }
     
     Card(
         shape = RoundedCornerShape(12.dp),
@@ -853,39 +863,47 @@ private fun AppListItem(
                 .padding(12.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            // App icon placeholder
+            // App icon
             Box(
                 modifier = Modifier
-                    .size(44.dp)
-                    .clip(RoundedCornerShape(10.dp))
+                    .size(48.dp)
+                    .clip(RoundedCornerShape(12.dp))
                     .background(
                         when {
                             isTrusted -> GuardianGreen.copy(alpha = 0.2f)
                             app.isThreat -> GuardianRed.copy(alpha = 0.2f)
                             app.isSystemApp -> GuardianBlue.copy(alpha = 0.1f)
-                            else -> GuardianGreen.copy(alpha = 0.1f)
+                            else -> Color.Transparent
                         }
                     ),
                 contentAlignment = Alignment.Center
             ) {
-                Icon(
-                    imageVector = when {
-                        isTrusted -> Icons.Default.CheckCircle
-                        app.isThreat -> Icons.Default.Warning
-                        app.virusTotalResult != null -> Icons.Default.BugReport
-                        app.isSystemApp -> Icons.Default.Android
-                        else -> Icons.Default.CheckCircle
-                    },
-                    contentDescription = null,
-                    tint = when {
-                        isTrusted -> GuardianGreen
-                        app.isThreat -> GuardianRed
-                        app.virusTotalResult != null -> GuardianYellow
-                        app.isSystemApp -> GuardianBlue
-                        else -> GuardianGreen
-                    },
-                    modifier = Modifier.size(22.dp)
-                )
+                if (appIcon != null) {
+                    Image(
+                        bitmap = appIcon!!.toBitmap().asImageBitmap(),
+                        contentDescription = null,
+                        modifier = Modifier.fillMaxSize()
+                    )
+                } else {
+                    Icon(
+                        imageVector = when {
+                            isTrusted -> Icons.Default.CheckCircle
+                            app.isThreat -> Icons.Default.Warning
+                            app.virusTotalResult != null -> Icons.Default.BugReport
+                            app.isSystemApp -> Icons.Default.Android
+                            else -> Icons.Default.Apps
+                        },
+                        contentDescription = null,
+                        tint = when {
+                            isTrusted -> GuardianGreen
+                            app.isThreat -> GuardianRed
+                            app.virusTotalResult != null -> GuardianYellow
+                            app.isSystemApp -> GuardianBlue
+                            else -> grayText
+                        },
+                        modifier = Modifier.size(28.dp)
+                    )
+                }
             }
             
             Spacer(modifier = Modifier.width(12.dp))
@@ -1009,4 +1027,13 @@ private fun AppListItem(
 private fun formatTime(timestamp: Long): String {
     val sdf = java.text.SimpleDateFormat("dd MMM HH:mm", java.util.Locale.getDefault())
     return sdf.format(java.util.Date(timestamp))
+}
+
+private fun loadAppIcon(context: Context, packageName: String): Drawable? {
+    return try {
+        val pm = context.packageManager
+        pm.getApplicationIcon(packageName)
+    } catch (e: Exception) {
+        null
+    }
 }
