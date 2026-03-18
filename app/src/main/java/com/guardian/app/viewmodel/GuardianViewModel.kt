@@ -151,15 +151,19 @@ class GuardianViewModel(application: Application) : AndroidViewModel(application
                 var threatsFound = 0
                 val detectedThreats = mutableListOf<Pair<String, String>>()
                 
-                // Known dangerous packages (real malware patterns)
+                // Known dangerous packages (real malware patterns) - more specific
                 val dangerousPatterns = listOf(
-                    "com.android.vending", // Play Store
+                    // Actual malware patterns
+                    "trojan", "malware", "virus", "backdoor", "spyware",
+                    "keylog", "ransomware", "botnet", "worm", "rootkit",
+                    "stealer", "miner", "dropper", "injector", "hook",
+                    // Suspicious fake apps
+                    "free.vip", "free.premium", "free.pro", "hack.tool",
+                    "crack.tool", "bypass.premium", "cheat.game",
+                    // Known malware packages
+                    "com.android.vending.billing", // Fake billing
                     "com.svidersk", "com.zmzpass", "com.crypt",
-                    "com.malware", "com.virus", "com.trojan",
                     "com.hack", "com.keylog", "com.spy",
-                    "com.remote", "com.admin", "com.root",
-                    "com.system", "com.advanced", "com.powerful",
-                    "free.", "pro.", "vip.", "premium.",
                     ".hacker", ".cracker", ".bypass"
                 )
                 
@@ -210,20 +214,33 @@ class GuardianViewModel(application: Application) : AndroidViewModel(application
                     val isSystemApp = (packageInfo.flags and ApplicationInfo.FLAG_SYSTEM) != 0
                     val isUpdatedSystemApp = (packageInfo.flags and ApplicationInfo.FLAG_UPDATED_SYSTEM_APP) != 0
                     
-                    if ((isDangerousPattern && !isSystemApp) || (hasSuspiciousPerms && !isSystemApp)) {
+                    // Flag as threat if: blacklist match OR (dangerous name pattern AND not system) OR (very dangerous perms)
+                    // Only flag permissions for non-system apps to avoid false positives
+                    val hasVeryDangerousPerms = try {
+                        val packageInfoFull = pm.getPackageInfo(packageInfo.packageName, PackageManager.GET_PERMISSIONS)
+                        val requestedPermissions = packageInfoFull.requestedPermissions?.toList() ?: emptyList()
+                        val veryDangerousPerms = listOf(
+                            "android.permission.READ_SMS",
+                            "android.permission.SEND_SMS",
+                            "android.permission.RECEIVE_SMS",
+                            "android.permission.READ_CALL_LOG",
+                            "android.permission.PROCESS_OUTGOING_CALLS"
+                        )
+                        // Only flag if has 2+ VERY dangerous perms
+                        requestedPermissions.count { veryDangerousPerms.contains(it) } >= 2
+                    } catch (e: Exception) { false }
+                    
+                    if (isDangerousPattern || hasVeryDangerousPerms) {
                         threatsFound++
                         val reason = when {
-                            isDangerousPattern -> "Suspicious package name"
-                            hasSuspiciousPerms -> "Dangerous permissions (${try {
-                                val pi = pm.getPackageInfo(packageInfo.packageName, PackageManager.GET_PERMISSIONS)
-                                pi.requestedPermissions?.count { it.contains("android.permission") } ?: 0
-                            } catch (e: Exception) { 0 }})"
-                            else -> "Potential threat"
+                            isDangerousPattern -> "Подозрительное имя пакета"
+                            hasVeryDangerousPerms -> "Опасные разрешения"
+                            else -> "Потенциальная угроза"
                         }
                         detectedThreats.add(appName to reason)
                         repository.addEvent(
                             EventType.APP_BLOCKED,
-                            "⚠️ Suspicious App",
+                            "⚠️ Подозрительное приложение",
                             "$appName - $reason",
                             packageInfo.packageName
                         )

@@ -22,11 +22,21 @@ import com.guardian.app.ui.theme.*
 import com.guardian.app.viewmodel.GuardianViewModel
 
 @Composable
-fun HomeScreen(viewModel: GuardianViewModel) {
+fun HomeScreen(
+    viewModel: GuardianViewModel,
+    onNavigateToEvents: () -> Unit = {}
+) {
     val isProtectionEnabled by viewModel.isProtectionEnabled.collectAsState()
     val isUsbMonitorEnabled by viewModel.isUsbMonitorEnabled.collectAsState()
     val stats by viewModel.stats.collectAsState()
     val events by viewModel.events.collectAsState()
+    val isDarkTheme by viewModel.isDarkTheme.collectAsState()
+    
+    // Theme-aware colors
+    val backgroundColor = if (isDarkTheme) GuardianBackground else GuardianBackgroundLight
+    val surfaceColor = if (isDarkTheme) GuardianSurface else GuardianSurfaceLight
+    val textColor = if (isDarkTheme) Color.White else Color(0xFF1E293B)
+    val grayText = if (isDarkTheme) Color.Gray else Color(0xFF64748B)
     
     val scanProgress = if (stats.appsScanned > 0) {
         (stats.appsScanned.toFloat() / 200 * 100).coerceIn(0f, 100f)
@@ -37,7 +47,7 @@ fun HomeScreen(viewModel: GuardianViewModel) {
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(GuardianBackground)
+            .background(backgroundColor)
             .padding(16.dp)
     ) {
         // Header
@@ -50,7 +60,7 @@ fun HomeScreen(viewModel: GuardianViewModel) {
                 Text(
                     text = "Guardian",
                     style = MaterialTheme.typography.headlineLarge,
-                    color = Color.White,
+                    color = textColor,
                     fontWeight = FontWeight.Bold
                 )
                 Text(
@@ -64,9 +74,9 @@ fun HomeScreen(viewModel: GuardianViewModel) {
                 checked = isProtectionEnabled,
                 onCheckedChange = { viewModel.setProtectionEnabled(it) },
                 colors = SwitchDefaults.colors(
-                    checkedThumbColor = Color.White,
+                    checkedThumbColor = textColor,
                     checkedTrackColor = GuardianGreen,
-                    uncheckedThumbColor = Color.White,
+                    uncheckedThumbColor = textColor,
                     uncheckedTrackColor = GuardianSurfaceVariant
                 )
             )
@@ -145,7 +155,7 @@ fun HomeScreen(viewModel: GuardianViewModel) {
                     Text(
                         text = "Статус сканирования",
                         style = MaterialTheme.typography.titleMedium,
-                        color = Color.White,
+                        color = textColor,
                         fontWeight = FontWeight.SemiBold
                     )
                     Text(
@@ -244,12 +254,25 @@ fun HomeScreen(viewModel: GuardianViewModel) {
         Spacer(modifier = Modifier.height(24.dp))
         
         // Recent Activity
-        Text(
-            text = "Последняя активность",
-            style = MaterialTheme.typography.titleMedium,
-            color = Color.White,
-            modifier = Modifier.padding(bottom = 12.dp)
-        )
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .clickable { onNavigateToEvents() }
+                .padding(bottom = 12.dp),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Text(
+                text = "Последняя активность",
+                style = MaterialTheme.typography.titleMedium,
+                color = textColor
+            )
+            Icon(
+                imageVector = Icons.Default.ChevronRight,
+                contentDescription = "Перейти к журналу",
+                tint = grayText
+            )
+        }
         
         if (recentEvents.isEmpty()) {
             Card(
@@ -297,7 +320,7 @@ fun HomeScreen(viewModel: GuardianViewModel) {
         Text(
             text = "Быстрые действия",
             style = MaterialTheme.typography.titleMedium,
-            color = Color.White,
+            color = textColor,
             modifier = Modifier.padding(bottom = 12.dp)
         )
         
@@ -381,7 +404,7 @@ private fun EventItem(
                 Text(
                     text = title.replace(Regex("[📱🔍✅⚠️🦠⏳❌]"), "").trim(),
                     style = MaterialTheme.typography.titleSmall,
-                    color = Color.White
+                    color = textColor
                 )
                 Text(
                     text = description,
@@ -427,7 +450,7 @@ private fun StatCard(
             Text(
                 text = value,
                 style = MaterialTheme.typography.titleMedium,
-                color = Color.White,
+                color = textColor,
                 fontWeight = FontWeight.Bold
             )
             Text(
@@ -476,7 +499,7 @@ private fun QuickActionCard(
                 Text(
                     text = title,
                     style = MaterialTheme.typography.titleSmall,
-                    color = Color.White
+                    color = textColor
                 )
                 Text(
                     text = subtitle,

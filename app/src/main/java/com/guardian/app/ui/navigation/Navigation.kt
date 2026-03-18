@@ -18,10 +18,10 @@ import com.guardian.app.ui.screens.*
 import com.guardian.app.viewmodel.GuardianViewModel
 
 sealed class Screen(val route: String, val title: String, val icon: ImageVector) {
-    object Home : Screen("home", "Shield", Icons.Default.Shield)
-    object Scan : Screen("scan", "Scan", Icons.Default.Security)
-    object Events : Screen("events", "Events", Icons.Default.History)
-    object Settings : Screen("settings", "Settings", Icons.Default.Settings)
+    object Home : Screen("home", "Главная", Icons.Default.Shield)
+    object Scan : Screen("scan", "Сканер", Icons.Default.Security)
+    object Events : Screen("events", "Журнал", Icons.Default.History)
+    object Settings : Screen("settings", "Настройки", Icons.Default.Settings)
 }
 
 val screens = listOf(Screen.Home, Screen.Scan, Screen.Events, Screen.Settings)
@@ -68,7 +68,17 @@ fun GuardianNavigation() {
             startDestination = Screen.Home.route,
             modifier = Modifier.padding(innerPadding)
         ) {
-            composable(Screen.Home.route) { HomeScreen(viewModel) }
+            composable(Screen.Home.route) { 
+                HomeScreen(viewModel) {
+                    navController.navigate(Screen.Events.route) {
+                        popUpTo(navController.graph.findStartDestination().id) {
+                            saveState = true
+                        }
+                        launchSingleTop = true
+                        restoreState = true
+                    }
+                }
+            }
             composable(Screen.Scan.route) { ScanScreen(viewModel) }
             composable(Screen.Events.route) { EventsScreen(viewModel) }
             composable(Screen.Settings.route) { SettingsScreen(viewModel) }
