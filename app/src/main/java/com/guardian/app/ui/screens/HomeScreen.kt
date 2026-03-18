@@ -4,8 +4,10 @@ import androidx.compose.animation.core.*
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.*
@@ -47,12 +49,14 @@ fun HomeScreen(
     } else 0f
     
     val recentEvents = events.take(5)
+    val scrollState = rememberScrollState()
     
     Column(
         modifier = Modifier
             .fillMaxSize()
             .background(backgroundColor)
             .padding(16.dp)
+            .verticalScroll(scrollState)
     ) {
         // Header
         Row(
@@ -234,7 +238,11 @@ fun HomeScreen(
                     },
                 shape = RoundedCornerShape(16.dp),
                 colors = CardDefaults.cardColors(
-                    containerColor = GuardianRed.copy(alpha = 0.15f)
+                    containerColor = if (isDarkTheme) GuardianRed.copy(alpha = 0.15f) else Color(0xFFFEF2F2)
+                ),
+                border = androidx.compose.foundation.BorderStroke(
+                    width = 1.dp,
+                    color = if (isDarkTheme) GuardianRed.copy(alpha = 0.3f) else GuardianRed.copy(alpha = 0.2f)
                 ),
                 elevation = CardDefaults.cardElevation(defaultElevation = if (isDarkTheme) 0.dp else 2.dp)
             ) {
@@ -247,14 +255,17 @@ fun HomeScreen(
                     Box(
                         modifier = Modifier
                             .size(48.dp)
-                            .background(GuardianRed.copy(alpha = 0.2f), CircleShape),
+                            .background(
+                                color = if (isDarkTheme) GuardianRed.copy(alpha = 0.2f) else GuardianRed.copy(alpha = 0.1f),
+                                shape = CircleShape
+                            ),
                         contentAlignment = Alignment.Center
                     ) {
                         Icon(
                             imageVector = Icons.Default.Warning,
                             contentDescription = null,
                             modifier = Modifier.size(28.dp),
-                            tint = GuardianRed
+                            tint = if (isDarkTheme) GuardianRed else GuardianRedLight
                         )
                     }
                     
@@ -264,20 +275,20 @@ fun HomeScreen(
                         Text(
                             text = "USB отладка включена",
                             style = MaterialTheme.typography.titleMedium,
-                            color = GuardianRed,
+                            color = if (isDarkTheme) GuardianRed else GuardianRedLight,
                             fontWeight = FontWeight.SemiBold
                         )
                         Text(
                             text = "Нажмите, чтобы открыть настройки разработчика и выключить",
                             style = MaterialTheme.typography.bodySmall,
-                            color = if (isDarkTheme) Color.Gray else Color(0xFF64748B)
+                            color = grayText
                         )
                     }
                     
                     Icon(
                         imageVector = Icons.Default.ChevronRight,
                         contentDescription = null,
-                        tint = GuardianRed
+                        tint = if (isDarkTheme) GuardianRed else GuardianRedLight
                     )
                 }
             }
