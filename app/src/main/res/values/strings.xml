@@ -59,4 +59,12 @@
     <string name="usb_connected">USB Connected</string>
     <string name="usb_warning">USB Warning</string>
     <string name="usb_connected_message">USB connected - ensure debugging is disabled</string>
+    <string name="device_admin_required">Device Admin Required</string>
+    <string name="device_admin_description">Guardian needs device admin access to block apps</string>
+    <string name="enable">Enable</string>
+    <string name="usage_stats_required">Usage Access Required</string>
+    <string name="usage_stats_description">Please grant Usage Access for app monitoring</string>
+    <string name="grant_permission">Grant Permission</string>
+    <string name="notification_permission_required">Notification Permission</string>
+    <string name="notification_permission_description">Enable notifications to receive security alerts</string>
 </resources>
