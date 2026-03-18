@@ -805,7 +805,7 @@ class UsbMonitorReceiver : BroadcastReceiver() {
     }
 }
 
-// Enhanced App installation tracker
+// Enhanced App installation tracker with virus scanning
 class AppMonitorReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent) {
         val packageName = intent.data?.schemeSpecificPart ?: return
@@ -821,46 +821,98 @@ class AppMonitorReceiver : BroadcastReceiver() {
                 when (intent.action) {
                     Intent.ACTION_PACKAGE_ADDED -> {
                         if (!isReplacing) {
-                            // Analyze new app
-                            val (riskScore, dangerousPerms) = analyzeAppPermissions(context, packageName)
+                            // Perform full security scan on newly installed app
+                            val scanResult = performSecurityScan(context, packageName, appName)
                             
-                            val eventType = if (riskScore >= 10) {
-                                EventType.APP_BLOCKED
-                            } else {
-                                EventType.APP_INSTALLED
-                            }
-                            
-                            val title = if (riskScore >= 10) {
-                                "🚨 Подозрительное приложение установлено"
-                            } else {
-                                "📱 Приложение установлено"
-                            }
-                            
-                            val message = if (riskScore >= 10) {
-                                "$appName - опасные разрешения: ${dangerousPerms.take(3).joinToString(", ")} (риск: $riskScore)"
-                            } else {
-                                appName
-                            }
-                            
-                            logEvent(context, eventType, title, message, packageName)
-                            
-                            if (riskScore >= 10) {
-                                showNotification(
-                                    context,
-                                    "🚨 Внимание! Опасное приложение",
-                                    "$appName имеет подозрительные разрешения",
-                                    "app:$packageName"
-                                )
+                            when (scanResult.threatLevel) {
+                                ThreatLevel.CRITICAL -> {
+                                    logEvent(
+                                        context, 
+                                        EventType.APP_BLOCKED,
+                                        "🚨 ВРЕДОНОСНОЕ ПРИЛОЖЕНИЕ!",
+                                        "$appName - ${scanResult.reason} (риск: ${scanResult.riskScore}/10)",
+                                        packageName
+                                    )
+                                    showNotification(
+                                        context,
+                                        "🚨 ВРЕДОНОСНОЕ ПРИЛОЖЕНИЕ УСТАНОВЛЕНО!",
+                                        "$appName - ${scanResult.reason}. Рекомендуется немедленное удаление!",
+                                        "app_threat:$packageName"
+                                    )
+                                }
+                                ThreatLevel.HIGH -> {
+                                    logEvent(
+                                        context,
+                                        EventType.APP_BLOCKED,
+                                        "⚠️ Подозрительное приложение",
+                                        "$appName - ${scanResult.reason} (риск: ${scanResult.riskScore}/10)",
+                                        packageName
+                                    )
+                                    showNotification(
+                                        context,
+                                        "⚠️ Опасное приложение установлено",
+                                        "$appName - ${scanResult.reason}",
+                                        "app_suspicious:$packageName"
+                                    )
+                                }
+                                ThreatLevel.MEDIUM -> {
+                                    logEvent(
+                                        context,
+                                        EventType.APP_INSTALLED,
+                                        "📱 Приложение установлено (проверено)",
+                                        "$appName - обнаружены потенциально опасные разрешения",
+                                        packageName
+                                    )
+                                    showNotification(
+                                        context,
+                                        "📱 Приложение установлено",
+                                        "$appName - требует внимания (риск: ${scanResult.riskScore})",
+                                        "app_installed:$packageName"
+                                    )
+                                }
+                                ThreatLevel.LOW -> {
+                                    logEvent(
+                                        context,
+                                        EventType.APP_INSTALLED,
+                                        "📱 Приложение установлено",
+                                        "$appName - безопасно",
+                                        packageName
+                                    )
+                                    showNotification(
+                                        context,
+                                        "✅ Приложение установлено",
+                                        "$appName - проверка завершена, угроз не обнаружено",
+                                        "app_safe:$packageName"
+                                    )
+                                }
                             }
                         } else {
-                            // App updated
-                            logEvent(
-                                context,
-                                EventType.APP_INSTALLED,
-                                "🔄 Приложение обновлено",
-                                appName,
-                                packageName
-                            )
+                            // App updated - quick check
+                            val (riskScore, dangerousPerms) = analyzeAppPermissions(context, packageName)
+                            
+                            if (riskScore >= 10) {
+                                logEvent(
+                                    context,
+                                    EventType.APP_BLOCKED,
+                                    "🔄 Обновление с угрозой",
+                                    "$appName - после обновления обнаружены опасные разрешения (риск: $riskScore)",
+                                    packageName
+                                )
+                                showNotification(
+                                    context,
+                                    "⚠️ Опасное обновление",
+                                    "$appName - новая версия содержит подозрительные разрешения",
+                                    "app_update:$packageName"
+                                )
+                            } else {
+                                logEvent(
+                                    context,
+                                    EventType.APP_INSTALLED,
+                                    "🔄 Приложение обновлено",
+                                    "$appName",
+                                    packageName
+                                )
+                            }
                         }
                     }
                     Intent.ACTION_PACKAGE_REMOVED -> {
@@ -872,6 +924,12 @@ class AppMonitorReceiver : BroadcastReceiver() {
                                 appName,
                                 packageName
                             )
+                            showNotification(
+                                context,
+                                "🗑️ Приложение удалено",
+                                "$appName было удалено с устройства",
+                                "app_removed:$packageName"
+                            )
                         }
                     }
                 }
@@ -879,5 +937,100 @@ class AppMonitorReceiver : BroadcastReceiver() {
                 // Ignore errors
             }
         }
+    }
+    
+    // Comprehensive security scan result
+    data class ScanResult(
+        val threatLevel: ThreatLevel,
+        val riskScore: Int,
+        val reason: String,
+        val details: List<String>
+    )
+    
+    enum class ThreatLevel {
+        CRITICAL, HIGH, MEDIUM, LOW
+    }
+    
+    // Perform comprehensive security scan on app
+    private fun performSecurityScan(context: Context, packageName: String, appName: String): ScanResult {
+        val details = mutableListOf<String>()
+        var riskScore = 0
+        
+        // Check 1: Is it a known trusted app?
+        val trustedApps = setOf(
+            "com.guardian.app", "com.google.android.youtube", "com.whatsapp", "org.telegram.messenger",
+            "com.vkontakte.android", "com.instagram.android", "com.facebook.katana",
+            "ru.sberbankmobile", "com.idamob.tinkoff.android", "ru.yandex.searchplugin",
+            "ru.megafon.mlk", "ru.mts.mymts", "ru.beeline.services", "ru.tele2.mytele2"
+        )
+        
+        if (trustedApps.contains(packageName) || 
+            packageName.startsWith("com.google.android") ||
+            packageName.startsWith("com.android") ||
+            packageName.startsWith("ru.yandex")) {
+            return ScanResult(ThreatLevel.LOW, 0, "Доверенное приложение", emptyList())
+        }
+        
+        // Check 2: Malware signatures in package name
+        val malwareSignatures = mapOf(
+            "trojan" to 10, "backdoor" to 10, "rat" to 9, "spyware" to 9,
+            "spy" to 7, "keylog" to 10, "stealer" to 9, "ransomware" to 10,
+            "banker" to 10, "bankbot" to 10, "smsfraud" to 9, "miner" to 8,
+            "adware" to 6, "riskware" to 7, "hack" to 7, "cracker" to 7,
+            "dropper" to 9, "rootkit" to 10, "botnet" to 10, "worm" to 9,
+            "fake" to 7, "fraud" to 8, "phishing" to 9, "pegasus" to 10,
+            "anubis" to 10, "cerberus" to 10, "eventbot" to 10, "sharkbot" to 10
+        )
+        
+        val lowerPackage = packageName.lowercase()
+        for ((signature, score) in malwareSignatures) {
+            if (lowerPackage.contains(signature)) {
+                riskScore += score
+                details.add("Сигнатура malware: $signature")
+            }
+        }
+        
+        // Check 3: Analyze permissions
+        val (permRisk, dangerousPerms) = analyzeAppPermissions(context, packageName)
+        riskScore += permRisk
+        if (dangerousPerms.isNotEmpty()) {
+            details.addAll(dangerousPerms.take(5))
+        }
+        
+        // Check 4: Is it a system app?
+        try {
+            val pm = context.packageManager
+            val appInfo = pm.getApplicationInfo(packageName, 0)
+            if ((appInfo.flags and android.content.pm.ApplicationInfo.FLAG_SYSTEM) != 0 ||
+                (appInfo.flags and android.content.pm.ApplicationInfo.FLAG_UPDATED_SYSTEM_APP) != 0) {
+                // System apps are generally trusted
+                riskScore = (riskScore * 0.3).toInt() // Reduce risk for system apps
+                details.add("Системное приложение")
+            }
+        } catch (e: Exception) { }
+        
+        // Determine threat level
+        val threatLevel = when {
+            riskScore >= 10 -> ThreatLevel.CRITICAL
+            riskScore >= 7 -> ThreatLevel.HIGH
+            riskScore >= 4 -> ThreatLevel.MEDIUM
+            else -> ThreatLevel.LOW
+        }
+        
+        val reason = when {
+            details.any { it.contains("malware") || it.contains("Сигнатура") } -> 
+                "Обнаружены вредоносные сигнатуры"
+            details.any { it.contains("BIND_ACCESSIBILITY") } -> 
+                "Требует доступ к специальным возможностям (может перехватывать ввод)"
+            details.any { it.contains("SEND_SMS") || it.contains("PROCESS_OUTGOING_CALLS") } -> 
+                "Может отправлять SMS/звонить без вашего ведома"
+            details.any { it.contains("READ_SMS") || it.contains("READ_CONTACTS") } -> 
+                "Доступ к личным данным (SMS, контакты)"
+            dangerousPerms.isNotEmpty() -> 
+                "Опасные разрешения: ${dangerousPerms.take(3).joinToString(", ")}"
+            else -> "Приложение безопасно"
+        }
+        
+        return ScanResult(threatLevel, riskScore.coerceAtMost(10), reason, details)
     }
 }
