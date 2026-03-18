@@ -264,7 +264,7 @@ class GuardianViewModel(application: Application) : AndroidViewModel(application
                 )
                 
                 // Known trusted apps (popular legitimate apps that should never be flagged)
-                val trustedApps = setOf(
+                val hardcodedTrustedApps = setOf(
                     // Own app
                     "com.guardian.app",
                     
@@ -508,7 +508,7 @@ class GuardianViewModel(application: Application) : AndroidViewModel(application
                 )
                 
                 // Get current trusted apps for checking
-                val currentTrustedApps = trustedApps.value
+                val currentTrustedApps = this@GuardianViewModel.trustedApps.value
                 val trustedPackageNames = currentTrustedApps.map { it.packageName }.toSet()
                 
                 // Check each app
@@ -517,20 +517,19 @@ class GuardianViewModel(application: Application) : AndroidViewModel(application
                     val appName = pm.getApplicationLabel(packageInfo).toString()
                     val isSystemApp = (packageInfo.flags and ApplicationInfo.FLAG_SYSTEM) != 0 ||
                                        (packageInfo.flags and ApplicationInfo.FLAG_UPDATED_SYSTEM_APP) != 0
-                    val isTrusted = trustedPackageNames.contains(packageInfo.packageName) || 
-                                    trustedPackageNames.any { trustedPkg -> packageInfo.packageName == trustedPkg }
+                    val isUserTrusted = trustedPackageNames.contains(packageInfo.packageName) || 
+                                        trustedPackageNames.any { trustedPkg -> packageInfo.packageName == trustedPkg }
+                    val isHardcodedTrusted = hardcodedTrustedApps.contains(packageInfo.packageName) ||
+                                             hardcodedTrustedApps.any { hardcodedPkg -> packageInfo.packageName.contains(hardcodedPkg) }
                     
                     // Skip trusted apps and system apps immediately
-                    if (trustedApps.value.any { it.packageName == packageInfo.packageName } || 
-                        trustedPackageNames.any { packageName == it.lowercase() } ||
-                        isSystemApp ||
-                        isTrusted) {
+                    if (isUserTrusted || isHardcodedTrusted || isSystemApp) {
                         // Add as safe app
                         val scanResult = com.guardian.app.ui.screens.AppScanResult(
                             packageName = packageInfo.packageName,
                             appName = appName,
                             isThreat = false,
-                            threatType = if (isTrusted) "Доверенное приложение" else "",
+                            threatType = if (isUserTrusted) "Доверенное приложение" else "",
                             isSystemApp = isSystemApp
                         )
                         scanResultsData.add(scanResult)
