@@ -20,6 +20,8 @@ class GuardianViewModel(application: Application) : AndroidViewModel(application
     val blacklist = repository.blacklist.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
     val events = repository.events.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
     val stats = repository.stats.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), AppStats())
+    val isScanning = MutableStateFlow(false)
+    val usbStatus = repository.isUsbDebugEnabled
     
     // Actions
     fun toggleProtection() {

@@ -1,4 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Guardian</string>
+    
+    <!-- Status -->
+    <string name="usb_on">USB Debug ON</string>
+    <string name="usb_off">USB Debug OFF</string>
+    <string name="protection_active">Protected</string>
+    <string name="protection_inactive">Unprotected</string>
+    <string name="protection_enabled">Enabled</string>
+    <string name="protection_disabled">Disabled</string>
+    <string name="scanning">Scanning...</string>
 </resources>
