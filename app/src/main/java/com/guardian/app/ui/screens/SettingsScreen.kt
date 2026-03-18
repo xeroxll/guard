@@ -4,6 +4,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.*
@@ -13,6 +14,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import com.guardian.app.ui.theme.*
 import com.guardian.app.viewmodel.GuardianViewModel
@@ -22,6 +26,9 @@ fun SettingsScreen(viewModel: GuardianViewModel) {
     val isProtectionEnabled by viewModel.isProtectionEnabled.collectAsState()
     val isUsbMonitorEnabled by viewModel.isUsbMonitorEnabled.collectAsState()
     var showResetDialog by remember { mutableStateOf(false) }
+    var showApiKeyDialog by remember { mutableStateOf(false) }
+    var apiKeyInput by remember { mutableStateOf("") }
+    var showApiKey by remember { mutableStateOf(false) }
     
     Column(
         modifier = Modifier
@@ -160,6 +167,25 @@ fun SettingsScreen(viewModel: GuardianViewModel) {
         
         Spacer(modifier = Modifier.height(24.dp))
         
+        // VirusTotal Section
+        Text(
+            text = "VIRUSTOTAL",
+            style = MaterialTheme.typography.labelMedium,
+            color = GuardianPrimary,
+            fontWeight = FontWeight.SemiBold,
+            modifier = Modifier.padding(bottom = 12.dp)
+        )
+        
+        SettingsItem(
+            icon = Icons.Default.BugReport,
+            iconTint = if (viewModel.isVirusTotalApiKeyConfigured()) GuardianGreen else GuardianYellow,
+            title = "VirusTotal API Key",
+            subtitle = if (viewModel.isVirusTotalApiKeyConfigured()) "API key configured" else "Tap to configure",
+            onClick = { showApiKeyDialog = true }
+        )
+        
+        Spacer(modifier = Modifier.height(24.dp))
+        
         // Data Section
         Text(
             text = "DATA",
@@ -210,6 +236,84 @@ fun SettingsScreen(viewModel: GuardianViewModel) {
                 },
                 dismissButton = {
                     TextButton(onClick = { showResetDialog = false }) {
+                        Text("Cancel", color = Color.Gray)
+                    }
+                }
+            )
+        }
+        
+        // API Key Dialog
+        if (showApiKeyDialog) {
+            AlertDialog(
+                onDismissRequest = { showApiKeyDialog = false },
+                containerColor = GuardianSurface,
+                title = { 
+                    Text(
+                        "VirusTotal API Key", 
+                        color = Color.White, 
+                        fontWeight = FontWeight.Bold 
+                    ) 
+                },
+                text = {
+                    Column {
+                        Text(
+                            "Enter your VirusTotal API key to enable cloud scanning.",
+                            color = Color.Gray
+                        )
+                        Spacer(modifier = Modifier.height(8.dp))
+                        Text(
+                            "Get a free API key at virustotal.com",
+                            color = GuardianBlue,
+                            style = MaterialTheme.typography.bodySmall
+                        )
+                        Spacer(modifier = Modifier.height(16.dp))
+                        
+                        OutlinedTextField(
+                            value = apiKeyInput,
+                            onValueChange = { apiKeyInput = it },
+                            label = { Text("API Key") },
+                            singleLine = true,
+                            visualTransformation = if (showApiKey) VisualTransformation.None else PasswordVisualTransformation(),
+                            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
+                            trailingIcon = {
+                                IconButton(onClick = { showApiKey = !showApiKey }) {
+                                    Icon(
+                                        imageVector = if (showApiKey) Icons.Default.VisibilityOff else Icons.Default.Visibility,
+                                        contentDescription = if (showApiKey) "Hide" else "Show",
+                                        tint = Color.Gray
+                                    )
+                                }
+                            },
+                            colors = OutlinedTextFieldDefaults.colors(
+                                focusedTextColor = Color.White,
+                                unfocusedTextColor = Color.White,
+                                focusedBorderColor = GuardianBlue,
+                                unfocusedBorderColor = Color.Gray,
+                                focusedLabelColor = GuardianBlue,
+                                unfocusedLabelColor = Color.Gray
+                            ),
+                            modifier = Modifier.fillMaxWidth()
+                        )
+                    }
+                },
+                confirmButton = {
+                    TextButton(
+                        onClick = {
+                            if (apiKeyInput.isNotBlank()) {
+                                viewModel.setVirusTotalApiKey(apiKeyInput)
+                            }
+                            showApiKeyDialog = false
+                            apiKeyInput = ""
+                        }
+                    ) {
+                        Text("Save", color = GuardianGreen)
+                    }
+                },
+                dismissButton = {
+                    TextButton(onClick = { 
+                        showApiKeyDialog = false
+                        apiKeyInput = ""
+                    }) {
                         Text("Cancel", color = Color.Gray)
                     }
                 }

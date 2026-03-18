@@ -1,6 +1,7 @@
 package com.guardian.app.data.api
 
 import android.content.Context
+import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import android.util.Log
 import com.guardian.app.data.model.VirusTotalResponse
@@ -18,9 +19,22 @@ class VirusTotalService(private val context: Context) {
     companion object {
         private const val TAG = "VirusTotalService"
         private const val BASE_URL = "https://www.virustotal.com/"
-        // Note: In production, store this securely (e.g., encrypted in SharedPreferences)
-        // Get your free API key from https://www.virustotal.com/gui/join-us
-        private const val API_KEY = "YOUR_VIRUSTOTAL_API_KEY"
+        private const val PREFS_NAME = "virustotal_prefs"
+        private const val KEY_API_KEY = "api_key"
+    }
+    
+    private val prefs: SharedPreferences by lazy {
+        context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
+    }
+    
+    // Get API key from SharedPreferences or use default
+    private fun getApiKey(): String {
+        return prefs.getString(KEY_API_KEY, "") ?: ""
+    }
+    
+    // Save API key to SharedPreferences
+    fun setApiKey(apiKey: String) {
+        prefs.edit().putString(KEY_API_KEY, apiKey.trim()).apply()
     }
     
     private val okHttpClient: OkHttpClient by lazy {
@@ -47,34 +61,85 @@ class VirusTotalService(private val context: Context) {
     }
     
     /**
+     * Validate API key by making a test request
+     */
+    suspend fun validateApiKey(): ScanResult = withContext(Dispatchers.IO) {
+        val apiKey = getApiKey()
+        if (apiKey.isBlank()) {
+            return@withContext ScanResult.Error("API key not set. Please configure your VirusTotal API key in Settings.")
+        }
+        
+        try {
+            // Try to get info about a known file hash
+            // Using a test hash that should exist in VirusTotal database
+            val testHash = "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855" // empty file SHA256
+            val response = api.getFileReport(apiKey, testHash)
+            
+            if (response.error != null) {
+                return@withContext when {
+                    response.error.contains("quota", ignoreCase = true) -> ScanResult.RateLimited
+                    response.error.contains("Unauthorized", ignoreCase = true) -> 
+                        ScanResult.Error("Invalid API key. Please check your key and try again.")
+                    else -> ScanResult.Error(response.error)
+                }
+            }
+            
+            ScanResult.Success(
+                VirusTotalResult(
+                    isInfected = false,
+                    detectedBy = 0,
+                    totalScanners = 0,
+                    malwareName = null,
+                    scanDate = null,
+                    permalink = null
+                )
+            )
+        } catch (e: retrofit2.HttpException) {
+            when (e.code()) {
+                401 -> ScanResult.Error("Invalid API key. Please check your key.")
+                429 -> ScanResult.RateLimited
+                else -> ScanResult.Error("HTTP Error: ${e.code()}")
+            }
+        } catch (e: Exception) {
+            ScanResult.Error(e.message ?: "Unknown error validating API key")
+        }
+    }
+    
+    /**
      * Scans an installed app using VirusTotal API
-     * Returns scan result with detection statistics
      */
     suspend fun scanApp(packageName: String): ScanResult = withContext(Dispatchers.IO) {
+        val apiKey = getApiKey()
+        
+        if (apiKey.isBlank()) {
+            return@withContext ScanResult.Error("API key not configured. Please add it in Settings.")
+        }
+        
         try {
-            // Get APK file path
             val pm = context.packageManager
             val appInfo = pm.getApplicationInfo(packageName, 0)
             val apkPath = appInfo.sourceDir
             
-            // Calculate SHA-256 hash of the APK
             val sha256Hash = calculateFileHash(apkPath)
             if (sha256Hash == null) {
                 return@withContext ScanResult.Error("Could not calculate file hash")
             }
             
-            // Query VirusTotal API
-            val response = api.getFileReport(API_KEY, sha256Hash)
+            Log.d(TAG, "Checking hash: $sha256Hash for package: $packageName")
+            
+            val response = api.getFileReport(apiKey, sha256Hash)
             
             if (response.error != null) {
+                Log.e(TAG, "API Error: ${response.error}")
                 return@withContext when {
                     response.error.contains("quota", ignoreCase = true) -> ScanResult.RateLimited
                     response.error.contains("not found", ignoreCase = true) -> ScanResult.NotFound
+                    response.error.contains("Unauthorized", ignoreCase = true) -> 
+                        ScanResult.Error("Invalid API key")
                     else -> ScanResult.Error(response.error)
                 }
             }
             
-            // Parse the response
             val data = response.data
             if (data == null) {
                 return@withContext ScanResult.NotFound
@@ -88,15 +153,15 @@ class VirusTotalService(private val context: Context) {
             }
             
             val detectedCount = (stats.malicious ?: 0) + (stats.suspicious ?: 0)
-            val totalScanners = (stats.malicious ?: 0) + (stats.suspicious ?: 0) + 
-                              (stats.undetected ?: 0) + (stats.unchecked ?: 0) + 
-                              (stats.typeUnsupported ?: 0) + (stats.timeout ?: 0)
+            val totalScanners = listOfNotNull(
+                stats.malicious, stats.suspicious, stats.undetected, 
+                stats.harmless, stats.timeout, stats.typeUnsupported
+            ).sum()
             
-            // Get malware name if detected
             val malwareName = if (detectedCount > 0) {
                 attributes.lastAnalysisResults?.values
-                    ?.find { it.category == "malicious" }
-                    ?.result ?: "Unknown malware"
+                    ?.filter { it.category == "malicious" || it.category == "suspicious" }
+                    ?.firstNotNullOfOrNull { it.result } ?: "Detected by $detectedCount scanners"
             } else null
             
             val result = VirusTotalResult(
@@ -110,6 +175,8 @@ class VirusTotalService(private val context: Context) {
                 },
                 permalink = "https://www.virustotal.com/gui/file/$sha256Hash"
             )
+            
+            Log.d(TAG, "Scan result for $packageName: infected=${result.isInfected}, detected=${result.detectedBy}/${result.totalScanners}")
             
             ScanResult.Success(result)
             
@@ -125,30 +192,6 @@ class VirusTotalService(private val context: Context) {
             Log.e(TAG, "Error scanning app: ${e.message}", e)
             ScanResult.Error(e.message ?: "Unknown error")
         }
-    }
-    
-    /**
-     * Scan multiple apps and return results
-     */
-    suspend fun scanApps(
-        packageNames: List<String>, 
-        onProgress: (Int, Int, String) -> Unit
-    ): List<Pair<String, ScanResult>> = withContext(Dispatchers.IO) {
-        val results = mutableListOf<Pair<String, ScanResult>>()
-        
-        packageNames.forEachIndexed { index, packageName ->
-            onProgress(index + 1, packageNames.size, packageName)
-            
-            val result = scanApp(packageName)
-            results.add(packageName to result)
-            
-            // Rate limiting - VirusTotal free tier allows 4 requests per minute
-            if (index < packageNames.size - 1) {
-                kotlinx.coroutines.delay(16000) // 16 seconds between requests
-            }
-        }
-        
-        results
     }
     
     /**
@@ -193,5 +236,5 @@ class VirusTotalService(private val context: Context) {
     /**
      * Check if API key is configured
      */
-    fun isApiKeyConfigured(): Boolean = API_KEY != "YOUR_VIRUSTOTAL_API_KEY" && API_KEY.isNotBlank()
+    fun isApiKeyConfigured(): Boolean = getApiKey().isNotBlank()
 }

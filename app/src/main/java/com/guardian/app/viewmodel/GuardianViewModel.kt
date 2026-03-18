@@ -251,6 +251,10 @@ class GuardianViewModel(application: Application) : AndroidViewModel(application
     // VirusTotal scan methods
     fun isVirusTotalApiKeyConfigured(): Boolean = virusTotalService.isApiKeyConfigured()
     
+    fun setVirusTotalApiKey(apiKey: String) {
+        virusTotalService.setApiKey(apiKey)
+    }
+    
     fun startVirusTotalScan() {
         if (!virusTotalService.isApiKeyConfigured()) {
             viewModelScope.launch {
