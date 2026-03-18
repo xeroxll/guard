@@ -276,7 +276,10 @@ class GuardianViewModel(application: Application) : AndroidViewModel(application
                 val resultsMap = mutableMapOf<String, VirusTotalResult>()
                 var shouldStopScanning = false
                 
-                packageNames.forEachIndexed { index, packageName ->
+                for (index in packageNames.indices) {
+                    if (shouldStopScanning) break
+                    
+                    val packageName = packageNames[index]
                     _virusTotalProgress.value = Pair(index + 1, packageNames.size)
                     
                     val appName = try {
@@ -312,15 +315,12 @@ class GuardianViewModel(application: Application) : AndroidViewModel(application
                                 "⏳ Rate Limited",
                                 "VirusTotal API rate limit reached. Try again later."
                             )
-                            // Set flag to stop the loop
                             shouldStopScanning = true
                         }
                     }
                     
-                    if (shouldStopScanning) break
-                    
                     // Rate limiting for free API (4 requests/min)
-                    if (index < packageNames.size - 1) {
+                    if (index < packageNames.size - 1 && !shouldStopScanning) {
                         kotlinx.coroutines.delay(16000)
                     }
                 }
