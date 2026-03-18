@@ -10,4 +10,31 @@
     <string name="protection_enabled">Enabled</string>
     <string name="protection_disabled">Disabled</string>
     <string name="scanning">Scanning...</string>
+    
+    <!-- Home -->
+    <string name="usb_debug">USB Debug</string>
+    <string name="blocks">Blocks</string>
+    <string name="threats">Threats</string>
+    <string name="checks">Checks</string>
+    <string name="hours_24">24h</string>
+    <string name="working_time">Working Time</string>
+    
+    <!-- Blacklist -->
+    <string name="blacklist_title">Blacklist</string>
+    <string name="blacklist_subtitle">Manage blocked applications</string>
+    <string name="blacklist_empty">No blocked apps</string>
+    <string name="app_name_hint">App Name</string>
+    <string name="package_name_hint">Package Name</string>
+    
+    <!-- Log -->
+    <string name="log_title">Log</string>
+    <string name="log_subtitle">Security events history</string>
+    <string name="log_empty">No events</string>
+    
+    <!-- Settings -->
+    <string name="settings_title">Settings</string>
+    <string name="settings_subtitle">App preferences</string>
+    <string name="general_protection">Protection</string>
+    <string name="general_protection_desc">Enable or disable protection</string>
+    <string name="usb_debugging">USB Debugging</string>
 </resources>
