@@ -130,7 +130,14 @@ class GuardianRepository(private val context: Context) {
     suspend fun updateScanStats(appsScanned: Int) {
         context.dataStore.edit { prefs ->
             val current = parseStats(prefs[STATS] ?: "{}")
-            prefs[STATS] = """{"threatsBlocked":${current.threatsBlocked},"appsScanned":$appsScanned,"lastScanTime":${System.currentTimeMillis()}}"""
+            prefs[STATS] = """{"threatsBlocked":0,"appsScanned":$appsScanned,"lastScanTime":${System.currentTimeMillis()}}"""
+        }
+    }
+    
+    suspend fun resetBlockedCount() {
+        context.dataStore.edit { prefs ->
+            val current = parseStats(prefs[STATS] ?: "{}")
+            prefs[STATS] = """{"threatsBlocked":0,"appsScanned":${current.appsScanned},"lastScanTime":${current.lastScanTime}}"""
         }
     }
     

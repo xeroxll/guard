@@ -123,6 +123,9 @@ class GuardianViewModel(application: Application) : AndroidViewModel(application
     // Scan with real threat detection
     fun startScan() {
         viewModelScope.launch {
+            // Reset threat counter before scanning
+            repository.resetBlockedCount()
+            
             try {
                 val pm = getApplication<Application>().packageManager
                 val packages = pm.getInstalledApplications(PackageManager.GET_META_DATA)

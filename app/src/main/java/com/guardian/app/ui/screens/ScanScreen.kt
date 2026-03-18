@@ -314,8 +314,13 @@ fun ScanScreen(viewModel: GuardianViewModel) {
                 items(displayedApps) { app ->
                     AppListItem(
                         app = app,
+                        isBlacklisted = blacklist.any { it.packageName == app.packageName },
                         onAddToBlacklist = { 
                             viewModel.addToBlacklist(app.appName, app.packageName)
+                        },
+                        onRemoveFromBlacklist = {
+                            val blacklistedApp = blacklist.find { it.packageName == app.packageName }
+                            blacklistedApp?.let { viewModel.removeFromBlacklist(it.id) }
                         }
                     )
                 }
@@ -469,7 +474,9 @@ private fun StatCard(
 @Composable
 private fun AppListItem(
     app: AppScanResult,
-    onAddToBlacklist: () -> Unit
+    isBlacklisted: Boolean,
+    onAddToBlacklist: () -> Unit,
+    onRemoveFromBlacklist: () -> Unit
 ) {
     Card(
         shape = RoundedCornerShape(12.dp),
@@ -562,17 +569,17 @@ private fun AppListItem(
                 }
             }
             
-            // Add to blacklist button for threats
-            if (app.isThreat) {
+            // Add/Remove from blacklist button for threats
+            if (app.isThreat || isBlacklisted) {
                 Spacer(modifier = Modifier.width(8.dp))
                 IconButton(
-                    onClick = onAddToBlacklist,
+                    onClick = if (isBlacklisted) onRemoveFromBlacklist else onAddToBlacklist,
                     modifier = Modifier.size(32.dp)
                 ) {
                     Icon(
-                        imageVector = Icons.Default.Block,
-                        contentDescription = "Добавить в черный список",
-                        tint = GuardianRed,
+                        imageVector = if (isBlacklisted) Icons.Default.CheckCircle else Icons.Default.Block,
+                        contentDescription = if (isBlacklisted) "Удалить из черного списка" else "Добавить в черный список",
+                        tint = if (isBlacklisted) GuardianGreen else GuardianRed,
                         modifier = Modifier.size(20.dp)
                     )
                 }
