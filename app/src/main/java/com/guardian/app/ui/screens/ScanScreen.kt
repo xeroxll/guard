@@ -50,6 +50,7 @@ fun ScanScreen(viewModel: GuardianViewModel) {
     val context = LocalContext.current
     val stats by viewModel.stats.collectAsState()
     val blacklist by viewModel.blacklist.collectAsState()
+    val trustedApps by viewModel.trustedApps.collectAsState()
     val isVirusTotalScanning by viewModel.isVirusTotalScanning.collectAsState()
     val virusTotalProgress by viewModel.virusTotalProgress.collectAsState()
     val virusTotalResults by viewModel.virusTotalResults.collectAsState()
