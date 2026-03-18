@@ -224,11 +224,131 @@ class GuardianViewModel(application: Application) : AndroidViewModel(application
                     "com.lge", "com.motorola", "com.asus"
                 )
                 
+                // Known trusted apps (popular legitimate apps that should never be flagged)
+                val trustedApps = setOf(
+                    // Google apps
+                    "com.google.android.youtube",
+                    "com.google.android.apps.youtube.music",
+                    "com.google.android.apps.youtube.kids",
+                    "com.google.android.gm",  // Gmail
+                    "com.google.android.apps.maps",
+                    "com.google.android.apps.photos",
+                    "com.google.android.apps.docs",
+                    "com.google.android.apps.drive",
+                    "com.google.android.apps.translate",
+                    "com.google.android.apps.chrome",
+                    "com.google.android.apps.wallet",
+                    "com.google.android.apps.messaging",
+                    "com.google.android.dialer",
+                    "com.google.android.contacts",
+                    "com.google.android.calendar",
+                    "com.google.android.keep",
+                    "com.google.android.apps.tasks",
+                    "com.google.android.play.games",
+                    
+                    // Social Media
+                    "com.facebook.katana",
+                    "com.facebook.orca",  // Messenger
+                    "com.instagram.android",
+                    "com.twitter.android",
+                    "com.snapchat.android",
+                    "com.whatsapp",
+                    "com.whatsapp.w4b",  // Business
+                    "org.telegram.messenger",
+                    "org.telegram.messenger.web",
+                    "com.viber.voip",
+                    "com.skype.raider",
+                    "com.linkedin.android",
+                    "com.discord",
+                    "com.zhiliaoapp.musically",  // TikTok
+                    "com.ss.android.ugc.trill",
+                    
+                    // Banking (major banks - add more as needed)
+                    "ru.sberbankmobile",
+                    "com.idamob.tinkoff.android",
+                    "ru.alfabank.mobile.android",
+                    "ru.vtb24.mobilebanking.android",
+                    "com.raiffeisen",
+                    "ru.raiffeisennews",
+                    "com.tcsbank",
+                    "ru.otkritie",
+                    "com.vtb.mobilebank",
+                    "ru.gazprombank.android.mobilebank",
+                    "ru.smpbank",
+                    "ru.psb",
+                    "ru.nspk.mirpay",
+                    
+                    // Payment systems
+                    "com.paypal.android.p2pmobile",
+                    "com.venmo",
+                    "com.google.android.apps.walletnfcrel",
+                    "com.yandex.pay",
+                    
+                    // E-commerce
+                    "com.amazon.mShop.android.shopping",
+                    "com.amazon.dee.app",
+                    "com.wildberries.ru",
+                    "ru.ozon.app.android",
+                    "com.alibaba.aliexpresshd",
+                    "com.ebay.mobile",
+                    "com.alibaba.intl.android.apps.poseidon",
+                    
+                    // Streaming
+                    "com.netflix.mediaclient",
+                    "com.spotify.music",
+                    "com.apple.android.music",
+                    "com.yandex.music",
+                    "com.vkontakte.android",
+                    "com.vk.music",
+                    "com.kinopoisk",
+                    "com.ok.android",
+                    
+                    // Shopping/Food
+                    "com.yandex.food",
+                    "com.yandex.eda",
+                    "com.yandex.lavka",
+                    "com.sberbank.sdakit.service",
+                    
+                    // Transport
+                    "com.ubercab",
+                    "com.yandex.taxi",
+                    "com.taxsee.taxsee",
+                    "ru.citymobil.driver",
+                    
+                    // Messengers
+                    "com.microsoft.teams",
+                    "com.microsoft.skype.teams",
+                    "com.slack",
+                    "com.zoom.us",
+                    
+                    // Utilities
+                    "com.dropbox.android",
+                    "com.microsoft.office.word",
+                    "com.microsoft.office.excel",
+                    "com.microsoft.office.powerpoint",
+                    "com.adobe.reader"
+                )
+                
                 // Check each app
                 for (packageInfo in packages) {
                     val packageName = packageInfo.packageName.lowercase()
                     val appName = pm.getApplicationLabel(packageInfo).toString()
                     val isSystemApp = (packageInfo.flags and ApplicationInfo.FLAG_SYSTEM) != 0
+                    
+                    // Skip trusted apps immediately
+                    if (trustedApps.contains(packageInfo.packageName) || 
+                        trustedApps.any { packageName == it.lowercase() }) {
+                        // Add as safe app
+                        val scanResult = com.guardian.app.ui.screens.AppScanResult(
+                            packageName = packageInfo.packageName,
+                            appName = appName,
+                            isThreat = false,
+                            threatType = "",
+                            isSystemApp = isSystemApp
+                        )
+                        scanResultsData.add(scanResult)
+                        continue
+                    }
                     
                     var riskScore = 0
                     val threatReasons = mutableListOf<String>()
@@ -286,13 +406,15 @@ class GuardianViewModel(application: Application) : AndroidViewModel(application
                         val dangerousCount = requestedPermissions.count { dangerousPerms.contains(it) }
                         
                         // High risk: accessibility service + SMS permissions (classic banking trojan pattern)
-                        if (criticalCount > 0 && dangerousCount >= 3) {
+                        // Only flag if app is NOT from a trusted developer
+                        val isTrustedDeveloper = trustedPackages.any { packageName.startsWith(it) }
+                        if (criticalCount > 0 && dangerousCount >= 3 && !isTrustedDeveloper) {
                             riskScore += 8
                             threatReasons.add("Критические разрешения (возможный банковский троян)")
                         }
                         
-                        // Medium risk: many dangerous permissions
-                        if (dangerousCount >= 5) {
+                        // Medium risk: many dangerous permissions (only for non-system, non-trusted apps)
+                        if (dangerousCount >= 7 && !isSystemApp && !isTrustedDeveloper) {
                             riskScore += 4
                             threatReasons.add("Много опасных разрешений ($dangerousCount)")
                         }
@@ -302,9 +424,11 @@ class GuardianViewModel(application: Application) : AndroidViewModel(application
                         val hasCallPerms = requestedPermissions.any { it.contains("CALL") }
                         val hasContactPerms = requestedPermissions.contains("android.permission.READ_CONTACTS")
                         
-                        if (hasSmsPerms && hasCallPerms && hasContactPerms && !isSystemApp) {
-                            // Check if it's not a known messaging app
-                            val isKnownMessaging = listOf("whatsapp", "telegram", "signal", "viber", "messages", "sms")
+                        if (hasSmsPerms && hasCallPerms && hasContactPerms && !isSystemApp && !isTrustedDeveloper) {
+                            // Check if it's not a known messaging app (extended list)
+                            val isKnownMessaging = listOf("whatsapp", "telegram", "signal", "viber", "messages", "sms", 
+                                "phone", "dialer", "contacts", "facebook", "instagram", "twitter", "snapchat", "discord",
+                                "skype", "linkedin", "wechat", "line", "kakao", "imo", "zalo")
                                 .any { packageName.contains(it) }
                             
                             if (!isKnownMessaging) {
@@ -326,7 +450,8 @@ class GuardianViewModel(application: Application) : AndroidViewModel(application
                     }
                     
                     // Determine if it's a threat based on risk score
-                    isThreat = isThreat || riskScore >= 7
+                    // Higher threshold (9 instead of 7) to reduce false positives
+                    isThreat = isThreat || riskScore >= 9
                     
                     // Create scan result
                     val scanResult = com.guardian.app.ui.screens.AppScanResult(
