@@ -67,4 +67,11 @@
     <string name="grant_permission">Grant Permission</string>
     <string name="notification_permission_required">Notification Permission</string>
     <string name="notification_permission_description">Enable notifications to receive security alerts</string>
+    <string name="sms_blocked">SMS Blocked</string>
+    <string name="suspicious_sms">Suspicious SMS detected</string>
+    <string name="call_blocked">Call Blocked</string>
+    <string name="suspicious_call">Suspicious call detected</string>
+    <string name="usb_security_warning">Security Warning</string>
+    <string name="usb_debugging_enabled">USB Debugging is ENABLED! This is a major security risk.</string>
+    <string name="protection_active">Protection Active</string>
 </resources>

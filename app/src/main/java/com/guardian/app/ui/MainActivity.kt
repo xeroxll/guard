@@ -1,59 +1,32 @@
 package com.guardian.app.ui
 
 import android.Manifest
-import android.app.admin.DevicePolicyManager
-import android.content.ComponentName
+import android.app.AppOpsManager
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.provider.Settings
-import android.net.Uri
-import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.activity.result.contract.ActivityResultContracts
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
+import androidx.compose.foundation.layout.*
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat
-import com.guardian.app.admin.GuardianDeviceAdminReceiver
 import com.guardian.app.ui.navigation.GuardianNavigation
 import com.guardian.app.ui.theme.GuardianTheme
 
 class MainActivity : ComponentActivity() {
     
-    private lateinit var devicePolicyManager: DevicePolicyManager
-    private lateinit var adminComponent: ComponentName
-    
-    private val notificationPermissionLauncher = registerForActivityResult(
-        ActivityResultContracts.RequestPermission()
-    ) { isGranted ->
-        if (isGranted) {
-            Toast.makeText(this, "Notifications enabled", Toast.LENGTH_SHORT).show()
-        }
-    }
-    
-    private val usageStatsPermissionLauncher = registerForActivityResult(
-        ActivityResultContracts.StartActivityForResult()
-    ) {
-        // Check if permission was granted
-    }
-    
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        
-        devicePolicyManager = getSystemService(Context.DEVICE_POLICY_SERVICE) as DevicePolicyManager
-        adminComponent = ComponentName(this, GuardianDeviceAdminReceiver::class.java)
-        
         enableEdgeToEdge()
-        
-        // Request permissions
-        requestNotificationPermission()
-        checkUsageStatsPermission()
         
         setContent {
             GuardianTheme {
@@ -65,80 +38,86 @@ class MainActivity : ComponentActivity() {
                 }
             }
         }
+        
+        // Request permissions on startup
+        requestAllPermissions()
     }
     
-    private fun requestNotificationPermission() {
+    private fun requestAllPermissions() {
+        val permissions = mutableListOf<String>()
+        
+        // SMS permissions
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU) {
+            permissions.add(Manifest.permission.RECEIVE_SMS)
+            permissions.add(Manifest.permission.READ_SMS)
+        }
+        
+        // Phone state
+        permissions.add(Manifest.permission.READ_PHONE_STATE)
+        
+        // Notifications
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            when {
-                ContextCompat.checkSelfPermission(
-                    this,
-                    Manifest.permission.POST_NOTIFICATIONS
-                ) == PackageManager.PERMISSION_GRANTED -> {
-                    // Permission already granted
+            permissions.add(Manifest.permission.POST_NOTIFICATIONS)
+        }
+        
+        // Request all at once
+        val notGranted = permissions.filter {
+            ContextCompat.checkSelfPermission(this, it) != PackageManager.PERMISSION_GRANTED
+        }
+        
+        if (notGranted.isNotEmpty()) {
+            requestPermissions(notGranted.toTypedArray(), 1001)
+        }
+        
+        // Check and prompt for special permissions
+        checkSpecialPermissions()
+    }
+    
+    private fun checkSpecialPermissions() {
+        // Usage Stats
+        if (!hasUsageStatsPermission()) {
+            try {
+                startActivity(Intent(Settings.ACTION_USAGE_ACCESS_SETTINGS))
+            } catch (e: Exception) {
+                // Ignore
+            }
+        }
+        
+        // Battery optimization
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            val powerManager = getSystemService(Context.POWER_SERVICE) as android.os.PowerManager
+            if (!powerManager.isIgnoringBatteryOptimizations(packageName)) {
+                try {
+                    startActivity(Intent(Settings.ACTION_REQUEST_IGNORE_BATTERY_OPTIMIZATIONS).apply {
+                        data = Uri.parse("package:$packageName")
+                    })
+                } catch (e: Exception) {
+                    // Ignore
                 }
-                else -> {
-                    notificationPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
+            }
+        }
+        
+        // Write Settings (for some devices)
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
+            if (!Settings.System.canWrite(this)) {
+                try {
+                    startActivity(Intent(Settings.ACTION_MANAGE_WRITE_SETTINGS).apply {
+                        data = Uri.parse("package:$packageName")
+                    })
+                } catch (e: Exception) {
+                    // Ignore
                 }
             }
         }
     }
     
-    private fun checkUsageStatsPermission() {
-        if (!hasUsageStatsPermission()) {
-            Toast.makeText(
-                this,
-                "Please grant Usage Access for full functionality",
-                Toast.LENGTH_LONG
-            ).show()
-            usageStatsPermissionLauncher.launch(
-                Intent(Settings.ACTION_USAGE_ACCESS_SETTINGS)
-            )
-        }
-    }
-    
-    fun hasUsageStatsPermission(): Boolean {
-        val appOps = getSystemService(Context.APP_OPS_SERVICE) as android.app.AppOpsManager
+    private fun hasUsageStatsPermission(): Boolean {
+        val appOps = getSystemService(Context.APP_OPS_SERVICE) as AppOpsManager
         val mode = appOps.checkOpNoThrow(
-            android.app.AppOpsManager.OPSTR_GET_USAGE_STATS,
+            AppOpsManager.OPSTR_GET_USAGE_STATS,
             android.os.Process.myUid(),
             packageName
         )
-        return mode == android.app.AppOpsManager.MODE_ALLOWED
-    }
-    
-    fun isDeviceAdminActive(): Boolean {
-        return devicePolicyManager.isAdminActive(adminComponent)
-    }
-    
-    fun enableDeviceAdmin() {
-        val intent = Intent(DevicePolicyManager.ACTION_ADD_DEVICE_ADMIN)
-        intent.putExtra(DevicePolicyManager.EXTRA_DEVICE_ADMIN, adminComponent)
-        intent.putExtra(
-            DevicePolicyManager.EXTRA_ADD_EXPLANATION,
-            "Guardian needs device admin access to block apps and protect your device"
-        )
-        startActivity(intent)
-    }
-    
-    fun disableDeviceAdmin() {
-        if (isDeviceAdminActive()) {
-            devicePolicyManager.removeActiveAdmin(adminComponent)
-        }
-    }
-    
-    fun openUsageAccessSettings() {
-        startActivity(Intent(Settings.ACTION_USAGE_ACCESS_SETTINGS))
-    }
-    
-    fun openNotificationSettings() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            val intent = Intent(Settings.ACTION_APP_NOTIFICATION_SETTINGS)
-            intent.putExtra(Settings.EXTRA_APP_PACKAGE, packageName)
-            startActivity(intent)
-        } else {
-            startActivity(Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS).apply {
-                data = Uri.parse("package:$packageName")
-            })
-        }
+        return mode == AppOpsManager.MODE_ALLOWED
     }
 }

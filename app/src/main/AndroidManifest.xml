@@ -9,8 +9,17 @@
     <uses-permission android:name="android.permission.QUERY_ALL_PACKAGES" tools:ignore="QueryAllPackagesPermission" />
     <uses-permission android:name="android.permission.PACKAGE_USAGE_STATS" tools:ignore="ProtectedPermissions" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_SPECIAL_USE" />
     <uses-permission android:name="android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS" />
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+    <uses-permission android:name="android.permission.WRITE_SETTINGS" tools:ignore="ProtectedPermissions" />
+    
+    <!-- SMS & Call permissions -->
+    <uses-permission android:name="android.permission.RECEIVE_SMS" />
+    <uses-permission android:name="android.permission.READ_SMS" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.READ_CALL_LOG" />
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
 
     <application
         android:name=".GuardianApp"
@@ -24,18 +33,19 @@
         <activity
             android:name=".ui.MainActivity"
             android:exported="true"
-            android:theme="@style/Theme.Guardian">
+            android:theme="@style/Theme.Guardian"
+            android:launchMode="singleTask">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
 
-        <!-- Package Monitor Receiver -->
+        <!-- App Monitor - tracks installations -->
         <receiver
-            android:name=".receiver.PackageMonitorReceiver"
+            android:name=".receiver.AppMonitorReceiver"
             android:exported="true"
-            android:permission="android.permission.BIND_NOTIFICATION_LISTENER_SERVICE">
+            android:directBootAware="true">
             <intent-filter>
                 <action android:name="android.intent.action.PACKAGE_ADDED" />
                 <action android:name="android.intent.action.PACKAGE_REMOVED" />
@@ -43,34 +53,33 @@
             </intent-filter>
         </receiver>
 
-        <!-- Boot Receiver -->
+        <!-- USB Monitor - checks USB debugging -->
         <receiver
-            android:name=".receiver.BootReceiver"
-            android:exported="true">
+            android:name=".receiver.UsbMonitorReceiver"
+            android:exported="true"
+            android:directBootAware="true">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
-            </intent-filter>
-        </receiver>
-
-        <!-- USB Debug Receiver -->
-        <receiver
-            android:name=".receiver.UsbDebugReceiver"
-            android:exported="true">
-            <intent-filter>
                 <action android:name="android.hardware.usb.action.USB_STATE" />
             </intent-filter>
         </receiver>
 
-        <!-- Device Admin Receiver -->
+        <!-- SMS Filter - scam detection -->
         <receiver
-            android:name=".admin.GuardianDeviceAdminReceiver"
+            android:name=".receiver.SmsReceiver"
             android:exported="true"
-            android:permission="android.permission.BIND_DEVICE_ADMIN">
-            <meta-data
-                android:name="android.app.device_admin"
-                android:resource="@xml/device_admin" />
+            android:permission="android.permission.BROADCAST_SMS">
             <intent-filter>
-                <action android:name="android.app.action.DEVICE_ADMIN_ENABLED" />
+                <action android:name="android.provider.Telephony.SMS_RECEIVED" />
+            </intent-filter>
+        </receiver>
+
+        <!-- Call Filter - blocks suspicious calls -->
+        <receiver
+            android:name=".receiver.CallReceiver"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.PHONE_STATE" />
             </intent-filter>
         </receiver>
 
