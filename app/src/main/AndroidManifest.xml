@@ -41,6 +41,14 @@
             </intent-filter>
         </activity>
 
+        <!-- Foreground service for app monitoring -->
+        <service
+            android:name=".service.GuardianMonitorService"
+            android:enabled="true"
+            android:exported="false"
+            android:foregroundServiceType="specialUse"
+            android:description="Мониторинг безопасности установки приложений" />
+
         <!-- App Monitor - tracks installations -->
         <receiver
             android:name=".receiver.AppMonitorReceiver"

@@ -20,6 +20,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.guardian.app.service.GuardianMonitorService
 import com.guardian.app.ui.navigation.GuardianNavigation
 import com.guardian.app.ui.theme.GuardianTheme
 import com.guardian.app.viewmodel.GuardianViewModel
@@ -46,6 +47,21 @@ class MainActivity : ComponentActivity() {
         
         // Request permissions on startup
         requestAllPermissions()
+        
+        // Start monitoring service
+        startMonitoringService()
+    }
+    
+    private fun startMonitoringService() {
+        val intent = Intent(this, GuardianMonitorService::class.java).apply {
+            action = GuardianMonitorService.ACTION_START
+        }
+        
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            startForegroundService(intent)
+        } else {
+            startService(intent)
+        }
     }
     
     private fun requestAllPermissions() {
