@@ -120,6 +120,13 @@ class GuardianViewModel(application: Application) : AndroidViewModel(application
         }
     }
     
+    // Uninstall app - returns intent to start uninstall dialog
+    fun getUninstallIntent(packageName: String): android.content.Intent {
+        return android.content.Intent(android.content.Intent.ACTION_DELETE).apply {
+            data = android.net.Uri.parse("package:$packageName")
+        }
+    }
+    
     // Scan with real threat detection
     fun startScan() {
         viewModelScope.launch {

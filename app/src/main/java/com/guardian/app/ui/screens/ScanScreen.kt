@@ -321,6 +321,10 @@ fun ScanScreen(viewModel: GuardianViewModel) {
                         onRemoveFromBlacklist = {
                             val blacklistedApp = blacklist.find { it.packageName == app.packageName }
                             blacklistedApp?.let { viewModel.removeFromBlacklist(it.id) }
+                        },
+                        onUninstall = {
+                            val intent = viewModel.getUninstallIntent(app.packageName)
+                            context.startActivity(intent)
                         }
                     )
                 }
@@ -476,7 +480,8 @@ private fun AppListItem(
     app: AppScanResult,
     isBlacklisted: Boolean,
     onAddToBlacklist: () -> Unit,
-    onRemoveFromBlacklist: () -> Unit
+    onRemoveFromBlacklist: () -> Unit,
+    onUninstall: () -> Unit
 ) {
     Card(
         shape = RoundedCornerShape(12.dp),
@@ -580,6 +585,22 @@ private fun AppListItem(
                         imageVector = if (isBlacklisted) Icons.Default.CheckCircle else Icons.Default.Block,
                         contentDescription = if (isBlacklisted) "Удалить из черного списка" else "Добавить в черный список",
                         tint = if (isBlacklisted) GuardianGreen else GuardianRed,
+                        modifier = Modifier.size(20.dp)
+                    )
+                }
+            }
+            
+            // Uninstall button for threats (non-system apps only)
+            if (app.isThreat && !app.isSystemApp) {
+                Spacer(modifier = Modifier.width(4.dp))
+                IconButton(
+                    onClick = onUninstall,
+                    modifier = Modifier.size(32.dp)
+                ) {
+                    Icon(
+                        imageVector = Icons.Default.Delete,
+                        contentDescription = "Удалить приложение",
+                        tint = GuardianRed,
                         modifier = Modifier.size(20.dp)
                     )
                 }
