@@ -24,6 +24,15 @@ class GuardianViewModel(application: Application) : AndroidViewModel(application
     // Main protection
     val isProtectionEnabled = repository.isProtectionEnabled.stateIn(viewModelScope, SharingStarted.Eagerly, true)
     
+    // Theme
+    val isDarkTheme = repository.isDarkTheme.stateIn(viewModelScope, SharingStarted.Eagerly, true)
+    
+    fun setDarkTheme(enabled: Boolean) {
+        viewModelScope.launch {
+            repository.setDarkTheme(enabled)
+        }
+    }
+    
     // Individual module toggles
     val isUsbMonitorEnabled = repository.isUsbMonitorEnabled.stateIn(viewModelScope, SharingStarted.Eagerly, true)
     val isSmsFilterEnabled = repository.isSmsFilterEnabled.stateIn(viewModelScope, SharingStarted.Eagerly, true)

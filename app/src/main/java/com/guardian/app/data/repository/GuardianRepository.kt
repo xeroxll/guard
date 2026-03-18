@@ -21,6 +21,9 @@ class GuardianRepository(private val context: Context) {
         // Main protection toggle
         private val PROTECTION_ENABLED = booleanPreferencesKey("protection_enabled")
         
+        // Theme toggle
+        private val DARK_THEME = booleanPreferencesKey("dark_theme")
+        
         // Individual module toggles
         private val USB_MONITOR_ENABLED = booleanPreferencesKey("usb_monitor_enabled")
         private val SMS_FILTER_ENABLED = booleanPreferencesKey("sms_filter_enabled")
@@ -31,6 +34,13 @@ class GuardianRepository(private val context: Context) {
         private val BLACKLIST = stringPreferencesKey("blacklist")
         private val EVENTS = stringPreferencesKey("events")
         private val STATS = stringPreferencesKey("stats")
+    }
+    
+    // Theme State
+    val isDarkTheme: Flow<Boolean> = context.dataStore.data.map { it[DARK_THEME] ?: true }
+    
+    suspend fun setDarkTheme(enabled: Boolean) {
+        context.dataStore.edit { it[DARK_THEME] = enabled }
     }
     
     // Main Protection State

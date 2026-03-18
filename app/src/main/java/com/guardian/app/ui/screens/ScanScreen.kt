@@ -45,6 +45,13 @@ fun ScanScreen(viewModel: GuardianViewModel) {
     val isVirusTotalScanning by viewModel.isVirusTotalScanning.collectAsState()
     val virusTotalProgress by viewModel.virusTotalProgress.collectAsState()
     val virusTotalResults by viewModel.virusTotalResults.collectAsState()
+    val isDarkTheme by viewModel.isDarkTheme.collectAsState()
+    
+    // Use theme-aware colors
+    val backgroundColor = if (isDarkTheme) GuardianBackground else GuardianBackgroundLight
+    val surfaceColor = if (isDarkTheme) GuardianSurface else GuardianSurfaceLight
+    val textColor = if (isDarkTheme) Color.White else Color(0xFF1E293B)
+    val grayText = if (isDarkTheme) Color.Gray else Color(0xFF64748B)
     
     var isScanning by remember { mutableStateOf(false) }
     var scanResults by remember { mutableStateOf<List<AppScanResult>>(emptyList()) }
@@ -66,20 +73,20 @@ fun ScanScreen(viewModel: GuardianViewModel) {
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(GuardianBackground)
+            .background(backgroundColor)
             .padding(16.dp)
     ) {
         // Header
         Text(
             text = "Сканер",
             style = MaterialTheme.typography.headlineLarge,
-            color = Color.White,
+            color = textColor,
             fontWeight = FontWeight.Bold
         )
         Text(
             text = "Проверка установленных приложений",
             style = MaterialTheme.typography.bodyMedium,
-            color = Color.Gray
+            color = grayText
         )
         
         Spacer(modifier = Modifier.height(24.dp))

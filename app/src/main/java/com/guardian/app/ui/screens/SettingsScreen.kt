@@ -25,6 +25,7 @@ import com.guardian.app.viewmodel.GuardianViewModel
 fun SettingsScreen(viewModel: GuardianViewModel) {
     val isProtectionEnabled by viewModel.isProtectionEnabled.collectAsState()
     val isUsbMonitorEnabled by viewModel.isUsbMonitorEnabled.collectAsState()
+    val isDarkTheme by viewModel.isDarkTheme.collectAsState()
     var showResetDialog by remember { mutableStateOf(false) }
     var showApiKeyDialog by remember { mutableStateOf(false) }
     var apiKeyInput by remember { mutableStateOf("") }
@@ -71,6 +72,36 @@ fun SettingsScreen(viewModel: GuardianViewModel) {
                     colors = SwitchDefaults.colors(
                         checkedThumbColor = Color.White,
                         checkedTrackColor = GuardianGreen,
+                        uncheckedThumbColor = Color.White,
+                        uncheckedTrackColor = GuardianSurfaceVariant
+                    )
+                )
+            }
+        )
+        
+        Spacer(modifier = Modifier.height(24.dp))
+        
+        // Appearance Section
+        Text(
+            text = "ОФОРМЛЕНИЕ",
+            style = MaterialTheme.typography.labelMedium,
+            color = GuardianPrimary,
+            fontWeight = FontWeight.SemiBold,
+            modifier = Modifier.padding(bottom = 12.dp)
+        )
+        
+        SettingsItem(
+            icon = if (isDarkTheme) Icons.Default.DarkMode else Icons.Default.LightMode,
+            iconTint = if (isDarkTheme) GuardianYellow else GuardianBlue,
+            title = "Тёмная тема",
+            subtitle = if (isDarkTheme) "Включена" else "Выключена",
+            trailing = {
+                Switch(
+                    checked = isDarkTheme,
+                    onCheckedChange = { viewModel.setDarkTheme(it) },
+                    colors = SwitchDefaults.colors(
+                        checkedThumbColor = Color.White,
+                        checkedTrackColor = GuardianPrimary,
                         uncheckedThumbColor = Color.White,
                         uncheckedTrackColor = GuardianSurfaceVariant
                     )

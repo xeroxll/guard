@@ -19,8 +19,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.guardian.app.ui.navigation.GuardianNavigation
 import com.guardian.app.ui.theme.GuardianTheme
+import com.guardian.app.viewmodel.GuardianViewModel
 
 class MainActivity : ComponentActivity() {
     
@@ -29,7 +31,10 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         
         setContent {
-            GuardianTheme {
+            val viewModel: GuardianViewModel = viewModel()
+            val isDarkTheme by viewModel.isDarkTheme.collectAsState()
+            
+            GuardianTheme(darkTheme = isDarkTheme) {
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
