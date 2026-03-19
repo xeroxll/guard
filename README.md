@@ -10,6 +10,8 @@ A modern Android security application built with Jetpack Compose that helps prot
 - **Real-time Protection**: Toggle protection on/off
 - **Modern UI**: Beautiful dark theme with Material Design 3
 
+**Note:** SMS and Call filtering features have been removed for Google Play compliance.
+
 ## Tech Stack
 
 - **Language**: Kotlin
@@ -52,6 +54,8 @@ The app requires the following permissions:
 - FOREGROUND_SERVICE
 - REQUEST_IGNORE_BATTERY_OPTIMIZATIONS
 - SYSTEM_ALERT_WINDOW
+
+**Note:** SMS and Call permissions have been removed for Google Play compliance.
 
 ## License
 

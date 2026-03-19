@@ -67,14 +67,7 @@ class MainActivity : ComponentActivity() {
     private fun requestAllPermissions() {
         val permissions = mutableListOf<String>()
         
-        // SMS permissions
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU) {
-            permissions.add(Manifest.permission.RECEIVE_SMS)
-            permissions.add(Manifest.permission.READ_SMS)
-        }
-        
-        // Phone state
-        permissions.add(Manifest.permission.READ_PHONE_STATE)
+        // SMS and Call permissions removed for Google Play compliance
         
         // Notifications
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {

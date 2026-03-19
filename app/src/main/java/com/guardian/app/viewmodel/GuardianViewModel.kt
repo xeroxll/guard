@@ -39,10 +39,8 @@ class GuardianViewModel(application: Application) : AndroidViewModel(application
         }
     }
     
-    // Individual module toggles
+    // Individual module toggles - SMS and Call filters removed for Google Play
     val isUsbMonitorEnabled = repository.isUsbMonitorEnabled.stateIn(viewModelScope, SharingStarted.Eagerly, true)
-    val isSmsFilterEnabled = repository.isSmsFilterEnabled.stateIn(viewModelScope, SharingStarted.Eagerly, true)
-    val isCallFilterEnabled = repository.isCallFilterEnabled.stateIn(viewModelScope, SharingStarted.Eagerly, true)
     val isAppMonitorEnabled = repository.isAppMonitorEnabled.stateIn(viewModelScope, SharingStarted.Eagerly, true)
     
     // USB Debug state - check actual system setting
@@ -693,7 +691,7 @@ class GuardianViewModel(application: Application) : AndroidViewModel(application
                 if (threatsFound > 0) {
                     repository.addEvent(
                         EventType.SCAN_COMPLETED,
-                        "⚠️ Обнаружено $threatsFound угроз",
+                        "⚠️ Обнаружено $threatsFound у��роз",
                         "Проверено ${packages.size} приложений"
                     )
                 } else {

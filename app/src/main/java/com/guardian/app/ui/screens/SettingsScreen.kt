@@ -149,45 +149,7 @@ fun SettingsScreen(viewModel: GuardianViewModel) {
             }
         )
         
-        SettingsItem(
-            icon = Icons.Default.Sms,
-            iconTint = if (isDarkTheme) GuardianBlue else GuardianBlueLight,
-            title = "Фильтр SMS",
-            subtitle = "Блокировка мошеннических SMS",
-            isDarkTheme = isDarkTheme,
-            trailing = {
-                Switch(
-                    checked = viewModel.isSmsFilterEnabled.collectAsState().value,
-                    onCheckedChange = { viewModel.setSmsFilterEnabled(it) },
-                    colors = SwitchDefaults.colors(
-                        checkedThumbColor = Color.White,
-                        checkedTrackColor = if (isDarkTheme) GuardianBlue else GuardianBlueLight,
-                        uncheckedThumbColor = Color.White,
-                        uncheckedTrackColor = if (isDarkTheme) GuardianSurfaceVariant else GuardianSurfaceVariantLight
-                    )
-                )
-            }
-        )
-        
-        SettingsItem(
-            icon = Icons.Default.Phone,
-            iconTint = if (isDarkTheme) GuardianPink else GuardianPinkLight,
-            title = "Фильтр вызовов",
-            subtitle = "Блокировка подозрительных вызовов",
-            isDarkTheme = isDarkTheme,
-            trailing = {
-                Switch(
-                    checked = viewModel.isCallFilterEnabled.collectAsState().value,
-                    onCheckedChange = { viewModel.setCallFilterEnabled(it) },
-                    colors = SwitchDefaults.colors(
-                        checkedThumbColor = Color.White,
-                        checkedTrackColor = if (isDarkTheme) GuardianPink else GuardianPinkLight,
-                        uncheckedThumbColor = Color.White,
-                        uncheckedTrackColor = if (isDarkTheme) GuardianSurfaceVariant else GuardianSurfaceVariantLight
-                    )
-                )
-            }
-        )
+        // SMS and Call filters removed for Google Play compliance
         
         SettingsItem(
             icon = Icons.Default.Apps,
